@@ -1,6 +1,8 @@
 # team-project-brian
-team-project-brian created by GitHub Classroom
+This is the team repo for the CSC 335 Final Team of 4 Project
+
 Project Contributors:
+
 Adler Nguyen
 Brian Nguyen
 Andy Reyes
