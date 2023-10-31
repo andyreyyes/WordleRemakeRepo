@@ -69,5 +69,21 @@ public class WordleGame {
 	public ArrayList<String> getGuesses(){
 		return this.guesses;
 	}
+	public void printGuesses() {
+		for(int i = 0; i < 5; i++) {
+			// if no word then print a blank 5 space
+			if(i >= guesses.size()) {
+				System.out.println("_ _ _ _ _");
+			}
+			else {
+				String guess = guesses.get(i);
+				for(int y = 0 ; y < 5; y++) {
+					System.out.print(guess.charAt(y) + " ");
+				}
+				System.out.println();
+
+			}
+		}
+	}
 
 }
