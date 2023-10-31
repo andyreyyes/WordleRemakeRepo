@@ -17,7 +17,7 @@ public class WordleConsoleGame {
 		System.out.println(game.getTargetWord());
 		while (true) {
 			
-			if (game.getGuessAmount() == 5) {
+			if (game.getGuessAmount() == 6) {
 				System.out.println("Ran out of guesses. Game over!");
 				break;
 			}
@@ -30,7 +30,7 @@ public class WordleConsoleGame {
 			}
 			else {
 				System.out.println("Guess was incorrect");
-				System.out.println("Guesses left:" + (5 - game.getGuessAmount()));
+				System.out.println("Guesses left:" + (6 - game.getGuessAmount()));
 			}
 		}
 		System.out.println("The correct word was " + game.getTargetWord());
