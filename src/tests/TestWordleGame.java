@@ -20,6 +20,7 @@ public class TestWordleGame {
 		ArrayList<String> temp = new ArrayList<String>();
 		temp.add("slope");
 		temp.add("capon");
+		game2.printGuesses();
 		assertEquals(temp,game2.getGuesses());
 		
 		ArrayList<Character> temp2 = new ArrayList<Character>();
