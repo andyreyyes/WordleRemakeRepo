@@ -11,11 +11,13 @@ public class WordleGame {
 	private String targetWord;
 	private ArrayList<String> guesses;
 	private ArrayList<Character> guessedLetters;
+	private int guessAmount;
 	
 	public WordleGame() {
 		targetWord = getRandomWord();
 		guesses = new ArrayList<String>();
 		guessedLetters = new ArrayList<Character>();
+		guessAmount = 0;
 	}
 
 	/*
@@ -50,6 +52,7 @@ public class WordleGame {
 	}
 
 	public boolean processGuess(String guess) {
+		guessAmount++;
 		guesses.add(guess);
 		this.addGuessedLetters(guess);
 		return targetWord.equals(guess);
@@ -77,13 +80,16 @@ public class WordleGame {
 			}
 			else {
 				String guess = guesses.get(i);
-				for(int y = 0 ; y < 5; y++) {
+				for(int y = 0 ; y <= 5; y++) {
 					System.out.print(guess.charAt(y) + " ");
 				}
 				System.out.println();
 
 			}
 		}
+	}
+	public int getGuessAmount() {
+		return guessAmount;
 	}
 
 }
