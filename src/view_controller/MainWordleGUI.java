@@ -17,6 +17,8 @@ public class MainWordleGUI extends Application {
 	private Menu stats;
 	private Menu settings;
 	private Menu login;
+	
+	private WordleGamePane gamePane;
 
 	public static void main(String args[]) {
 		launch(args);
@@ -43,6 +45,9 @@ public class MainWordleGUI extends Application {
 		
 		menuBar.getMenus().addAll(home, stats, settings, login);
 		pane.setTop(menuBar);
+		
+		gamePane = new WordleGamePane();
+		pane.setCenter(gamePane);
 		
 	}
 
