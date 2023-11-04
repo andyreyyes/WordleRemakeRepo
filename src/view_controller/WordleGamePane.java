@@ -13,58 +13,53 @@ import model.WordleGame;
 public class WordleGamePane extends TilePane {
 
 	WordleGame game = new WordleGame(); // Wordle game
-
 	Square[][] grid = new Square[6][5]; // grid of Buttons
-
-	int currentRow;
-	int currentCol;
-
 	ArrayList<Character> lettersUsed = new ArrayList<Character>(); // List of characters that have been used
+	Boolean win = false; // if player won
 
-	Boolean win = false; // if won
+	int currentRow = 0;
+	int currentCol = 0;
 
 	public WordleGamePane() {
-		System.out.println(game.getTargetWord()); // for testing
-		this.setMaxSize(400, 600);
+		editPane();
+		makeSquares();
 
+		System.out.println(game.getTargetWord()); // for testing
+	}
+
+	private void editPane() {
+		this.setMaxSize(400, 600);
 		this.setVgap(10);
 		this.setHgap(10);
-
 		this.setOrientation(Orientation.HORIZONTAL);
 		this.setPrefRows(6);
 		this.setPrefColumns(5);
-
-		currentRow = 0;
-		currentCol = 0;
-
-		makeSquares();
-
 		this.setOnKeyPressed(event -> keyPress(event.getText(), String.valueOf(event.getCode())));
 	}
 
 	// changes the color of the spaces in the row (and disables buttons on win)
-	public void updateRowColors() {
+	private void updateRowColors() {
 		for (int i = 0; i < 5; i++) {
 			switch (grid[currentRow][i].getStatus()) {
-			case "Wrong":
+			case "Wrong": // grey if wrong
 				grid[currentRow][i].setStyle("-fx-background-color: grey;");
 				break;
-			case "Present":
+			case "Present": // gold if present in word
 				grid[currentRow][i].setStyle("-fx-background-color: gold;");
 				break;
-			case "Correct":
+			case "Correct": // green if in correct spot
 				grid[currentRow][i].setStyle("-fx-background-color: green;");
 				break;
 			}
 			grid[currentRow][i].setTextFill(Color.WHITE);
 		}
-		if (win) {
+		if (win) { // disable buttons on win
 			this.setOnKeyPressed(null);
 		}
 	}
 
 	// makes the squares of the grids
-	void makeSquares() {
+	private void makeSquares() {
 		for (int i = 0; i < 6; i++) {
 			for (int j = 0; j < 5; j++) {
 				Square square = new Square();
@@ -86,10 +81,7 @@ public class WordleGamePane extends TilePane {
 				word += grid[currentRow][i].getText();
 			}
 			if (validWord(word)) {
-				setStatusOfButtons(word);
-				updateRowColors();
-				currentRow++;
-				currentCol = 0;
+				updateGrid(word);
 			}
 		} else if (currentCol == 5 && letter.length() > 0) { // if out of range do nothing
 			return;
@@ -106,6 +98,14 @@ public class WordleGamePane extends TilePane {
 		} else {
 			return;
 		}
+	}
+
+	// updates buttons and current row and column
+	private void updateGrid(String word) {
+		setStatusOfButtons(word);
+		updateRowColors();
+		currentRow++;
+		currentCol = 0;
 	}
 
 	// Checks for win, and also changes the status of the spaces
