@@ -20,13 +20,11 @@ public class MainWordleGUI extends Application {
 	private Menu home;
 	private Menu stats;
 	private Menu settings;
-<<<<<<< HEAD
+
 	private MenuItem login;
-=======
-	private Menu login;
+	private MenuItem game;
 	
 	private WordleGamePane gamePane;
->>>>>>> 8edd424019bb19915e870f32a5d6d6cdec80ab40
 
 	public static void main(String args[]) {
 		launch(args);
@@ -49,8 +47,10 @@ public class MainWordleGUI extends Application {
 		menuBar = new MenuBar();
 		
 		home = new Menu("Home");
-		login = new MenuItem("Account");
-		home.getItems().add(login);
+		game = new MenuItem("Game");
+		login = new MenuItem("Login");
+		home.getItems().addAll(login, game);
+		
 		stats = new Menu("Stats");
 		settings = new Menu("Settings");
 		
@@ -62,16 +62,13 @@ public class MainWordleGUI extends Application {
 		
 	}
 	
-	private void setViewTo(Node newView) {
-		pane.setCenter(null);
-		pane.setCenter((BorderPane)  newView);
-	}
 	
 	private void registerListeners() {
 		login.setOnAction((arg0) -> {
 			pane.setCenter(loginView);
-			
-			
+		});
+		game.setOnAction((arg0) -> {
+			pane.setCenter(gamePane);
 		});
 	}
 	
