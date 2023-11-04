@@ -14,8 +14,10 @@ public class WordleGamePane extends TilePane {
 	int currentRow;
 	int currentCol;
 
-	public WordleGamePane() {
+	Boolean win = false;
 
+	public WordleGamePane() {
+		System.out.println(game.getTargetWord());
 		this.setMaxSize(400, 600);
 
 		this.setVgap(10);
@@ -51,7 +53,9 @@ public class WordleGamePane extends TilePane {
 
 			}
 		}
-
+		if (win) {
+			this.setOnKeyPressed(null);
+		}
 	}
 
 	void makeSquares() {
@@ -85,7 +89,7 @@ public class WordleGamePane extends TilePane {
 				word += grid[currentRow][i].getText();
 			}
 			if (validWord(word)) {
-				setStatusOfButtons();
+				setStatusOfButtons(word);
 				updateRow();
 				currentRow++;
 				currentCol = 0;
@@ -105,13 +109,23 @@ public class WordleGamePane extends TilePane {
 		}
 	}
 
-	private void setStatusOfButtons() {
-		// TODO Auto-generated method stub
+	private void setStatusOfButtons(String word) {
+		word = word.toLowerCase();
+		if (game.processGuess(word)) {
+			win = true;
+		}
+		for (int i = 0; i < 5; i++) {
+			if (word.charAt(i) == game.getTargetWord().charAt(i)) {
+				grid[currentRow][i].setStatus("Correct");
+			} else if (game.getTargetWord().indexOf(word.charAt(i)) != -1) {
+				grid[currentRow][i].setStatus("Present");
+			}
+		}
 
 	}
 
 	private boolean validWord(String word) {
-		// TODO Auto-generated method stub
+
 		return true;
 	}
 
@@ -149,6 +163,10 @@ class Square extends Button {
 
 	void setCorrect() {
 		status = "Correct";
+	}
+
+	void setStatus(String status) {
+		this.status = status;
 	}
 
 	String getStatus() {
