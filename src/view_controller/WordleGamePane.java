@@ -175,14 +175,6 @@ class Square extends Button {
 		return String.valueOf(letter);
 	}
 
-	public Boolean compareTo(Square otherSquare) {
-		return this.letter == otherSquare.letter;
-	}
-
-	void setUnchecked() {
-		status = "Unchecked";
-	}
-
 	void setWrong() {
 		status = "Wrong";
 	}
