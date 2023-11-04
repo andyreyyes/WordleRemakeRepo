@@ -20,7 +20,13 @@ public class MainWordleGUI extends Application {
 	private Menu home;
 	private Menu stats;
 	private Menu settings;
+<<<<<<< HEAD
 	private MenuItem login;
+=======
+	private Menu login;
+	
+	private WordleGamePane gamePane;
+>>>>>>> 8edd424019bb19915e870f32a5d6d6cdec80ab40
 
 	public static void main(String args[]) {
 		launch(args);
@@ -50,6 +56,9 @@ public class MainWordleGUI extends Application {
 		
 		menuBar.getMenus().addAll(home, stats, settings);
 		pane.setTop(menuBar);
+		
+		gamePane = new WordleGamePane();
+		pane.setCenter(gamePane);
 		
 	}
 	
