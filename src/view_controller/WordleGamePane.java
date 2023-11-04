@@ -24,7 +24,7 @@ public class WordleGamePane extends TilePane {
 	Boolean win = false; // if won
 
 	public WordleGamePane() {
-		System.out.println(game.getTargetWord());
+		System.out.println(game.getTargetWord()); // for testing
 		this.setMaxSize(400, 600);
 
 		this.setVgap(10);
@@ -38,17 +38,14 @@ public class WordleGamePane extends TilePane {
 		currentCol = 0;
 
 		makeSquares();
+
 		this.setOnKeyPressed(event -> keyPress(event.getText(), String.valueOf(event.getCode())));
 	}
 
 	// changes the color of the spaces in the row (and disables buttons on win)
-	public void updateRow() {
+	public void updateRowColors() {
 		for (int i = 0; i < 5; i++) {
 			switch (grid[currentRow][i].getStatus()) {
-			case "Empty":
-				break;
-			case "Unchecked":
-				break;
 			case "Wrong":
 				grid[currentRow][i].setStyle("-fx-background-color: grey;");
 				break;
@@ -59,7 +56,7 @@ public class WordleGamePane extends TilePane {
 				grid[currentRow][i].setStyle("-fx-background-color: green;");
 				break;
 			}
-			grid[currentRow][i].setTextFill(Color.WHITE);	
+			grid[currentRow][i].setTextFill(Color.WHITE);
 		}
 		if (win) {
 			this.setOnKeyPressed(null);
@@ -81,18 +78,6 @@ public class WordleGamePane extends TilePane {
 		}
 	}
 
-	// Prints the grid for testing
-	public String toString() {
-		String ret = "";
-		for (int i = 0; i < 6; i++) {
-			for (int j = 0; j < 5; j++) {
-				ret += grid[i][j].toString();
-			}
-			ret += "\n";
-		}
-		return ret;
-	}
-
 	// on a key press
 	private void keyPress(String letter, String keyCode) {
 		if (keyCode.equals("ENTER") && currentCol == 5) { // next line and changes current one
@@ -102,7 +87,7 @@ public class WordleGamePane extends TilePane {
 			}
 			if (validWord(word)) {
 				setStatusOfButtons(word);
-				updateRow();
+				updateRowColors();
 				currentRow++;
 				currentCol = 0;
 			}
@@ -118,6 +103,8 @@ public class WordleGamePane extends TilePane {
 			Button currentButton = grid[currentRow][currentCol];
 			currentButton.setText(letter.toUpperCase());
 			currentCol++;
+		} else {
+			return;
 		}
 	}
 
@@ -128,12 +115,16 @@ public class WordleGamePane extends TilePane {
 			win = true;
 		}
 		for (int i = 0; i < 5; i++) {
-			if (word.charAt(i) == game.getTargetWord().charAt(i)) {
-				grid[currentRow][i].setStatus("Correct");
-			} else if (game.getTargetWord().indexOf(word.charAt(i)) != -1) {
-				grid[currentRow][i].setStatus("Present");
+			if (word.charAt(i) == game.getTargetWord().charAt(i)) { // if char is in word and in the right spot
+				grid[currentRow][i].setCorrect();
+			} else if (!game.getTargetWord().contains(word.substring(i, i + 1))) { // if char is completely not in the
+																					// word
+				grid[currentRow][i].setWrong();
+			} else if (game.getTargetWord().indexOf(word.charAt(i)) != -1) { // if char is in the word but not at the
+																				// right location
+				grid[currentRow][i].setPresent();
 			} else {
-				grid[currentRow][i].setStatus("Wrong");
+				grid[currentRow][i].setWrong();
 			}
 		}
 
@@ -141,7 +132,7 @@ public class WordleGamePane extends TilePane {
 
 	// Checks if word is able to be used
 	private boolean validWord(String word) {
-		for (int i = 0; i < word.length(); i++) {
+		for (int i = 0; i < word.length(); i++) { // loop that adds to lettersUsed
 			if (!lettersUsed.contains(word.charAt(i))) {
 				lettersUsed.add(word.charAt(i));
 			}
@@ -151,6 +142,18 @@ public class WordleGamePane extends TilePane {
 
 	public ArrayList<Character> getLettersUsed() {
 		return lettersUsed;
+	}
+
+	// Prints the grid for testing
+	public String toString() {
+		String ret = "";
+		for (int i = 0; i < 6; i++) {
+			for (int j = 0; j < 5; j++) {
+				ret += grid[i][j].toString();
+			}
+			ret += "\n";
+		}
+		return ret;
 	}
 }
 
@@ -170,6 +173,10 @@ class Square extends Button {
 
 	public String toString() {
 		return String.valueOf(letter);
+	}
+
+	public Boolean compareTo(Square otherSquare) {
+		return this.letter == otherSquare.letter;
 	}
 
 	void setUnchecked() {
