@@ -31,6 +31,11 @@ public class WordleConsoleGame {
 				for (int i = 0; i < 5; i++) {
 					if (input.charAt(i) == game.getTargetWord().charAt(i)) {
 						System.out.print(input.charAt(i) + " ");
+						
+					}
+					else if (game.getTargetWord().indexOf(input.charAt(i)) != -1) {
+						System.out.print("* ");
+						
 					}
 					else {
 						System.out.print("_ ");
