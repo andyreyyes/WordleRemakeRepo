@@ -1,6 +1,7 @@
 package view_controller;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 
 import javafx.geometry.Orientation;
 import javafx.scene.control.Button;
@@ -39,6 +40,7 @@ public class WordleGamePane extends TilePane {
 
 	// changes the color of the spaces in the row (and disables buttons on win)
 	private void updateRowColors() {
+
 		for (int i = 0; i < 5; i++) {
 			switch (grid[currentRow][i].getStatus()) {
 			case "Wrong": // grey if wrong
@@ -114,14 +116,26 @@ public class WordleGamePane extends TilePane {
 		if (game.processGuess(word)) {
 			win = true;
 		}
+		HashMap<Character, Integer> lettersCountMap = makeHashMap(game.getTargetWord());
+
+		for (int i = 0; i < 5; i++) {
+			if (word.charAt(i) == game.getTargetWord().charAt(i)) {
+				lettersCountMap.put(game.getTargetWord().charAt(i),
+						lettersCountMap.get(game.getTargetWord().charAt(i)) - 1);
+			} else if (game.getTargetWord().indexOf(word.charAt(i)) != -1) {
+				lettersCountMap.put(game.getTargetWord().charAt(i),
+						lettersCountMap.get(game.getTargetWord().charAt(i)) - 1);
+			}
+		}
 		for (int i = 0; i < 5; i++) {
 			if (word.charAt(i) == game.getTargetWord().charAt(i)) { // if char is in word and in the right spot
 				grid[currentRow][i].setCorrect();
+
 			} else if (!game.getTargetWord().contains(word.substring(i, i + 1))) { // if char is completely not in the
 																					// word
 				grid[currentRow][i].setWrong();
-			} else if (game.getTargetWord().indexOf(word.charAt(i)) != -1) { // if char is in the word but not at the
-																				// right location
+			} else if (game.getTargetWord().indexOf(word.charAt(i)) != -1 && lettersCountMap.get(word.charAt(i)) > 0) {
+				// if chat is in the word but not at the right location.
 				grid[currentRow][i].setPresent();
 			} else {
 				grid[currentRow][i].setWrong();
@@ -130,12 +144,27 @@ public class WordleGamePane extends TilePane {
 
 	}
 
+	private HashMap<Character, Integer> makeHashMap(String word) {
+		HashMap<Character, Integer> newMap = new HashMap<>();
+		for (int i = 0; i < word.length(); i++) {
+			if (newMap.containsKey(word.charAt(i))) {
+				newMap.put(word.charAt(i), newMap.get(word.charAt(i)) + 1);
+			} else {
+				newMap.put(word.charAt(i), 1);
+			}
+		}
+		return newMap;
+	}
+
 	// Checks if word is able to be used
 	private boolean validWord(String word) {
 		for (int i = 0; i < word.length(); i++) { // loop that adds to lettersUsed
 			if (!lettersUsed.contains(word.charAt(i))) {
 				lettersUsed.add(word.charAt(i));
 			}
+		}
+		if (!game.getWordList().contains(word.toLowerCase())) {
+			return false;
 		}
 		return true;
 	}

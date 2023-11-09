@@ -12,6 +12,7 @@ public class WordleGame {
 	private ArrayList<String> guesses;
 	private ArrayList<Character> guessedLetters;
 	private int guessAmount;
+	private ArrayList<String> wordList;
 	
 	public WordleGame() {
 		targetWord = getRandomWord();
@@ -31,7 +32,7 @@ public class WordleGame {
 	}
 
 	public String getRandomWord() {
-		ArrayList<String> wordList = new ArrayList<String>();
+		wordList = new ArrayList<String>();
 		Random random = new Random();
 		// add all words to the wordlist
 		try (BufferedReader reader = new BufferedReader(new FileReader("words.txt"))) {
@@ -90,6 +91,10 @@ public class WordleGame {
 	}
 	public int getGuessAmount() {
 		return guessAmount;
+	}
+	
+	public ArrayList<String> getWordList() {
+		return wordList;
 	}
 
 }
