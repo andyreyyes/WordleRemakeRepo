@@ -13,6 +13,7 @@ import model.WordleGame;
 public class WordleGamePane extends TilePane {
 
 	WordleGame game = new WordleGame(); // Wordle game
+	KeyBoardPane keyboard;
 	Square[][] grid = new Square[6][5]; // grid of Buttons
 	ArrayList<Character> lettersUsed = new ArrayList<Character>(); // List of characters that have been used
 	Boolean win = false; // if player won
@@ -38,7 +39,7 @@ public class WordleGamePane extends TilePane {
 	}
 
 	// changes the color of the spaces in the row (and disables buttons on win)
-	private void updateRowColors() {
+	public void updateRowColors() {
 		for (int i = 0; i < 5; i++) {
 			switch (grid[currentRow][i].getStatus()) {
 			case "Wrong": // grey if wrong
@@ -74,7 +75,7 @@ public class WordleGamePane extends TilePane {
 	}
 
 	// on a key press
-	private void keyPress(String letter, String keyCode) {
+	public void keyPress(String letter, String keyCode) {
 		if (keyCode.equals("ENTER") && currentCol == 5) { // next line and changes current one
 			String word = "";
 			for (int i = 0; i < 5; i++) {
@@ -82,6 +83,7 @@ public class WordleGamePane extends TilePane {
 			}
 			if (validWord(word)) {
 				updateGrid(word);
+				keyboard.updateKeys();
 			}
 		} else if (currentCol == 5 && letter.length() > 0) { // if out of range do nothing
 			return;
@@ -143,6 +145,14 @@ public class WordleGamePane extends TilePane {
 	public ArrayList<Character> getLettersUsed() {
 		return lettersUsed;
 	}
+	
+	public int getColumn() {
+		return currentCol;
+	}
+	
+	public Square[][] getGrid() {
+		return grid;
+	}
 
 	// Prints the grid for testing
 	public String toString() {
@@ -154,6 +164,11 @@ public class WordleGamePane extends TilePane {
 			ret += "\n";
 		}
 		return ret;
+	}
+	
+	//Sets the keyboard to a KeyBoardPane object
+	public void setKeyboard(KeyBoardPane pane) {
+		keyboard = pane;
 	}
 }
 
