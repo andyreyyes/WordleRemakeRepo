@@ -1,6 +1,7 @@
 package view_controller;
 
 import javafx.application.Application;
+import javafx.geometry.Pos;
 import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.control.Menu;
@@ -25,6 +26,10 @@ public class MainWordleGUI extends Application {
 	private MenuItem game;
 	
 	private WordleGamePane gamePane;
+	
+	private KeyBoardPane keyboardPane;
+	
+	private VBox mainGameLayout = new VBox();
 
 	public static void main(String args[]) {
 		launch(args);
@@ -57,9 +62,20 @@ public class MainWordleGUI extends Application {
 		menuBar.getMenus().addAll(home, stats, settings);
 		pane.setTop(menuBar);
 		
-		gamePane = new WordleGamePane();
-		pane.setCenter(gamePane);
 		
+		gamePane = new WordleGamePane();
+		
+		keyboardPane = new KeyBoardPane();
+		keyboardPane.setGame(gamePane);
+		
+		mainGameLayout.getChildren().addAll(gamePane, keyboardPane);
+		
+		mainGameLayout.setAlignment(Pos.CENTER);
+		mainGameLayout.setSpacing(35);
+		
+		keyboardPane.setGame(gamePane);
+		gamePane.setKeyboard(keyboardPane);
+		pane.setCenter(mainGameLayout);
 	}
 	
 	
@@ -68,7 +84,9 @@ public class MainWordleGUI extends Application {
 			pane.setCenter(loginView);
 		});
 		game.setOnAction((arg0) -> {
-			pane.setCenter(gamePane);
+			keyboardPane.setGame(gamePane);
+			gamePane.setKeyboard(keyboardPane);
+			pane.setCenter(mainGameLayout);
 		});
 	}
 	
