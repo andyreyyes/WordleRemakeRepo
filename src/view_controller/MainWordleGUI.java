@@ -84,6 +84,7 @@ public class MainWordleGUI extends Application {
 			pane.setCenter(loginView);
 		});
 		game.setOnAction((arg0) -> {
+			keyboardPane.setGame(gamePane);
 			gamePane.setKeyboard(keyboardPane);
 			pane.setCenter(mainGameLayout);
 		});
