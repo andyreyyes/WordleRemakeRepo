@@ -78,7 +78,9 @@ public class WordleGamePane extends TilePane {
 
 	// on a key press
 	public void keyPress(String letter, String keyCode) {
-		if (keyCode.equals("ENTER") && currentCol == 5) { // next line and changes current one
+		if (win) {	// cant type after win
+			return;
+		} else if (keyCode.equals("ENTER") && currentCol == 5) { // next line and changes current one
 			String word = "";
 			for (int i = 0; i < 5; i++) {
 				word += grid[currentRow][i].getText();
@@ -174,11 +176,11 @@ public class WordleGamePane extends TilePane {
 	public ArrayList<Character> getLettersUsed() {
 		return lettersUsed;
 	}
-	
+
 	public int getColumn() {
 		return currentCol;
 	}
-	
+
 	public Square[][] getGrid() {
 		return grid;
 	}
@@ -194,8 +196,8 @@ public class WordleGamePane extends TilePane {
 		}
 		return ret;
 	}
-	
-	//Sets the keyboard to a KeyBoardPane object
+
+	// Sets the keyboard to a KeyBoardPane object
 	public void setKeyboard(KeyBoardPane pane) {
 		keyboard = pane;
 	}
