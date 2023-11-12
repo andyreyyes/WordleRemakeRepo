@@ -7,8 +7,6 @@ import java.util.HashMap;
 public class AccountCollection implements Serializable {
 	private static final long serialVersionUID = 1L;
 	HashMap<String, UserAccount> accounts;
-	UserAccount loggedIn;
-
 	public AccountCollection() {
 		accounts = new HashMap<String, UserAccount>();
 	}
@@ -28,19 +26,19 @@ public class AccountCollection implements Serializable {
 	public boolean login(String username, String password) {
 		// If username exists and passwords match.
 		if (accounts.containsKey(username) && accounts.get(username).getPassword().equals(password)) {
-			// Set loggedIn to the currently logged in account
-			loggedIn = accounts.get(username);
 			return true;
 		}
 		return false;
 	}
-
-	public void logout() {
-		loggedIn = null;
+	public UserAccount getAccount(String username, String password) {
+		if(login(username,password)) {
+			return accounts.get(username);
+		}
+		else {
+			return null;
+		}
 	}
-	
-	public UserAccount getLoggedIn() {
-		return loggedIn;
+	public boolean validName(String name) {
+		return !(accounts.keySet().contains(name));
 	}
-
 }

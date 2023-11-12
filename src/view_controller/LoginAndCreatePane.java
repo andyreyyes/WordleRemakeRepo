@@ -31,6 +31,7 @@ public class LoginAndCreatePane extends VBox {
 	private Label passwordLabel = new Label("Password: ");
 	
     private AccountCollection accounts;
+    private UserAccount curAccount;
 
 	private Label informationLabel = new Label("Create a new Account or Login");
 
@@ -70,16 +71,12 @@ public class LoginAndCreatePane extends VBox {
 	private void registerListeners() {
 		loginButton.setOnAction((event) -> {
 			if (!loggedIn) {
-				if (usernameInput.getText().length() > 0 && passwordInput.getText().length() > 0) {
-					
-					String username = usernameInput.getText();
-					String password = passwordInput.getText();
-					
-					usernameInput.setText("");
-					passwordInput.setText("");
-					UserAccount tempAccount = new UserAccount(username, password);
+				if (usernameInput.getText().length() > 0 && passwordInput.getText().length() > 0 && accounts.login(usernameInput.getText(), passwordInput.getText())) {
 					informationLabel.setText("Sucessfully logged in");
 					loggedIn = true;
+					curAccount = accounts.getAccount(usernameInput.getText(), passwordInput.getText());
+					usernameInput.setText("");
+					passwordInput.setText("");
 
 				} else {
 					informationLabel.setText("Enter a valid username and Password");
@@ -92,6 +89,7 @@ public class LoginAndCreatePane extends VBox {
 			if (loggedIn) {
 				usernameInput.setText("");
 				passwordInput.setText("");
+				curAccount = null;
 				informationLabel.setText("Sucessfully logged out");
 				loggedIn = false;
 
@@ -102,12 +100,12 @@ public class LoginAndCreatePane extends VBox {
 		});
 		createAccountButton.setOnAction((event) -> {
 			if (!loggedIn) {
-				if (usernameInput.getText().length() > 0 && passwordInput.getText().length() > 0) {
+				if (usernameInput.getText().length() > 0 && passwordInput.getText().length() > 0 && accounts.validName(usernameInput.getText())) {
 					String username = usernameInput.getText();
 					String password = passwordInput.getText();
 					usernameInput.setText("");
 					passwordInput.setText("");
-					UserAccount newAccount = new UserAccount(username, password);
+					accounts.makeAccount(username, password);
 					informationLabel.setText("Sucessfully created an Account");
 					
 				} else {
