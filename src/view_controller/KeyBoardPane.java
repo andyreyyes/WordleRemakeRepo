@@ -9,19 +9,19 @@ import javafx.scene.layout.*;
 
 public class KeyBoardPane extends GridPane {
 
-	//arraylist of all keys on the keyboard
+	// arraylist of all keys on the keyboard
 	private ArrayList<Button> keyList = new ArrayList<>();
 
-	//VBox to hold the key rows
+	// VBox to hold the key rows
 	private VBox keyColumn = new VBox();
 
-	//All 3 rows of keys on the keyboard
+	// All 3 rows of keys on the keyboard
 	private HBox keyRow1 = new HBox();
 	private HBox keyRow2 = new HBox();
 	private HBox keyRow3 = new HBox();
 
-	//All individual keys
-	//1st row
+	// All individual keys
+	// 1st row
 	private Button qKey = new Button("Q");
 	private Button wKey = new Button("W");
 	private Button eKey = new Button("E");
@@ -33,8 +33,8 @@ public class KeyBoardPane extends GridPane {
 	private Button oKey = new Button("O");
 	private Button pKey = new Button("P");
 
-	
-	//2nd Row
+
+	// 2nd Row
 	private Button aKey = new Button("A");
 	private Button sKey = new Button("S");
 	private Button dKey = new Button("D");
@@ -45,8 +45,8 @@ public class KeyBoardPane extends GridPane {
 	private Button kKey = new Button("K");
 	private Button lKey = new Button("L");
 
-	
-	//3rd Row
+
+	// 3rd Row
 	private Button enterKey = new Button("ENTER");
 	private Button zKey = new Button("Z");
 	private Button xKey = new Button("X");
@@ -57,9 +57,9 @@ public class KeyBoardPane extends GridPane {
 	private Button mKey = new Button("M");
 	private Button backKey = new Button("<--");
 
-	//WordGamePane to use to update keys and keep focus in the right pane
+	// WordGamePane to use to update keys and keep focus in the right pane
 	private WordleGamePane game;
-	
+
 	private Square[][] squareList;
 
 	public KeyBoardPane() {
@@ -67,7 +67,7 @@ public class KeyBoardPane extends GridPane {
 	}
 
 	private void initialize() {
-		//Constructs the keyboard
+		// Constructs the keyboard
 		this.setMinWidth(365);
 		this.setMaxWidth(365);
 		this.setMinHeight(150);
@@ -82,7 +82,7 @@ public class KeyBoardPane extends GridPane {
 
 
 		// Set style of each key to a white button
-		//1st row of keys
+		// 1st row of keys
 		qKey.setStyle("-fx-focus-color: transparent; -fx-faint-focus-color: transparent; -fx-background-color: white;");
 		wKey.setStyle("-fx-focus-color: transparent; -fx-faint-focus-color: transparent; -fx-background-color: white;");
 		eKey.setStyle("-fx-focus-color: transparent; -fx-faint-focus-color: transparent; -fx-background-color: white;");
@@ -94,8 +94,8 @@ public class KeyBoardPane extends GridPane {
 		oKey.setStyle("-fx-focus-color: transparent; -fx-faint-focus-color: transparent; -fx-background-color: white;");
 		pKey.setStyle("-fx-focus-color: transparent; -fx-faint-focus-color: transparent; -fx-background-color: white;");
 
-		
-		//2nd row of keys
+
+		// 2nd row of keys
 		aKey.setStyle("-fx-focus-color: transparent; -fx-faint-focus-color: transparent; -fx-background-color: white;");
 		sKey.setStyle("-fx-focus-color: transparent; -fx-faint-focus-color: transparent; -fx-background-color: white;");
 		dKey.setStyle("-fx-focus-color: transparent; -fx-faint-focus-color: transparent; -fx-background-color: white;");
@@ -106,7 +106,7 @@ public class KeyBoardPane extends GridPane {
 		kKey.setStyle("-fx-focus-color: transparent; -fx-faint-focus-color: transparent; -fx-background-color: white;");
 		lKey.setStyle("-fx-focus-color: transparent; -fx-faint-focus-color: transparent; -fx-background-color: white;");
 
-		//3rd row of keys
+		// 3rd row of keys
 		enterKey.setStyle(
 				"-fx-focus-color: transparent; -fx-faint-focus-color: transparent; -fx-background-color: white;");
 		zKey.setStyle("-fx-focus-color: transparent; -fx-faint-focus-color: transparent; -fx-background-color: white;");
@@ -134,8 +134,8 @@ public class KeyBoardPane extends GridPane {
 		this.add(keyColumn, 0, 0);
 
 		createList();
-		
-		
+
+
 		registerHandlers();
 	}
 
@@ -261,42 +261,46 @@ public class KeyBoardPane extends GridPane {
 	}
 
 	public void setGame(WordleGamePane newGame) {
-		//Sets game to a WordleGamePane object
+		// Sets game to a WordleGamePane object
 		game = newGame;
 	}
-	
+
 	public void setGrid(Square[][] grid) {
 		squareList = grid;
 	}
 
 	public void updateKeys() {
-		//Updates the keyboard to gray keys if the letters have been used
-		//Goes through each key and each letter used in a guess and
-		//Updates the right key accordingly
+		// Updates the keyboard to gray keys if the letters have been used
+		// Goes through each key and each letter used in a guess and
+		// Updates the right key accordingly
 		String letter;
 		for (int i = 0; i < 5; i++) {
 			switch (squareList[game.getRow()][i].getStatus()) {
 			case "Wrong": // grey if wrong
 				letter = squareList[game.getRow()][i].getText();
-				for (Button keys: keyList) {
-					if ((keys.getText().equals(letter)) && !keys.getStyle().contains("-fx-background-color: green") && !keys.getStyle().contains("-fx-background-color: gray")) {
-						keys.setStyle("-fx-focus-color: transparent; -fx-faint-focus-color: transparent; -fx-background-color: gray;");
+				for (Button keys : keyList) {
+					if ((keys.getText().equals(letter)) && !keys.getStyle().contains("-fx-background-color: green")
+							&& !keys.getStyle().contains("-fx-background-color: gold")) {
+						keys.setStyle(
+								"-fx-focus-color: transparent; -fx-faint-focus-color: transparent; -fx-background-color: gray;");
 					}
 				}
 				break;
 			case "Present": // gold if present in word
 				letter = squareList[game.getRow()][i].getText();
-				for (Button keys: keyList) {
-					if ((keys.getText().equals(letter))) {
-						keys.setStyle("-fx-focus-color: transparent; -fx-faint-focus-color: transparent; -fx-background-color: gold;");
+				for (Button keys : keyList) {
+					if ((keys.getText().equals(letter)) && !keys.getStyle().contains("-fx-background-color: green")) {
+						keys.setStyle(
+								"-fx-focus-color: transparent; -fx-faint-focus-color: transparent; -fx-background-color: gold;");
 					}
 				}
 				break;
 			case "Correct": // green if in correct spot
 				letter = squareList[game.getRow()][i].getText();
-				for (Button keys: keyList) {
+				for (Button keys : keyList) {
 					if ((keys.getText().equals(letter))) {
-						keys.setStyle("-fx-focus-color: transparent; -fx-faint-focus-color: transparent; -fx-background-color: green;");
+						keys.setStyle(
+								"-fx-focus-color: transparent; -fx-faint-focus-color: transparent; -fx-background-color: green;");
 					}
 				}
 				break;
@@ -310,8 +314,8 @@ public class KeyBoardPane extends GridPane {
 		// 0 = q, 1 = w, 2 = e, 3 = r, 4 = t, 5 = y, 6 = u, 7 = i, 8 = o, 9 = p
 		// 10 = a, 11 = s, 12 = d, 13 = f, 14 = g, 15 = h, 16 = j, 17 = j, 18 = k,
 		// 19 = l, 20 = z, 21 = x, 22 = c, 23 = v, 24 = b, 25 = n, 26 = m
-		
-		//1st row of keys
+
+		// 1st row of keys
 		keyList.add(qKey);
 		keyList.add(wKey);
 		keyList.add(eKey);
@@ -323,7 +327,7 @@ public class KeyBoardPane extends GridPane {
 		keyList.add(oKey);
 		keyList.add(pKey);
 
-		//2nd row of keys
+		// 2nd row of keys
 		keyList.add(aKey);
 		keyList.add(sKey);
 		keyList.add(dKey);
@@ -334,7 +338,7 @@ public class KeyBoardPane extends GridPane {
 		keyList.add(kKey);
 		keyList.add(lKey);
 
-		//3rd row of keys
+		// 3rd row of keys
 		keyList.add(zKey);
 		keyList.add(xKey);
 		keyList.add(cKey);

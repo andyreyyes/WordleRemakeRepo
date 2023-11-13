@@ -19,7 +19,7 @@ import model.WordleGame;
 
 public class WordleGamePane extends TilePane {
 
-	WordleGame game = new WordleGame(); // Wordle game
+	WordleGame game = new WordleGame("gusto"); // Wordle game
 	KeyBoardPane keyboard;
 	Square[][] grid = new Square[6][5]; // grid of Buttons
 	ArrayList<Character> lettersUsed = new ArrayList<Character>(); // List of characters that have been used
@@ -209,7 +209,6 @@ public class WordleGamePane extends TilePane {
 	public int getRow() {
 		return currentRow;
 	}
-	
 	public Square[][] getGrid() {
 		return grid;
 	}
