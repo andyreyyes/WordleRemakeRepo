@@ -13,7 +13,7 @@ import model.WordleGame;
 
 public class WordleGamePane extends TilePane {
 
-	WordleGame game = new WordleGame(); // Wordle game
+	WordleGame game = new WordleGame("gusto"); // Wordle game
 	KeyBoardPane keyboard;
 	Square[][] grid = new Square[6][5]; // grid of Buttons
 	ArrayList<Character> lettersUsed = new ArrayList<Character>(); // List of characters that have been used
@@ -40,12 +40,7 @@ public class WordleGamePane extends TilePane {
 	}
 
 	// changes the color of the spaces in the row (and disables buttons on win)
-<<<<<<< HEAD
-	private void updateRowColors() {
-
-=======
 	public void updateRowColors() {
->>>>>>> refs/remotes/origin/main
 		for (int i = 0; i < 5; i++) {
 			switch (grid[currentRow][i].getStatus()) {
 			case "Wrong": // grey if wrong
@@ -89,7 +84,6 @@ public class WordleGamePane extends TilePane {
 			}
 			if (validWord(word)) {
 				updateGrid(word);
-				keyboard.updateKeys();
 			}
 		} else if (currentCol == 5 && letter.length() > 0) { // if out of range do nothing
 			return;
@@ -112,6 +106,9 @@ public class WordleGamePane extends TilePane {
 	private void updateGrid(String word) {
 		setStatusOfButtons(word);
 		updateRowColors();
+		keyboard.setGrid(grid);
+		keyboard.setGame(this);
+		keyboard.updateKeys();
 		currentRow++;
 		currentCol = 0;
 	}
@@ -123,14 +120,14 @@ public class WordleGamePane extends TilePane {
 			win = true;
 		}
 		HashMap<Character, Integer> lettersCountMap = makeHashMap(game.getTargetWord());
-
+		
 		for (int i = 0; i < 5; i++) {
 			if (word.charAt(i) == game.getTargetWord().charAt(i)) {
 				lettersCountMap.put(game.getTargetWord().charAt(i),
 						lettersCountMap.get(game.getTargetWord().charAt(i)) - 1);
 			} else if (game.getTargetWord().indexOf(word.charAt(i)) != -1) {
-				lettersCountMap.put(game.getTargetWord().charAt(i),
-						lettersCountMap.get(game.getTargetWord().charAt(i)) - 1);
+				lettersCountMap.put(word.charAt(i),
+						lettersCountMap.get(word.charAt(i)) - 1);
 			}
 		}
 		for (int i = 0; i < 5; i++) {
@@ -140,7 +137,7 @@ public class WordleGamePane extends TilePane {
 			} else if (!game.getTargetWord().contains(word.substring(i, i + 1))) { // if char is completely not in the
 																					// word
 				grid[currentRow][i].setWrong();
-			} else if (game.getTargetWord().indexOf(word.charAt(i)) != -1 && lettersCountMap.get(word.charAt(i)) > 0) {
+			} else if (game.getTargetWord().indexOf(word.charAt(i)) != -1 && lettersCountMap.get(word.charAt(i)) >= 0) {
 				// if chat is in the word but not at the right location.
 				grid[currentRow][i].setPresent();
 			} else {
@@ -169,9 +166,9 @@ public class WordleGamePane extends TilePane {
 				lettersUsed.add(word.charAt(i));
 			}
 		}
-		if (!game.getWordList().contains(word.toLowerCase())) {
-			return false;
-		}
+//		if (!game.getWordList().contains(word.toLowerCase())) {
+//			return false;
+//		}
 		return true;
 	}
 
@@ -181,6 +178,10 @@ public class WordleGamePane extends TilePane {
 	
 	public int getColumn() {
 		return currentCol;
+	}
+	
+	public int getRow() {
+		return currentRow;
 	}
 	
 	public Square[][] getGrid() {

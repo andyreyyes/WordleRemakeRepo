@@ -59,6 +59,8 @@ public class KeyBoardPane extends GridPane {
 
 	//WordGamePane to use to update keys and keep focus in the right pane
 	private WordleGamePane game;
+	
+	private Square[][] squareList;
 
 	public KeyBoardPane() {
 		initialize();
@@ -132,6 +134,8 @@ public class KeyBoardPane extends GridPane {
 		this.add(keyColumn, 0, 0);
 
 		createList();
+		
+		
 		registerHandlers();
 	}
 
@@ -218,9 +222,6 @@ public class KeyBoardPane extends GridPane {
 
 		enterKey.setOnAction((event) -> {
 			game.requestFocus();
-			if (game.getColumn() == 5) {
-				updateKeys();
-			}
 			game.keyPress(" ", "ENTER");
 
 		});
@@ -263,18 +264,42 @@ public class KeyBoardPane extends GridPane {
 		//Sets game to a WordleGamePane object
 		game = newGame;
 	}
+	
+	public void setGrid(Square[][] grid) {
+		squareList = grid;
+	}
 
 	public void updateKeys() {
 		//Updates the keyboard to gray keys if the letters have been used
 		//Goes through each key and each letter used in a guess and
 		//Updates the right key accordingly
-		for (Button keys : keyList) {
-			for (Character letter : game.getLettersUsed()) {
-				if ((keys.getText()).equals(letter.toString())) {
-					keys.setStyle(
-							"-fx-focus-color: transparent; -fx-faint-focus-color: transparent; -fx-background-color: gray;");
-					keys.setOpacity(20);
+		String letter;
+		for (int i = 0; i < 5; i++) {
+			switch (squareList[game.getRow()][i].getStatus()) {
+			case "Wrong": // grey if wrong
+				letter = squareList[game.getRow()][i].getText();
+				for (Button keys: keyList) {
+					if ((keys.getText().equals(letter)) && !keys.getStyle().contains("-fx-background-color: green") && !keys.getStyle().contains("-fx-background-color: gray")) {
+						keys.setStyle("-fx-focus-color: transparent; -fx-faint-focus-color: transparent; -fx-background-color: gray;");
+					}
 				}
+				break;
+			case "Present": // gold if present in word
+				letter = squareList[game.getRow()][i].getText();
+				for (Button keys: keyList) {
+					if ((keys.getText().equals(letter))) {
+						keys.setStyle("-fx-focus-color: transparent; -fx-faint-focus-color: transparent; -fx-background-color: gold;");
+					}
+				}
+				break;
+			case "Correct": // green if in correct spot
+				letter = squareList[game.getRow()][i].getText();
+				for (Button keys: keyList) {
+					if ((keys.getText().equals(letter))) {
+						keys.setStyle("-fx-focus-color: transparent; -fx-faint-focus-color: transparent; -fx-background-color: green;");
+					}
+				}
+				break;
 			}
 		}
 	}
