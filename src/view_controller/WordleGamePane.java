@@ -3,12 +3,18 @@ package view_controller;
 import java.util.ArrayList;
 import java.util.HashMap;
 
+import javafx.animation.Interpolator;
+import javafx.animation.KeyFrame;
+import javafx.animation.KeyValue;
+import javafx.animation.Timeline;
+import javafx.animation.TranslateTransition;
 import javafx.geometry.Orientation;
 import javafx.scene.control.Button;
 import javafx.scene.layout.TilePane;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
+import javafx.util.Duration;
 import model.WordleGame;
 
 public class WordleGamePane extends TilePane {
@@ -40,6 +46,10 @@ public class WordleGamePane extends TilePane {
 	}
 
 	// changes the color of the spaces in the row (and disables buttons on win)
+<<<<<<< HEAD
+=======
+
+>>>>>>> 3a17cd6f18867bbc7025a3fa4aa357baf758fd27
 	public void updateRowColors() {
 		for (int i = 0; i < 5; i++) {
 			switch (grid[currentRow][i].getStatus()) {
@@ -65,6 +75,8 @@ public class WordleGamePane extends TilePane {
 		for (int i = 0; i < 6; i++) {
 			for (int j = 0; j < 5; j++) {
 				Square square = new Square();
+				square.setMaxSize(60, 60);
+				square.setMinSize(60, 60);
 				square.setPrefSize(60, 60);
 				grid[i][j] = square;
 				this.getChildren().add(square);
@@ -77,7 +89,9 @@ public class WordleGamePane extends TilePane {
 
 	// on a key press
 	public void keyPress(String letter, String keyCode) {
-		if (keyCode.equals("ENTER") && currentCol == 5) { // next line and changes current one
+		if (win) { // cant type after win
+			return;
+		} else if (keyCode.equals("ENTER") && currentCol == 5) { // next line and changes current one
 			String word = "";
 			for (int i = 0; i < 5; i++) {
 				word += grid[currentRow][i].getText();
@@ -97,9 +111,25 @@ public class WordleGamePane extends TilePane {
 			Button currentButton = grid[currentRow][currentCol];
 			currentButton.setText(letter.toUpperCase());
 			currentCol++;
+			animateButtonClick(currentButton);
 		} else {
 			return;
 		}
+	}
+	
+	// animates pop effect on buttons when pressed
+	private void animateButtonClick(Button currentButton) {
+		Timeline timeline = new Timeline(
+				new KeyFrame(Duration.millis(100),
+						new KeyValue(currentButton.scaleXProperty(), 1.2, Interpolator.EASE_BOTH)),
+				new KeyFrame(Duration.millis(100),
+						new KeyValue(currentButton.scaleYProperty(), 1.2, Interpolator.EASE_BOTH)),
+				new KeyFrame(Duration.millis(105),
+						new KeyValue(currentButton.scaleXProperty(), 1, Interpolator.EASE_OUT)),
+				new KeyFrame(Duration.millis(105),
+						new KeyValue(currentButton.scaleYProperty(), 1, Interpolator.EASE_OUT)));
+
+		timeline.play();
 	}
 
 	// updates buttons and current row and column
@@ -175,15 +205,19 @@ public class WordleGamePane extends TilePane {
 	public ArrayList<Character> getLettersUsed() {
 		return lettersUsed;
 	}
-	
+
 	public int getColumn() {
 		return currentCol;
 	}
+<<<<<<< HEAD
 	
 	public int getRow() {
 		return currentRow;
 	}
 	
+=======
+
+>>>>>>> 3a17cd6f18867bbc7025a3fa4aa357baf758fd27
 	public Square[][] getGrid() {
 		return grid;
 	}
@@ -199,8 +233,8 @@ public class WordleGamePane extends TilePane {
 		}
 		return ret;
 	}
-	
-	//Sets the keyboard to a KeyBoardPane object
+
+	// Sets the keyboard to a KeyBoardPane object
 	public void setKeyboard(KeyBoardPane pane) {
 		keyboard = pane;
 	}
