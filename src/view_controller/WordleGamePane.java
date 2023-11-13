@@ -40,12 +40,8 @@ public class WordleGamePane extends TilePane {
 	}
 
 	// changes the color of the spaces in the row (and disables buttons on win)
-<<<<<<< HEAD
-	private void updateRowColors() {
 
-=======
 	public void updateRowColors() {
->>>>>>> refs/remotes/origin/main
 		for (int i = 0; i < 5; i++) {
 			switch (grid[currentRow][i].getStatus()) {
 			case "Wrong": // grey if wrong
@@ -178,11 +174,11 @@ public class WordleGamePane extends TilePane {
 	public ArrayList<Character> getLettersUsed() {
 		return lettersUsed;
 	}
-	
+
 	public int getColumn() {
 		return currentCol;
 	}
-	
+
 	public Square[][] getGrid() {
 		return grid;
 	}
@@ -198,8 +194,8 @@ public class WordleGamePane extends TilePane {
 		}
 		return ret;
 	}
-	
-	//Sets the keyboard to a KeyBoardPane object
+
+	// Sets the keyboard to a KeyBoardPane object
 	public void setKeyboard(KeyBoardPane pane) {
 		keyboard = pane;
 	}
