@@ -95,7 +95,6 @@ public class WordleGamePane extends TilePane {
 			}
 			if (validWord(word)) {
 				updateGrid(word);
-				keyboard.updateKeys();
 			}
 		} else if (currentCol == 5 && letter.length() > 0) { // if out of range do nothing
 			return;
