@@ -19,7 +19,7 @@ import model.WordleGame;
 
 public class WordleGamePane extends TilePane {
 
-	WordleGame game = new WordleGame("gusto"); // Wordle game
+	WordleGame game = new WordleGame(); // Wordle game
 	KeyBoardPane keyboard;
 	Square[][] grid = new Square[6][5]; // grid of Buttons
 	ArrayList<Character> lettersUsed = new ArrayList<Character>(); // List of characters that have been used
@@ -46,10 +46,6 @@ public class WordleGamePane extends TilePane {
 	}
 
 	// changes the color of the spaces in the row (and disables buttons on win)
-<<<<<<< HEAD
-=======
-
->>>>>>> 3a17cd6f18867bbc7025a3fa4aa357baf758fd27
 	public void updateRowColors() {
 		for (int i = 0; i < 5; i++) {
 			switch (grid[currentRow][i].getStatus()) {
@@ -196,9 +192,9 @@ public class WordleGamePane extends TilePane {
 				lettersUsed.add(word.charAt(i));
 			}
 		}
-//		if (!game.getWordList().contains(word.toLowerCase())) {
-//			return false;
-//		}
+		if (!game.getWordList().contains(word.toLowerCase())) {
+			return false;
+		}
 		return true;
 	}
 
@@ -209,15 +205,11 @@ public class WordleGamePane extends TilePane {
 	public int getColumn() {
 		return currentCol;
 	}
-<<<<<<< HEAD
 	
 	public int getRow() {
 		return currentRow;
 	}
 	
-=======
-
->>>>>>> 3a17cd6f18867bbc7025a3fa4aa357baf758fd27
 	public Square[][] getGrid() {
 		return grid;
 	}
