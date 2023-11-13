@@ -1,5 +1,11 @@
 package view_controller;
 
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
+
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.control.Button;
@@ -8,6 +14,7 @@ import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
+import model.AccountCollection;
 import model.UserAccount;
 
 public class LoginAndCreatePane extends VBox {
@@ -22,27 +29,54 @@ public class LoginAndCreatePane extends VBox {
 
 	private Label usernameLabel = new Label("Username: ");
 	private Label passwordLabel = new Label("Password: ");
+	
+    private AccountCollection accounts;
+    private UserAccount curAccount;
 
 	private Label informationLabel = new Label("Create a new Account or Login");
 
 	public LoginAndCreatePane() {
+		setupAccounts();
 		initilizePanel();
 		registerListeners();
+	}
+
+	private void setupAccounts() {
+		
+		try {
+			// get the account Collection if it exist
+			FileInputStream rawBytes = new FileInputStream("accounts.ser");
+			ObjectInputStream inFile = new ObjectInputStream(rawBytes);
+			AccountCollection objects = (AccountCollection) inFile.readObject();
+			inFile.close();
+			accounts = (AccountCollection) objects;
+			System.out.println("Read from serialized data file");	
+		} catch (IOException | ClassNotFoundException e) {
+			// making a new file
+			try {
+				accounts = new AccountCollection();
+				FileOutputStream bytesToDisk = new FileOutputStream("accounts.ser");
+				ObjectOutputStream outFile;
+				outFile = new ObjectOutputStream(bytesToDisk);
+				outFile.writeObject(accounts);
+				outFile.close();
+			} catch (IOException e1) {
+				e1.printStackTrace();
+			}
+
+		}
+			
 	}
 
 	private void registerListeners() {
 		loginButton.setOnAction((event) -> {
 			if (!loggedIn) {
-				if (usernameInput.getText().length() > 0 && passwordInput.getText().length() > 0) {
-					
-					String username = usernameInput.getText();
-					String password = passwordInput.getText();
-					
-					usernameInput.setText("");
-					passwordInput.setText("");
-					UserAccount tempAccount = new UserAccount(username, password);
+				if (usernameInput.getText().length() > 0 && passwordInput.getText().length() > 0 && accounts.login(usernameInput.getText(), passwordInput.getText())) {
 					informationLabel.setText("Sucessfully logged in");
 					loggedIn = true;
+					curAccount = accounts.getAccount(usernameInput.getText(), passwordInput.getText());
+					usernameInput.setText("");
+					passwordInput.setText("");
 
 				} else {
 					informationLabel.setText("Enter a valid username and Password");
@@ -55,6 +89,7 @@ public class LoginAndCreatePane extends VBox {
 			if (loggedIn) {
 				usernameInput.setText("");
 				passwordInput.setText("");
+				curAccount = null;
 				informationLabel.setText("Sucessfully logged out");
 				loggedIn = false;
 
@@ -65,12 +100,12 @@ public class LoginAndCreatePane extends VBox {
 		});
 		createAccountButton.setOnAction((event) -> {
 			if (!loggedIn) {
-				if (usernameInput.getText().length() > 0 && passwordInput.getText().length() > 0) {
+				if (usernameInput.getText().length() > 0 && passwordInput.getText().length() > 0 && accounts.validName(usernameInput.getText())) {
 					String username = usernameInput.getText();
 					String password = passwordInput.getText();
 					usernameInput.setText("");
 					passwordInput.setText("");
-					UserAccount newAccount = new UserAccount(username, password);
+					accounts.makeAccount(username, password);
 					informationLabel.setText("Sucessfully created an Account");
 					
 				} else {

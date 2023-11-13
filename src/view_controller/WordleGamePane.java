@@ -3,12 +3,18 @@ package view_controller;
 import java.util.ArrayList;
 import java.util.HashMap;
 
+import javafx.animation.Interpolator;
+import javafx.animation.KeyFrame;
+import javafx.animation.KeyValue;
+import javafx.animation.Timeline;
+import javafx.animation.TranslateTransition;
 import javafx.geometry.Orientation;
 import javafx.scene.control.Button;
 import javafx.scene.layout.TilePane;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
+import javafx.util.Duration;
 import model.WordleGame;
 
 public class WordleGamePane extends TilePane {
@@ -40,7 +46,10 @@ public class WordleGamePane extends TilePane {
 	}
 
 	// changes the color of the spaces in the row (and disables buttons on win)
+<<<<<<< HEAD
 
+=======
+>>>>>>> c42c28a23ac4d4c7d39e68e4f294dd74835318df
 	public void updateRowColors() {
 		for (int i = 0; i < 5; i++) {
 			switch (grid[currentRow][i].getStatus()) {
@@ -66,6 +75,8 @@ public class WordleGamePane extends TilePane {
 		for (int i = 0; i < 6; i++) {
 			for (int j = 0; j < 5; j++) {
 				Square square = new Square();
+				square.setMaxSize(60, 60);
+				square.setMinSize(60, 60);
 				square.setPrefSize(60, 60);
 				grid[i][j] = square;
 				this.getChildren().add(square);
@@ -78,14 +89,15 @@ public class WordleGamePane extends TilePane {
 
 	// on a key press
 	public void keyPress(String letter, String keyCode) {
-		if (keyCode.equals("ENTER") && currentCol == 5) { // next line and changes current one
+		if (win) { // cant type after win
+			return;
+		} else if (keyCode.equals("ENTER") && currentCol == 5) { // next line and changes current one
 			String word = "";
 			for (int i = 0; i < 5; i++) {
 				word += grid[currentRow][i].getText();
 			}
 			if (validWord(word)) {
 				updateGrid(word);
-				keyboard.updateKeys();
 			}
 		} else if (currentCol == 5 && letter.length() > 0) { // if out of range do nothing
 			return;
@@ -99,15 +111,34 @@ public class WordleGamePane extends TilePane {
 			Button currentButton = grid[currentRow][currentCol];
 			currentButton.setText(letter.toUpperCase());
 			currentCol++;
+			animateButtonClick(currentButton);
 		} else {
 			return;
 		}
+	}
+	
+	// animates pop effect on buttons when pressed
+	private void animateButtonClick(Button currentButton) {
+		Timeline timeline = new Timeline(
+				new KeyFrame(Duration.millis(100),
+						new KeyValue(currentButton.scaleXProperty(), 1.2, Interpolator.EASE_BOTH)),
+				new KeyFrame(Duration.millis(100),
+						new KeyValue(currentButton.scaleYProperty(), 1.2, Interpolator.EASE_BOTH)),
+				new KeyFrame(Duration.millis(105),
+						new KeyValue(currentButton.scaleXProperty(), 1, Interpolator.EASE_OUT)),
+				new KeyFrame(Duration.millis(105),
+						new KeyValue(currentButton.scaleYProperty(), 1, Interpolator.EASE_OUT)));
+
+		timeline.play();
 	}
 
 	// updates buttons and current row and column
 	private void updateGrid(String word) {
 		setStatusOfButtons(word);
 		updateRowColors();
+		keyboard.setGrid(grid);
+		keyboard.setGame(this);
+		keyboard.updateKeys();
 		currentRow++;
 		currentCol = 0;
 	}
@@ -119,14 +150,14 @@ public class WordleGamePane extends TilePane {
 			win = true;
 		}
 		HashMap<Character, Integer> lettersCountMap = makeHashMap(game.getTargetWord());
-
+		
 		for (int i = 0; i < 5; i++) {
 			if (word.charAt(i) == game.getTargetWord().charAt(i)) {
 				lettersCountMap.put(game.getTargetWord().charAt(i),
 						lettersCountMap.get(game.getTargetWord().charAt(i)) - 1);
 			} else if (game.getTargetWord().indexOf(word.charAt(i)) != -1) {
-				lettersCountMap.put(game.getTargetWord().charAt(i),
-						lettersCountMap.get(game.getTargetWord().charAt(i)) - 1);
+				lettersCountMap.put(word.charAt(i),
+						lettersCountMap.get(word.charAt(i)) - 1);
 			}
 		}
 		for (int i = 0; i < 5; i++) {
@@ -136,7 +167,7 @@ public class WordleGamePane extends TilePane {
 			} else if (!game.getTargetWord().contains(word.substring(i, i + 1))) { // if char is completely not in the
 																					// word
 				grid[currentRow][i].setWrong();
-			} else if (game.getTargetWord().indexOf(word.charAt(i)) != -1 && lettersCountMap.get(word.charAt(i)) > 0) {
+			} else if (game.getTargetWord().indexOf(word.charAt(i)) != -1 && lettersCountMap.get(word.charAt(i)) >= 0) {
 				// if chat is in the word but not at the right location.
 				grid[currentRow][i].setPresent();
 			} else {
@@ -178,7 +209,14 @@ public class WordleGamePane extends TilePane {
 	public int getColumn() {
 		return currentCol;
 	}
+<<<<<<< HEAD
 
+=======
+	
+	public int getRow() {
+		return currentRow;
+	}
+>>>>>>> c42c28a23ac4d4c7d39e68e4f294dd74835318df
 	public Square[][] getGrid() {
 		return grid;
 	}

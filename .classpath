@@ -11,6 +11,14 @@
 			<attribute name="module" value="true"/>
 		</attributes>
 	</classpathentry>
+<<<<<<< HEAD
 	<classpathentry kind="con" path="org.eclipse.jdt.junit.JUNIT_CONTAINER/5"/>
+=======
+	<classpathentry kind="con" path="org.eclipse.jdt.USER_LIBRARY/JavaFX">
+		<attributes>
+			<attribute name="module" value="true"/>
+		</attributes>
+	</classpathentry>
+>>>>>>> c42c28a23ac4d4c7d39e68e4f294dd74835318df
 	<classpathentry kind="output" path="bin"/>
 </classpath>
