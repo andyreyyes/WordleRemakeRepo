@@ -78,14 +78,13 @@ public class WordleGamePane extends TilePane {
 				this.getChildren().add(square);
 				square.setStyle(
 						"-fx-focus-color: transparent; -fx-faint-focus-color: transparent; -fx-background-color: white;");
-				square.setFont(Font.font("Helvetica Neue", FontWeight.BOLD, 25));
+				square.setFont(Font.font("Helvetica Neue", FontWeight.BOLD, 26));
 			}
 		}
 	}
 
 	// on a key press
 	public void keyPress(String letter, String keyCode) {
-		System.out.println(keyCode);
 		if (win) { // cant type after win
 			return;
 		} else if (keyCode.equals("ENTER") && currentCol == 5) { // next line and changes current one
