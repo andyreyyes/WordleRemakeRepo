@@ -41,4 +41,11 @@ public class AccountCollection implements Serializable {
 	public boolean validName(String name) {
 		return !(accounts.keySet().contains(name));
 	}
+	public void printAllNames() {
+	    System.out.println("All Usernames in the HashMap:");
+	    for (String username : accounts.keySet()) {
+	        System.out.println(username);
+	    }
+	}
+
 }

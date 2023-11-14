@@ -6,6 +6,7 @@ import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 
+import javafx.application.Platform;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.control.Button;
@@ -14,6 +15,7 @@ import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
+import javafx.stage.Stage;
 import model.AccountCollection;
 import model.UserAccount;
 
@@ -50,7 +52,8 @@ public class LoginAndCreatePane extends VBox {
 			AccountCollection objects = (AccountCollection) inFile.readObject();
 			inFile.close();
 			accounts = (AccountCollection) objects;
-			System.out.println("Read from serialized data file");	
+			System.out.println("Read from serialized data file");
+			accounts.printAllNames();
 		} catch (IOException | ClassNotFoundException e) {
 			// making a new file
 			try {
@@ -151,6 +154,23 @@ public class LoginAndCreatePane extends VBox {
 	
 	public boolean getLoggedInStatus() {
 		return loggedIn;
+	}
+	public void setupCloseAction(Stage stage) {
+		stage.setOnCloseRequest(event -> {
+			try {
+			FileOutputStream bytesToDisk = new FileOutputStream("accounts.ser");
+			ObjectOutputStream outFile = new ObjectOutputStream(bytesToDisk);
+			outFile.writeObject(accounts);
+			System.out.println("changed accounts");
+			outFile.close();
+			}
+			catch (IOException ioe) {
+				System.out.println(ioe);
+			}
+			// save to ser file
+			Platform.exit();
+			System.exit(0);
+		});
 	}
 
 }
