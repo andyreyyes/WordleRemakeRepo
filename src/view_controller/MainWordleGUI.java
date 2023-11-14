@@ -42,6 +42,7 @@ public class MainWordleGUI extends Application {
 		registerListeners();
 		Scene scene = new Scene(pane, 800, 800);
 		stage.setScene(scene);
+		loginView.setupCloseAction(stage);
 		stage.show();
 
 	}
