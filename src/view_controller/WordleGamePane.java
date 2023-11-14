@@ -85,6 +85,7 @@ public class WordleGamePane extends TilePane {
 
 	// on a key press
 	public void keyPress(String letter, String keyCode) {
+		System.out.println(keyCode);
 		if (win) { // cant type after win
 			return;
 		} else if (keyCode.equals("ENTER") && currentCol == 5) { // next line and changes current one
