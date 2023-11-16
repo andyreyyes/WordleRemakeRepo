@@ -1,4 +1,4 @@
-package view_controller;
+			package view_controller;
 
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
@@ -154,6 +154,9 @@ public class LoginAndCreatePane extends VBox {
 	
 	public boolean getLoggedInStatus() {
 		return loggedIn;
+	}
+	public UserAccount getUser() {
+		return curAccount;
 	}
 	public void setupCloseAction(Stage stage) {
 		stage.setOnCloseRequest(event -> {
