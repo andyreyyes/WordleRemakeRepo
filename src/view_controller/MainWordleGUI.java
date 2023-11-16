@@ -21,11 +21,14 @@ public class MainWordleGUI extends Application {
 	private MenuBar menuBar;
 	private Menu home;
 	private MenuItem stats;
-	private MenuItem settings;
+	private Menu settings;
 	private Menu more;
 
 	private MenuItem login;
 	private MenuItem game;
+	private MenuItem darkMode;
+	private MenuItem lightMode;
+	private MenuItem newGame;
 	
 	private WordleGamePane gamePane;
 	
@@ -64,7 +67,15 @@ public class MainWordleGUI extends Application {
 		
 		more = new Menu("More");
 		
-		settings = new MenuItem("Settings");
+		settings = new Menu("Settings");
+		
+		darkMode = new MenuItem("Dark Mode");
+		lightMode = new MenuItem("Light Mode");
+		
+		newGame = new MenuItem("New Game");
+		
+		settings.getItems().addAll(darkMode, newGame);
+		
 		stats = new MenuItem("Stats");
 		more.getItems().addAll(settings,stats);
 		
