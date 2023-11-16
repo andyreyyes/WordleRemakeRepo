@@ -112,7 +112,7 @@ public class WordleGamePane extends TilePane {
 			return;
 		}
 	}
-	
+
 	// animates pop effect on buttons when pressed
 	private void animateButtonClick(Button currentButton) {
 		Timeline timeline = new Timeline(
@@ -124,6 +124,61 @@ public class WordleGamePane extends TilePane {
 						new KeyValue(currentButton.scaleXProperty(), 1, Interpolator.EASE_OUT)),
 				new KeyFrame(Duration.millis(105),
 						new KeyValue(currentButton.scaleYProperty(), 1, Interpolator.EASE_OUT)));
+
+		timeline.play();
+	}
+	
+	// every button will bounce up, then down, then back to its normal position on a win
+	private void animateWin() {
+		Button button1 = grid[currentRow][0];
+		Button button2 = grid[currentRow][1];
+		Button button3 = grid[currentRow][2];
+		Button button4 = grid[currentRow][3];
+		Button button5 = grid[currentRow][4];
+		
+		int bounceUp = -20;
+		int bounceDown = 10;
+		
+		int delay = 0;
+
+		Timeline timeline = new Timeline(
+				
+				new KeyFrame(Duration.millis(delay += 50), 
+						new KeyValue(button1.translateYProperty(), bounceUp, Interpolator.EASE_BOTH)),
+				new KeyFrame(Duration.millis(delay += 100),
+						new KeyValue(button1.translateYProperty(), bounceDown, Interpolator.EASE_BOTH)),
+				new KeyFrame(Duration.millis(delay += 100),
+						new KeyValue(button1.translateYProperty(), 0, Interpolator.EASE_BOTH)),
+				
+				new KeyFrame(Duration.millis(delay += 0), 
+						new KeyValue(button2.translateYProperty(), bounceUp, Interpolator.EASE_BOTH)),
+				new KeyFrame(Duration.millis(delay += 100),
+						new KeyValue(button2.translateYProperty(), bounceDown, Interpolator.EASE_BOTH)),
+				new KeyFrame(Duration.millis(delay += 100),
+						new KeyValue(button2.translateYProperty(), 0, Interpolator.EASE_BOTH)),
+				
+				new KeyFrame(Duration.millis(delay += 0), 
+						new KeyValue(button3.translateYProperty(), bounceUp, Interpolator.EASE_BOTH)),
+				new KeyFrame(Duration.millis(delay += 100),
+						new KeyValue(button3.translateYProperty(), bounceDown, Interpolator.EASE_BOTH)),
+				new KeyFrame(Duration.millis(delay += 100),
+						new KeyValue(button3.translateYProperty(), 0, Interpolator.EASE_BOTH)),
+				
+				new KeyFrame(Duration.millis(delay += 0), 
+						new KeyValue(button4.translateYProperty(), bounceUp, Interpolator.EASE_BOTH)),
+				new KeyFrame(Duration.millis(delay += 100),
+						new KeyValue(button4.translateYProperty(), bounceDown, Interpolator.EASE_BOTH)),
+				new KeyFrame(Duration.millis(delay += 100),
+						new KeyValue(button4.translateYProperty(), 0, Interpolator.EASE_BOTH)),
+				
+				new KeyFrame(Duration.millis(delay += 0), 
+						new KeyValue(button5.translateYProperty(), bounceUp, Interpolator.EASE_BOTH)),
+				new KeyFrame(Duration.millis(delay += 100),
+						new KeyValue(button5.translateYProperty(), bounceDown, Interpolator.EASE_BOTH)),
+				new KeyFrame(Duration.millis(delay += 100),
+						new KeyValue(button5.translateYProperty(), 0, Interpolator.EASE_BOTH))
+				
+				);
 
 		timeline.play();
 	}
@@ -144,16 +199,16 @@ public class WordleGamePane extends TilePane {
 		word = word.toLowerCase();
 		if (game.processGuess(word)) {
 			win = true;
+			animateWin();
 		}
 		HashMap<Character, Integer> lettersCountMap = makeHashMap(game.getTargetWord());
-		
+
 		for (int i = 0; i < 5; i++) {
 			if (word.charAt(i) == game.getTargetWord().charAt(i)) {
 				lettersCountMap.put(game.getTargetWord().charAt(i),
 						lettersCountMap.get(game.getTargetWord().charAt(i)) - 1);
 			} else if (game.getTargetWord().indexOf(word.charAt(i)) != -1) {
-				lettersCountMap.put(word.charAt(i),
-						lettersCountMap.get(word.charAt(i)) - 1);
+				lettersCountMap.put(word.charAt(i), lettersCountMap.get(word.charAt(i)) - 1);
 			}
 		}
 		for (int i = 0; i < 5; i++) {
@@ -205,10 +260,11 @@ public class WordleGamePane extends TilePane {
 	public int getColumn() {
 		return currentCol;
 	}
-	
+
 	public int getRow() {
 		return currentRow;
 	}
+
 	public Square[][] getGrid() {
 		return grid;
 	}
