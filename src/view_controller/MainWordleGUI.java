@@ -10,6 +10,7 @@ import javafx.scene.control.MenuItem;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
+import model.UserAccount;
 
 public class MainWordleGUI extends Application {
 
@@ -19,8 +20,9 @@ public class MainWordleGUI extends Application {
 
 	private MenuBar menuBar;
 	private Menu home;
-	private Menu stats;
-	private Menu settings;
+	private MenuItem stats;
+	private MenuItem settings;
+	private Menu more;
 
 	private MenuItem login;
 	private MenuItem game;
@@ -30,6 +32,8 @@ public class MainWordleGUI extends Application {
 	private KeyBoardPane keyboardPane;
 	
 	private VBox mainGameLayout = new VBox();
+
+	private StatsPane statsView;
 
 	public static void main(String args[]) {
 		launch(args);
@@ -49,6 +53,7 @@ public class MainWordleGUI extends Application {
 
 	private void layoutGUI() {
 		loginView = new LoginAndCreatePane();
+		statsView = new StatsPane();
 		pane = new BorderPane();
 		menuBar = new MenuBar();
 		
@@ -57,10 +62,13 @@ public class MainWordleGUI extends Application {
 		login = new MenuItem("Login");
 		home.getItems().addAll(login, game);
 		
-		stats = new Menu("Stats");
-		settings = new Menu("Settings");
+		more = new Menu("More");
 		
-		menuBar.getMenus().addAll(home, stats, settings);
+		settings = new MenuItem("Settings");
+		stats = new MenuItem("Stats");
+		more.getItems().addAll(settings,stats);
+		
+		menuBar.getMenus().addAll(home, more);
 		pane.setTop(menuBar);
 		
 		
@@ -83,6 +91,11 @@ public class MainWordleGUI extends Application {
 	private void registerListeners() {
 		login.setOnAction((arg0) -> {
 			pane.setCenter(loginView);
+		});
+		stats.setOnAction((arg0) ->{
+			UserAccount user = loginView.getUser();
+			pane.setCenter(statsView);
+			statsView.updateStats(user);
 		});
 		game.setOnAction((arg0) -> {
 			keyboardPane.setGame(gamePane);
