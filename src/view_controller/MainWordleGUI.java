@@ -4,11 +4,13 @@ import javafx.application.Application;
 import javafx.geometry.Pos;
 import javafx.scene.Node;
 import javafx.scene.Scene;
+import javafx.scene.control.Label;
 import javafx.scene.control.Menu;
 import javafx.scene.control.MenuBar;
 import javafx.scene.control.MenuItem;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.VBox;
+import javafx.scene.text.Font;
 import javafx.stage.Stage;
 import model.UserAccount;
 
@@ -87,6 +89,10 @@ public class MainWordleGUI extends Application {
 		
 		keyboardPane = new KeyBoardPane();
 		keyboardPane.setGame(gamePane);
+		
+//		Label title = new Label("Briandle");
+//		title.setFont(new Font("Times New Roman", 60));
+//		mainGameLayout.getChildren().add(title);
 		
 		mainGameLayout.getChildren().addAll(gamePane, keyboardPane);
 		
