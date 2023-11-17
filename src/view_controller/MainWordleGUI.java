@@ -90,9 +90,14 @@ public class MainWordleGUI extends Application {
 		keyboardPane = new KeyBoardPane();
 		keyboardPane.setGame(gamePane);
 		
-//		Label title = new Label("Briandle");
-//		title.setFont(new Font("Times New Roman", 60));
-//		mainGameLayout.getChildren().add(title);
+		VBox titleBox = new VBox();
+		
+		Label title = new Label("		  Briandle");
+		title.setFont(new Font("Times New Roman", 60));
+		
+		titleBox.getChildren().add(title);
+		
+		mainGameLayout.getChildren().add(titleBox);
 		
 		mainGameLayout.getChildren().addAll(gamePane, keyboardPane);
 		
