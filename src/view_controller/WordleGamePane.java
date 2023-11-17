@@ -47,21 +47,61 @@ public class WordleGamePane extends TilePane {
 
 	// changes the color of the spaces in the row (and disables buttons on win)
 	public void updateRowColors() {
+		int delay = 400;
+		int startDelay = 400;
 		for (int i = 0; i < 5; i++) {
+			Button currentSquare = grid[currentRow][i];
 			switch (grid[currentRow][i].getStatus()) {
 			case "Wrong": // grey if wrong
-				grid[currentRow][i].setStyle("-fx-background-color: grey;");
+				Timeline timelineWrong = new Timeline(
+						new KeyFrame(Duration.millis(startDelay),
+								new KeyValue(currentSquare.scaleYProperty(), 0, Interpolator.EASE_BOTH)),
+
+						new KeyFrame(Duration.millis(delay),
+								new KeyValue(currentSquare.styleProperty(),
+										"-fx-background-color: grey; -fx-text-fill: white", Interpolator.EASE_BOTH)),
+
+						new KeyFrame(Duration.millis(delay += 400),
+								new KeyValue(currentSquare.scaleYProperty(), 1, Interpolator.EASE_BOTH))
+
+				);
+				timelineWrong.play();
 				break;
 			case "Present": // gold if present in word
-				grid[currentRow][i].setStyle("-fx-background-color: gold;");
+				Timeline timelinePresent = new Timeline(
+						new KeyFrame(Duration.millis(startDelay),
+								new KeyValue(currentSquare.scaleYProperty(), 0, Interpolator.EASE_BOTH)),
+
+						new KeyFrame(Duration.millis(delay),
+								new KeyValue(currentSquare.styleProperty(),
+										"-fx-background-color: gold; -fx-text-fill: white", Interpolator.EASE_BOTH)),
+
+						new KeyFrame(Duration.millis(delay += 400),
+								new KeyValue(currentSquare.scaleYProperty(), 1, Interpolator.EASE_BOTH))
+
+				);
+				timelinePresent.play();
 				break;
 			case "Correct": // green if in correct spot
-				grid[currentRow][i].setStyle("-fx-background-color: green;");
+				Timeline timelineCorrect = new Timeline(
+						new KeyFrame(Duration.millis(startDelay),
+								new KeyValue(currentSquare.scaleYProperty(), 0, Interpolator.EASE_BOTH)),
+
+						new KeyFrame(Duration.millis(delay),
+								new KeyValue(currentSquare.styleProperty(),
+										"-fx-background-color: green; -fx-text-fill: white", Interpolator.EASE_BOTH)),
+
+						new KeyFrame(Duration.millis(delay += 400),
+								new KeyValue(currentSquare.scaleYProperty(), 1, Interpolator.EASE_BOTH))
+
+				);
+				timelineCorrect.play();
 				break;
 			}
-			grid[currentRow][i].setTextFill(Color.WHITE);
+			startDelay += 400;
 		}
 		if (win) { // disable buttons on win
+//			animateWin();
 			this.setOnKeyPressed(null);
 		}
 	}
@@ -127,58 +167,59 @@ public class WordleGamePane extends TilePane {
 
 		timeline.play();
 	}
-	
-	// every button will bounce up, then down, then back to its normal position on a win
+
+	// every button will bounce up, then down, then back to its normal position on a
+	// win
 	private void animateWin() {
 		Button button1 = grid[currentRow][0];
 		Button button2 = grid[currentRow][1];
 		Button button3 = grid[currentRow][2];
 		Button button4 = grid[currentRow][3];
 		Button button5 = grid[currentRow][4];
-		
+
 		int bounceUp = -20;
 		int bounceDown = 10;
-		
+
 		int delay = 0;
 
 		Timeline timeline = new Timeline(
-				
-				new KeyFrame(Duration.millis(delay += 50), 
+
+				new KeyFrame(Duration.millis(delay += 50),
 						new KeyValue(button1.translateYProperty(), bounceUp, Interpolator.EASE_BOTH)),
 				new KeyFrame(Duration.millis(delay += 100),
 						new KeyValue(button1.translateYProperty(), bounceDown, Interpolator.EASE_BOTH)),
 				new KeyFrame(Duration.millis(delay += 100),
 						new KeyValue(button1.translateYProperty(), 0, Interpolator.EASE_BOTH)),
-				
-				new KeyFrame(Duration.millis(delay += 0), 
+
+				new KeyFrame(Duration.millis(delay += 50),
 						new KeyValue(button2.translateYProperty(), bounceUp, Interpolator.EASE_BOTH)),
 				new KeyFrame(Duration.millis(delay += 100),
 						new KeyValue(button2.translateYProperty(), bounceDown, Interpolator.EASE_BOTH)),
 				new KeyFrame(Duration.millis(delay += 100),
 						new KeyValue(button2.translateYProperty(), 0, Interpolator.EASE_BOTH)),
-				
-				new KeyFrame(Duration.millis(delay += 0), 
+
+				new KeyFrame(Duration.millis(delay += 50),
 						new KeyValue(button3.translateYProperty(), bounceUp, Interpolator.EASE_BOTH)),
 				new KeyFrame(Duration.millis(delay += 100),
 						new KeyValue(button3.translateYProperty(), bounceDown, Interpolator.EASE_BOTH)),
 				new KeyFrame(Duration.millis(delay += 100),
 						new KeyValue(button3.translateYProperty(), 0, Interpolator.EASE_BOTH)),
-				
-				new KeyFrame(Duration.millis(delay += 0), 
+
+				new KeyFrame(Duration.millis(delay += 50),
 						new KeyValue(button4.translateYProperty(), bounceUp, Interpolator.EASE_BOTH)),
 				new KeyFrame(Duration.millis(delay += 100),
 						new KeyValue(button4.translateYProperty(), bounceDown, Interpolator.EASE_BOTH)),
 				new KeyFrame(Duration.millis(delay += 100),
 						new KeyValue(button4.translateYProperty(), 0, Interpolator.EASE_BOTH)),
-				
-				new KeyFrame(Duration.millis(delay += 0), 
+
+				new KeyFrame(Duration.millis(delay += 50),
 						new KeyValue(button5.translateYProperty(), bounceUp, Interpolator.EASE_BOTH)),
 				new KeyFrame(Duration.millis(delay += 100),
 						new KeyValue(button5.translateYProperty(), bounceDown, Interpolator.EASE_BOTH)),
 				new KeyFrame(Duration.millis(delay += 100),
 						new KeyValue(button5.translateYProperty(), 0, Interpolator.EASE_BOTH))
-				
-				);
+
+		);
 
 		timeline.play();
 	}
@@ -199,7 +240,6 @@ public class WordleGamePane extends TilePane {
 		word = word.toLowerCase();
 		if (game.processGuess(word)) {
 			win = true;
-			animateWin();
 		}
 		HashMap<Character, Integer> lettersCountMap = makeHashMap(game.getTargetWord());
 
