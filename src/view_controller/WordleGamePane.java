@@ -49,11 +49,14 @@ public class WordleGamePane extends TilePane {
 	public void updateRowColors() {
 		int delay = 400;
 		int startDelay = 400;
+
+		Timeline timeline = null;
+
 		for (int i = 0; i < 5; i++) {
 			Button currentSquare = grid[currentRow][i];
 			switch (grid[currentRow][i].getStatus()) {
 			case "Wrong": // grey if wrong
-				Timeline timelineWrong = new Timeline(
+				timeline = new Timeline(
 						new KeyFrame(Duration.millis(startDelay),
 								new KeyValue(currentSquare.scaleYProperty(), 0, Interpolator.EASE_BOTH)),
 
@@ -65,10 +68,10 @@ public class WordleGamePane extends TilePane {
 								new KeyValue(currentSquare.scaleYProperty(), 1, Interpolator.EASE_BOTH))
 
 				);
-				timelineWrong.play();
+				timeline.play();
 				break;
 			case "Present": // gold if present in word
-				Timeline timelinePresent = new Timeline(
+				timeline = new Timeline(
 						new KeyFrame(Duration.millis(startDelay),
 								new KeyValue(currentSquare.scaleYProperty(), 0, Interpolator.EASE_BOTH)),
 
@@ -80,10 +83,10 @@ public class WordleGamePane extends TilePane {
 								new KeyValue(currentSquare.scaleYProperty(), 1, Interpolator.EASE_BOTH))
 
 				);
-				timelinePresent.play();
+				timeline.play();
 				break;
 			case "Correct": // green if in correct spot
-				Timeline timelineCorrect = new Timeline(
+				timeline = new Timeline(
 						new KeyFrame(Duration.millis(startDelay),
 								new KeyValue(currentSquare.scaleYProperty(), 0, Interpolator.EASE_BOTH)),
 
@@ -95,13 +98,13 @@ public class WordleGamePane extends TilePane {
 								new KeyValue(currentSquare.scaleYProperty(), 1, Interpolator.EASE_BOTH))
 
 				);
-				timelineCorrect.play();
+				timeline.play();
 				break;
 			}
 			startDelay += 400;
 		}
-		if (win) { // disable buttons on win
-//			animateWin();
+		if (win) { // disable buttons on win and animate win
+			timeline.setOnFinished(event -> animateWin());
 			this.setOnKeyPressed(null);
 		}
 	}
@@ -171,11 +174,11 @@ public class WordleGamePane extends TilePane {
 	// every button will bounce up, then down, then back to its normal position on a
 	// win
 	private void animateWin() {
-		Button button1 = grid[currentRow][0];
-		Button button2 = grid[currentRow][1];
-		Button button3 = grid[currentRow][2];
-		Button button4 = grid[currentRow][3];
-		Button button5 = grid[currentRow][4];
+		Button button1 = grid[currentRow - 1][0];
+		Button button2 = grid[currentRow - 1][1];
+		Button button3 = grid[currentRow - 1][2];
+		Button button4 = grid[currentRow - 1][3];
+		Button button5 = grid[currentRow - 1][4];
 
 		int bounceUp = -20;
 		int bounceDown = 10;
@@ -186,35 +189,35 @@ public class WordleGamePane extends TilePane {
 
 				new KeyFrame(Duration.millis(delay += 50),
 						new KeyValue(button1.translateYProperty(), bounceUp, Interpolator.EASE_BOTH)),
-				new KeyFrame(Duration.millis(delay += 100),
+				new KeyFrame(Duration.millis(delay += 75),
 						new KeyValue(button1.translateYProperty(), bounceDown, Interpolator.EASE_BOTH)),
 				new KeyFrame(Duration.millis(delay += 100),
 						new KeyValue(button1.translateYProperty(), 0, Interpolator.EASE_BOTH)),
 
 				new KeyFrame(Duration.millis(delay += 50),
 						new KeyValue(button2.translateYProperty(), bounceUp, Interpolator.EASE_BOTH)),
-				new KeyFrame(Duration.millis(delay += 100),
+				new KeyFrame(Duration.millis(delay += 75),
 						new KeyValue(button2.translateYProperty(), bounceDown, Interpolator.EASE_BOTH)),
 				new KeyFrame(Duration.millis(delay += 100),
 						new KeyValue(button2.translateYProperty(), 0, Interpolator.EASE_BOTH)),
 
 				new KeyFrame(Duration.millis(delay += 50),
 						new KeyValue(button3.translateYProperty(), bounceUp, Interpolator.EASE_BOTH)),
-				new KeyFrame(Duration.millis(delay += 100),
+				new KeyFrame(Duration.millis(delay += 75),
 						new KeyValue(button3.translateYProperty(), bounceDown, Interpolator.EASE_BOTH)),
 				new KeyFrame(Duration.millis(delay += 100),
 						new KeyValue(button3.translateYProperty(), 0, Interpolator.EASE_BOTH)),
 
 				new KeyFrame(Duration.millis(delay += 50),
 						new KeyValue(button4.translateYProperty(), bounceUp, Interpolator.EASE_BOTH)),
-				new KeyFrame(Duration.millis(delay += 100),
+				new KeyFrame(Duration.millis(delay += 75),
 						new KeyValue(button4.translateYProperty(), bounceDown, Interpolator.EASE_BOTH)),
 				new KeyFrame(Duration.millis(delay += 100),
 						new KeyValue(button4.translateYProperty(), 0, Interpolator.EASE_BOTH)),
 
 				new KeyFrame(Duration.millis(delay += 50),
 						new KeyValue(button5.translateYProperty(), bounceUp, Interpolator.EASE_BOTH)),
-				new KeyFrame(Duration.millis(delay += 100),
+				new KeyFrame(Duration.millis(delay += 75),
 						new KeyValue(button5.translateYProperty(), bounceDown, Interpolator.EASE_BOTH)),
 				new KeyFrame(Duration.millis(delay += 100),
 						new KeyValue(button5.translateYProperty(), 0, Interpolator.EASE_BOTH))
