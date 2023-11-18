@@ -25,6 +25,9 @@ public class MainWordleGUI extends Application {
 	private MenuItem stats;
 	private Menu settings;
 	private Menu more;
+	
+	private Label title = new Label("		  Briandle");
+	private VBox titleBox;
 
 	private MenuItem login;
 	private MenuItem game;
@@ -36,7 +39,7 @@ public class MainWordleGUI extends Application {
 	
 	private KeyBoardPane keyboardPane;
 	
-	private VBox mainGameLayout = new VBox();
+	private VBox mainGameLayout;
 
 	private StatsPane statsView;
 
@@ -90,12 +93,13 @@ public class MainWordleGUI extends Application {
 		keyboardPane = new KeyBoardPane();
 		keyboardPane.setGame(gamePane);
 		
-		VBox titleBox = new VBox();
+		titleBox = new VBox();
 		
-		Label title = new Label("		  Briandle");
 		title.setFont(new Font("Times New Roman", 60));
 		
 		titleBox.getChildren().add(title);
+		
+		mainGameLayout = new VBox();
 		
 		mainGameLayout.getChildren().add(titleBox);
 		
@@ -120,6 +124,24 @@ public class MainWordleGUI extends Application {
 			statsView.updateStats(user);
 		});
 		game.setOnAction((arg0) -> {
+			keyboardPane.setGame(gamePane);
+			gamePane.setKeyboard(keyboardPane);
+			pane.setCenter(mainGameLayout);
+		});
+		newGame.setOnAction((arg0) -> {
+			gamePane = new WordleGamePane();
+			keyboardPane = new KeyBoardPane();
+			
+			keyboardPane.setGame(gamePane);
+			gamePane.setKeyboard(keyboardPane);
+			
+			mainGameLayout = new VBox();
+			mainGameLayout.getChildren().add(titleBox);
+			mainGameLayout.getChildren().addAll(gamePane, keyboardPane);
+			
+			mainGameLayout.setAlignment(Pos.CENTER);
+			mainGameLayout.setSpacing(35);
+			
 			keyboardPane.setGame(gamePane);
 			gamePane.setKeyboard(keyboardPane);
 			pane.setCenter(mainGameLayout);
