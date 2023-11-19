@@ -137,6 +137,8 @@ public class WordleGamePane extends TilePane {
 			}
 			if (validWord(word)) {
 				updateGrid(word);
+			} else {
+				animateInvalidWord();
 			}
 		} else if (currentCol == 5 && letter.length() > 0) { // if out of range do nothing
 			return;
@@ -156,6 +158,77 @@ public class WordleGamePane extends TilePane {
 		} else {
 			return;
 		}
+	}
+
+	private void animateInvalidWord() {
+		Button button1 = grid[currentRow][0];
+		Button button2 = grid[currentRow][1];
+		Button button3 = grid[currentRow][2];
+		Button button4 = grid[currentRow][3];
+		Button button5 = grid[currentRow][4];
+		
+		Timeline timeline = new Timeline(
+
+				new KeyFrame(Duration.millis(100),
+						new KeyValue(button1.translateXProperty(), 10, Interpolator.EASE_BOTH)),
+				new KeyFrame(Duration.millis(200),
+						new KeyValue(button1.translateXProperty(), -10, Interpolator.EASE_BOTH)),
+				new KeyFrame(Duration.millis(300),
+						new KeyValue(button1.translateXProperty(), 10, Interpolator.EASE_BOTH)),
+				new KeyFrame(Duration.millis(400),
+						new KeyValue(button1.translateXProperty(), -10, Interpolator.EASE_BOTH)),
+				new KeyFrame(Duration.millis(500),
+						new KeyValue(button1.translateXProperty(), 0, Interpolator.EASE_BOTH)),
+				
+				new KeyFrame(Duration.millis(100),
+						new KeyValue(button2.translateXProperty(), 10, Interpolator.EASE_BOTH)),
+				new KeyFrame(Duration.millis(200),
+						new KeyValue(button2.translateXProperty(), -10, Interpolator.EASE_BOTH)),
+				new KeyFrame(Duration.millis(300),
+						new KeyValue(button2.translateXProperty(), 10, Interpolator.EASE_BOTH)),
+				new KeyFrame(Duration.millis(400),
+						new KeyValue(button2.translateXProperty(), -10, Interpolator.EASE_BOTH)),
+				new KeyFrame(Duration.millis(500),
+						new KeyValue(button2.translateXProperty(), 0, Interpolator.EASE_BOTH)),
+				
+				new KeyFrame(Duration.millis(100),
+						new KeyValue(button3.translateXProperty(), 10, Interpolator.EASE_BOTH)),
+				new KeyFrame(Duration.millis(200),
+						new KeyValue(button3.translateXProperty(), -10, Interpolator.EASE_BOTH)),
+				new KeyFrame(Duration.millis(300),
+						new KeyValue(button3.translateXProperty(), 10, Interpolator.EASE_BOTH)),
+				new KeyFrame(Duration.millis(400),
+						new KeyValue(button3.translateXProperty(), -10, Interpolator.EASE_BOTH)),
+				new KeyFrame(Duration.millis(500),
+						new KeyValue(button3.translateXProperty(), 0, Interpolator.EASE_BOTH)),
+				
+				new KeyFrame(Duration.millis(100),
+						new KeyValue(button4.translateXProperty(), 10, Interpolator.EASE_BOTH)),
+				new KeyFrame(Duration.millis(200),
+						new KeyValue(button4.translateXProperty(), -10, Interpolator.EASE_BOTH)),
+				new KeyFrame(Duration.millis(300),
+						new KeyValue(button4.translateXProperty(), 10, Interpolator.EASE_BOTH)),
+				new KeyFrame(Duration.millis(400),
+						new KeyValue(button4.translateXProperty(), -10, Interpolator.EASE_BOTH)),
+				new KeyFrame(Duration.millis(500),
+						new KeyValue(button4.translateXProperty(), 0, Interpolator.EASE_BOTH)),
+				
+				new KeyFrame(Duration.millis(100),
+						new KeyValue(button5.translateXProperty(), 10, Interpolator.EASE_BOTH)),
+				new KeyFrame(Duration.millis(200),
+						new KeyValue(button5.translateXProperty(), -10, Interpolator.EASE_BOTH)),
+				new KeyFrame(Duration.millis(300),
+						new KeyValue(button5.translateXProperty(), 10, Interpolator.EASE_BOTH)),
+				new KeyFrame(Duration.millis(400),
+						new KeyValue(button5.translateXProperty(), -10, Interpolator.EASE_BOTH)),
+				new KeyFrame(Duration.millis(500),
+						new KeyValue(button5.translateXProperty(), 0, Interpolator.EASE_BOTH))
+				
+
+		);
+
+		timeline.play();
+
 	}
 
 	// animates pop effect on buttons when pressed
