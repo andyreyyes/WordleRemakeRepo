@@ -161,74 +161,25 @@ public class WordleGamePane extends TilePane {
 	}
 
 	private void animateInvalidWord() {
-		Button button1 = grid[currentRow][0];
-		Button button2 = grid[currentRow][1];
-		Button button3 = grid[currentRow][2];
-		Button button4 = grid[currentRow][3];
-		Button button5 = grid[currentRow][4];
-		
-		Timeline timeline = new Timeline(
+	    for (int i = 0; i < grid[currentRow].length; i++) {
+	        Button button = grid[currentRow][i];
 
-				new KeyFrame(Duration.millis(100),
-						new KeyValue(button1.translateXProperty(), 10, Interpolator.EASE_BOTH)),
-				new KeyFrame(Duration.millis(200),
-						new KeyValue(button1.translateXProperty(), -10, Interpolator.EASE_BOTH)),
-				new KeyFrame(Duration.millis(300),
-						new KeyValue(button1.translateXProperty(), 10, Interpolator.EASE_BOTH)),
-				new KeyFrame(Duration.millis(400),
-						new KeyValue(button1.translateXProperty(), -10, Interpolator.EASE_BOTH)),
-				new KeyFrame(Duration.millis(500),
-						new KeyValue(button1.translateXProperty(), 0, Interpolator.EASE_BOTH)),
-				
-				new KeyFrame(Duration.millis(100),
-						new KeyValue(button2.translateXProperty(), 10, Interpolator.EASE_BOTH)),
-				new KeyFrame(Duration.millis(200),
-						new KeyValue(button2.translateXProperty(), -10, Interpolator.EASE_BOTH)),
-				new KeyFrame(Duration.millis(300),
-						new KeyValue(button2.translateXProperty(), 10, Interpolator.EASE_BOTH)),
-				new KeyFrame(Duration.millis(400),
-						new KeyValue(button2.translateXProperty(), -10, Interpolator.EASE_BOTH)),
-				new KeyFrame(Duration.millis(500),
-						new KeyValue(button2.translateXProperty(), 0, Interpolator.EASE_BOTH)),
-				
-				new KeyFrame(Duration.millis(100),
-						new KeyValue(button3.translateXProperty(), 10, Interpolator.EASE_BOTH)),
-				new KeyFrame(Duration.millis(200),
-						new KeyValue(button3.translateXProperty(), -10, Interpolator.EASE_BOTH)),
-				new KeyFrame(Duration.millis(300),
-						new KeyValue(button3.translateXProperty(), 10, Interpolator.EASE_BOTH)),
-				new KeyFrame(Duration.millis(400),
-						new KeyValue(button3.translateXProperty(), -10, Interpolator.EASE_BOTH)),
-				new KeyFrame(Duration.millis(500),
-						new KeyValue(button3.translateXProperty(), 0, Interpolator.EASE_BOTH)),
-				
-				new KeyFrame(Duration.millis(100),
-						new KeyValue(button4.translateXProperty(), 10, Interpolator.EASE_BOTH)),
-				new KeyFrame(Duration.millis(200),
-						new KeyValue(button4.translateXProperty(), -10, Interpolator.EASE_BOTH)),
-				new KeyFrame(Duration.millis(300),
-						new KeyValue(button4.translateXProperty(), 10, Interpolator.EASE_BOTH)),
-				new KeyFrame(Duration.millis(400),
-						new KeyValue(button4.translateXProperty(), -10, Interpolator.EASE_BOTH)),
-				new KeyFrame(Duration.millis(500),
-						new KeyValue(button4.translateXProperty(), 0, Interpolator.EASE_BOTH)),
-				
-				new KeyFrame(Duration.millis(100),
-						new KeyValue(button5.translateXProperty(), 10, Interpolator.EASE_BOTH)),
-				new KeyFrame(Duration.millis(200),
-						new KeyValue(button5.translateXProperty(), -10, Interpolator.EASE_BOTH)),
-				new KeyFrame(Duration.millis(300),
-						new KeyValue(button5.translateXProperty(), 10, Interpolator.EASE_BOTH)),
-				new KeyFrame(Duration.millis(400),
-						new KeyValue(button5.translateXProperty(), -10, Interpolator.EASE_BOTH)),
-				new KeyFrame(Duration.millis(500),
-						new KeyValue(button5.translateXProperty(), 0, Interpolator.EASE_BOTH))
-				
+	        KeyValue[] keyValues = new KeyValue[]{
+	                new KeyValue(button.translateXProperty(), 10, Interpolator.EASE_BOTH),
+	                new KeyValue(button.translateXProperty(), -10, Interpolator.EASE_BOTH),
+	                new KeyValue(button.translateXProperty(), 10, Interpolator.EASE_BOTH),
+	                new KeyValue(button.translateXProperty(), -10, Interpolator.EASE_BOTH),
+	                new KeyValue(button.translateXProperty(), 0, Interpolator.EASE_BOTH)
+	        };
 
-		);
+	        KeyFrame[] keyFrames = new KeyFrame[5];
+	        for (int j = 0; j < 5; j++) {
+	            keyFrames[j] = new KeyFrame(Duration.millis((j + 1)*100), keyValues[j]);
+	        }
 
-		timeline.play();
-
+	        Timeline timeline = new Timeline(keyFrames);
+	        timeline.play();
+	    }
 	}
 
 	// animates pop effect on buttons when pressed
@@ -249,57 +200,27 @@ public class WordleGamePane extends TilePane {
 	// every button will bounce up, then down, then back to its normal position on a
 	// win
 	private void animateWin() {
-		Button button1 = grid[currentRow - 1][0];
-		Button button2 = grid[currentRow - 1][1];
-		Button button3 = grid[currentRow - 1][2];
-		Button button4 = grid[currentRow - 1][3];
-		Button button5 = grid[currentRow - 1][4];
+	    int bounceUp = -20;
+	    int bounceDown = 10;
+	    int delay = 0;
 
-		int bounceUp = -20;
-		int bounceDown = 10;
+	    for (int i = 0; i < grid[currentRow - 1].length; i++) {
+	        Button button = grid[currentRow - 1][i];
 
-		int delay = 0;
+	        KeyValue[] keyValues = new KeyValue[]{
+	                new KeyValue(button.translateYProperty(), bounceUp, Interpolator.EASE_BOTH),
+	                new KeyValue(button.translateYProperty(), bounceDown, Interpolator.EASE_BOTH),
+	                new KeyValue(button.translateYProperty(), 0, Interpolator.EASE_BOTH)
+	        };
 
-		Timeline timeline = new Timeline(
+	        KeyFrame[] keyFrames = new KeyFrame[3];
+	        for (int j = 0; j < 3; j++) {
+				keyFrames[j] = new KeyFrame(Duration.millis(delay += 50), keyValues[j]);
+	        }
 
-				new KeyFrame(Duration.millis(delay += 50),
-						new KeyValue(button1.translateYProperty(), bounceUp, Interpolator.EASE_BOTH)),
-				new KeyFrame(Duration.millis(delay += 75),
-						new KeyValue(button1.translateYProperty(), bounceDown, Interpolator.EASE_BOTH)),
-				new KeyFrame(Duration.millis(delay += 100),
-						new KeyValue(button1.translateYProperty(), 0, Interpolator.EASE_BOTH)),
-
-				new KeyFrame(Duration.millis(delay += 50),
-						new KeyValue(button2.translateYProperty(), bounceUp, Interpolator.EASE_BOTH)),
-				new KeyFrame(Duration.millis(delay += 75),
-						new KeyValue(button2.translateYProperty(), bounceDown, Interpolator.EASE_BOTH)),
-				new KeyFrame(Duration.millis(delay += 100),
-						new KeyValue(button2.translateYProperty(), 0, Interpolator.EASE_BOTH)),
-
-				new KeyFrame(Duration.millis(delay += 50),
-						new KeyValue(button3.translateYProperty(), bounceUp, Interpolator.EASE_BOTH)),
-				new KeyFrame(Duration.millis(delay += 75),
-						new KeyValue(button3.translateYProperty(), bounceDown, Interpolator.EASE_BOTH)),
-				new KeyFrame(Duration.millis(delay += 100),
-						new KeyValue(button3.translateYProperty(), 0, Interpolator.EASE_BOTH)),
-
-				new KeyFrame(Duration.millis(delay += 50),
-						new KeyValue(button4.translateYProperty(), bounceUp, Interpolator.EASE_BOTH)),
-				new KeyFrame(Duration.millis(delay += 75),
-						new KeyValue(button4.translateYProperty(), bounceDown, Interpolator.EASE_BOTH)),
-				new KeyFrame(Duration.millis(delay += 100),
-						new KeyValue(button4.translateYProperty(), 0, Interpolator.EASE_BOTH)),
-
-				new KeyFrame(Duration.millis(delay += 50),
-						new KeyValue(button5.translateYProperty(), bounceUp, Interpolator.EASE_BOTH)),
-				new KeyFrame(Duration.millis(delay += 75),
-						new KeyValue(button5.translateYProperty(), bounceDown, Interpolator.EASE_BOTH)),
-				new KeyFrame(Duration.millis(delay += 100),
-						new KeyValue(button5.translateYProperty(), 0, Interpolator.EASE_BOTH))
-
-		);
-
-		timeline.play();
+	        Timeline timeline = new Timeline(keyFrames);
+	        timeline.play();
+	    }
 	}
 
 	// updates buttons and current row and column
