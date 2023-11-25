@@ -6,6 +6,7 @@ import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.control.Button;
 import javafx.scene.layout.*;
+import javafx.scene.paint.Color;
 
 public class KeyBoardPane extends GridPane {
 
@@ -346,6 +347,23 @@ public class KeyBoardPane extends GridPane {
 		keyList.add(bKey);
 		keyList.add(nKey);
 		keyList.add(mKey);
+	}
+
+	public void setDarkMode() {
+		this.setStyle("-fx-background-color: black;");
+		
+		backKey.setStyle("-fx-focus-color: transparent; -fx-faint-focus-color: transparent; -fx-background-color: grey;");
+		backKey.setTextFill(Color.WHITE);
+		
+		enterKey.setStyle("-fx-focus-color: transparent; -fx-faint-focus-color: transparent; -fx-background-color: grey;");
+		enterKey.setTextFill(Color.WHITE);
+		
+		for (Button key: keyList) {
+			key.setStyle("-fx-focus-color: transparent; -fx-faint-focus-color: transparent; -fx-background-color: grey;");
+			key.setTextFill(Color.WHITE);
+			
+		}
+		
 	}
 
 }

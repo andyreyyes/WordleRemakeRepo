@@ -10,6 +10,7 @@ import javafx.scene.control.MenuBar;
 import javafx.scene.control.MenuItem;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.VBox;
+import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 import javafx.stage.Stage;
 import model.UserAccount;
@@ -145,6 +146,13 @@ public class MainWordleGUI extends Application {
 			keyboardPane.setGame(gamePane);
 			gamePane.setKeyboard(keyboardPane);
 			pane.setCenter(mainGameLayout);
+		});
+		darkMode.setOnAction((event) -> {
+			pane.setStyle("-fx-background-color: black;");
+			title.setTextFill(Color.WHITE);
+			gamePane.setDarkMode();
+			
+			keyboardPane.setDarkMode();
 		});
 	}
 	

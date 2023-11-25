@@ -324,6 +324,18 @@ public class WordleGamePane extends TilePane {
 	public void setKeyboard(KeyBoardPane pane) {
 		keyboard = pane;
 	}
+
+	public void setDarkMode() {
+		for (int i = 0; i < 6; i++) {
+			for (int j = 0; j < 5; j++) {
+				grid[i][j].setStyle("-fx-focus-color: transparent; -fx-faint-focus-color: transparent; -fx-background-color: black;"
+						+ "-fx-border-color:grey;");
+				grid[i][j].setTextFill(Color.WHITE);
+			}
+		}
+		this.setStyle("-fx-background-color: black;");
+		
+	}
 }
 
 class Square extends Button {
