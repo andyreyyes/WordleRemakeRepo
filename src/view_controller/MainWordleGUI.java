@@ -66,6 +66,8 @@ public class MainWordleGUI extends Application {
 		pane = new BorderPane();
 		menuBar = new MenuBar();
 		
+		pane.setStyle("-fx-background-color: white;");
+		
 		home = new Menu("Home");
 		game = new MenuItem("Game");
 		login = new MenuItem("Login");
@@ -80,7 +82,7 @@ public class MainWordleGUI extends Application {
 		
 		newGame = new MenuItem("New Game");
 		
-		settings.getItems().addAll(darkMode, newGame);
+		settings.getItems().addAll(darkMode, lightMode, newGame);
 		
 		stats = new MenuItem("Stats");
 		more.getItems().addAll(settings,stats);
@@ -153,6 +155,13 @@ public class MainWordleGUI extends Application {
 			gamePane.setDarkMode();
 			
 			keyboardPane.setDarkMode();
+		});
+		lightMode.setOnAction((event) -> {
+			pane.setStyle("-fx-background-color: white;");
+			title.setTextFill(Color.BLACK);
+			gamePane.setLightMode();
+			keyboardPane.setLightMode();
+			
 		});
 	}
 	

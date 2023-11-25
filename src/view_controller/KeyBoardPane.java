@@ -68,6 +68,7 @@ public class KeyBoardPane extends GridPane {
 	}
 
 	private void initialize() {
+		this.setStyle("-fx-background-color: white;");
 		// Constructs the keyboard
 		this.setMinWidth(365);
 		this.setMaxWidth(365);
@@ -84,41 +85,41 @@ public class KeyBoardPane extends GridPane {
 
 		// Set style of each key to a white button
 		// 1st row of keys
-		qKey.setStyle("-fx-focus-color: transparent; -fx-faint-focus-color: transparent; -fx-background-color: white;");
-		wKey.setStyle("-fx-focus-color: transparent; -fx-faint-focus-color: transparent; -fx-background-color: white;");
-		eKey.setStyle("-fx-focus-color: transparent; -fx-faint-focus-color: transparent; -fx-background-color: white;");
-		rKey.setStyle("-fx-focus-color: transparent; -fx-faint-focus-color: transparent; -fx-background-color: white;");
-		tKey.setStyle("-fx-focus-color: transparent; -fx-faint-focus-color: transparent; -fx-background-color: white;");
-		yKey.setStyle("-fx-focus-color: transparent; -fx-faint-focus-color: transparent; -fx-background-color: white;");
-		uKey.setStyle("-fx-focus-color: transparent; -fx-faint-focus-color: transparent; -fx-background-color: white;");
-		iKey.setStyle("-fx-focus-color: transparent; -fx-faint-focus-color: transparent; -fx-background-color: white;");
-		oKey.setStyle("-fx-focus-color: transparent; -fx-faint-focus-color: transparent; -fx-background-color: white;");
-		pKey.setStyle("-fx-focus-color: transparent; -fx-faint-focus-color: transparent; -fx-background-color: white;");
+		qKey.setStyle("-fx-focus-color: transparent; -fx-faint-focus-color: transparent; -fx-background-color: #c1c9c7;");
+		wKey.setStyle("-fx-focus-color: transparent; -fx-faint-focus-color: transparent; -fx-background-color: #c1c9c7;");
+		eKey.setStyle("-fx-focus-color: transparent; -fx-faint-focus-color: transparent; -fx-background-color: #c1c9c7;");
+		rKey.setStyle("-fx-focus-color: transparent; -fx-faint-focus-color: transparent; -fx-background-color: #c1c9c7;");
+		tKey.setStyle("-fx-focus-color: transparent; -fx-faint-focus-color: transparent; -fx-background-color: #c1c9c7;");
+		yKey.setStyle("-fx-focus-color: transparent; -fx-faint-focus-color: transparent; -fx-background-color: #c1c9c7;");
+		uKey.setStyle("-fx-focus-color: transparent; -fx-faint-focus-color: transparent; -fx-background-color: #c1c9c7;");
+		iKey.setStyle("-fx-focus-color: transparent; -fx-faint-focus-color: transparent; -fx-background-color: #c1c9c7;");
+		oKey.setStyle("-fx-focus-color: transparent; -fx-faint-focus-color: transparent; -fx-background-color: #c1c9c7;");
+		pKey.setStyle("-fx-focus-color: transparent; -fx-faint-focus-color: transparent; -fx-background-color: #c1c9c7;");
 
 
 		// 2nd row of keys
-		aKey.setStyle("-fx-focus-color: transparent; -fx-faint-focus-color: transparent; -fx-background-color: white;");
-		sKey.setStyle("-fx-focus-color: transparent; -fx-faint-focus-color: transparent; -fx-background-color: white;");
-		dKey.setStyle("-fx-focus-color: transparent; -fx-faint-focus-color: transparent; -fx-background-color: white;");
-		fKey.setStyle("-fx-focus-color: transparent; -fx-faint-focus-color: transparent; -fx-background-color: white;");
-		gKey.setStyle("-fx-focus-color: transparent; -fx-faint-focus-color: transparent; -fx-background-color: white;");
-		hKey.setStyle("-fx-focus-color: transparent; -fx-faint-focus-color: transparent; -fx-background-color: white;");
-		jKey.setStyle("-fx-focus-color: transparent; -fx-faint-focus-color: transparent; -fx-background-color: white;");
-		kKey.setStyle("-fx-focus-color: transparent; -fx-faint-focus-color: transparent; -fx-background-color: white;");
-		lKey.setStyle("-fx-focus-color: transparent; -fx-faint-focus-color: transparent; -fx-background-color: white;");
+		aKey.setStyle("-fx-focus-color: transparent; -fx-faint-focus-color: transparent; -fx-background-color: #c1c9c7;");
+		sKey.setStyle("-fx-focus-color: transparent; -fx-faint-focus-color: transparent; -fx-background-color: #c1c9c7;");
+		dKey.setStyle("-fx-focus-color: transparent; -fx-faint-focus-color: transparent; -fx-background-color: #c1c9c7;");
+		fKey.setStyle("-fx-focus-color: transparent; -fx-faint-focus-color: transparent; -fx-background-color: #c1c9c7;");
+		gKey.setStyle("-fx-focus-color: transparent; -fx-faint-focus-color: transparent; -fx-background-color: #c1c9c7;");
+		hKey.setStyle("-fx-focus-color: transparent; -fx-faint-focus-color: transparent; -fx-background-color: #c1c9c7;");
+		jKey.setStyle("-fx-focus-color: transparent; -fx-faint-focus-color: transparent; -fx-background-color: #c1c9c7;");
+		kKey.setStyle("-fx-focus-color: transparent; -fx-faint-focus-color: transparent; -fx-background-color: #c1c9c7;");
+		lKey.setStyle("-fx-focus-color: transparent; -fx-faint-focus-color: transparent; -fx-background-color: #c1c9c7;");
 
 		// 3rd row of keys
 		enterKey.setStyle(
-				"-fx-focus-color: transparent; -fx-faint-focus-color: transparent; -fx-background-color: white;");
-		zKey.setStyle("-fx-focus-color: transparent; -fx-faint-focus-color: transparent; -fx-background-color: white;");
-		xKey.setStyle("-fx-focus-color: transparent; -fx-faint-focus-color: transparent; -fx-background-color: white;");
-		cKey.setStyle("-fx-focus-color: transparent; -fx-faint-focus-color: transparent; -fx-background-color: white;");
-		vKey.setStyle("-fx-focus-color: transparent; -fx-faint-focus-color: transparent; -fx-background-color: white;");
-		bKey.setStyle("-fx-focus-color: transparent; -fx-faint-focus-color: transparent; -fx-background-color: white;");
-		nKey.setStyle("-fx-focus-color: transparent; -fx-faint-focus-color: transparent; -fx-background-color: white;");
-		mKey.setStyle("-fx-focus-color: transparent; -fx-faint-focus-color: transparent; -fx-background-color: white;");
+				"-fx-focus-color: transparent; -fx-faint-focus-color: transparent; -fx-background-color: #c1c9c7;");
+		zKey.setStyle("-fx-focus-color: transparent; -fx-faint-focus-color: transparent; -fx-background-color: #c1c9c7;");
+		xKey.setStyle("-fx-focus-color: transparent; -fx-faint-focus-color: transparent; -fx-background-color: #c1c9c7;");
+		cKey.setStyle("-fx-focus-color: transparent; -fx-faint-focus-color: transparent; -fx-background-color: #c1c9c7;");
+		vKey.setStyle("-fx-focus-color: transparent; -fx-faint-focus-color: transparent; -fx-background-color: #c1c9c7;");
+		bKey.setStyle("-fx-focus-color: transparent; -fx-faint-focus-color: transparent; -fx-background-color: #c1c9c7;");
+		nKey.setStyle("-fx-focus-color: transparent; -fx-faint-focus-color: transparent; -fx-background-color: #c1c9c7;");
+		mKey.setStyle("-fx-focus-color: transparent; -fx-faint-focus-color: transparent; -fx-background-color: #c1c9c7;");
 		backKey.setStyle(
-				"-fx-focus-color: transparent; -fx-faint-focus-color: transparent; -fx-background-color: white;");
+				"-fx-focus-color: transparent; -fx-faint-focus-color: transparent; -fx-background-color: #c1c9c7;");
 
 		keyRow1.getChildren().addAll(qKey, wKey, eKey, rKey, tKey, yKey, uKey, iKey, oKey, pKey);
 		keyRow2.getChildren().addAll(aKey, sKey, dKey, fKey, gKey, hKey, jKey, kKey, lKey);
@@ -352,15 +353,32 @@ public class KeyBoardPane extends GridPane {
 	public void setDarkMode() {
 		this.setStyle("-fx-background-color: black;");
 		
-		backKey.setStyle("-fx-focus-color: transparent; -fx-faint-focus-color: transparent; -fx-background-color: grey;");
+		backKey.setStyle("-fx-focus-color: transparent; -fx-faint-focus-color: transparent; -fx-background-color: #c1c9c7;");
 		backKey.setTextFill(Color.WHITE);
 		
-		enterKey.setStyle("-fx-focus-color: transparent; -fx-faint-focus-color: transparent; -fx-background-color: grey;");
+		enterKey.setStyle("-fx-focus-color: transparent; -fx-faint-focus-color: transparent; -fx-background-color: #c1c9c7;");
 		enterKey.setTextFill(Color.WHITE);
 		
 		for (Button key: keyList) {
-			key.setStyle("-fx-focus-color: transparent; -fx-faint-focus-color: transparent; -fx-background-color: grey;");
+			key.setStyle("-fx-focus-color: transparent; -fx-faint-focus-color: transparent; -fx-background-color: #c1c9c7;");
 			key.setTextFill(Color.WHITE);
+			
+		}
+		
+	}
+
+	public void setLightMode() {
+		this.setStyle("-fx-background-color: white;");
+		
+		backKey.setStyle("-fx-focus-color: transparent; -fx-faint-focus-color: transparent; -fx-background-color: #c1c9c7;");
+		backKey.setTextFill(Color.BLACK);
+		
+		enterKey.setStyle("-fx-focus-color: transparent; -fx-faint-focus-color: transparent; -fx-background-color: #c1c9c7;");
+		enterKey.setTextFill(Color.BLACK);
+		
+		for (Button key: keyList) {
+			key.setStyle("-fx-focus-color: transparent; -fx-faint-focus-color: transparent; -fx-background-color: #c1c9c7;");
+			key.setTextFill(Color.BLACK);
 			
 		}
 		

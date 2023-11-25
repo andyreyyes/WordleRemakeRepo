@@ -36,6 +36,7 @@ public class WordleGamePane extends TilePane {
 	}
 
 	private void editPane() {
+		this.setStyle("-fx-background-color: white;");
 		this.setMaxSize(400, 600);
 		this.setVgap(10);
 		this.setHgap(10);
@@ -120,7 +121,8 @@ public class WordleGamePane extends TilePane {
 				grid[i][j] = square;
 				this.getChildren().add(square);
 				square.setStyle(
-						"-fx-focus-color: transparent; -fx-faint-focus-color: transparent; -fx-background-color: white;");
+						"-fx-focus-color: transparent; -fx-faint-focus-color: transparent; -fx-background-color: white;"
+								+ "-fx-border-color: grey;");
 				square.setFont(Font.font("Helvetica Neue", FontWeight.BOLD, 26));
 			}
 		}
@@ -335,6 +337,17 @@ public class WordleGamePane extends TilePane {
 		}
 		this.setStyle("-fx-background-color: black;");
 		
+	}
+	
+	public void setLightMode() {
+		for (int i = 0; i < 6; i++) {
+			for (int j = 0; j < 5; j++) {
+				grid[i][j].setStyle("-fx-focus-color: transparent; -fx-faint-focus-color: transparent; -fx-background-color: white;"
+			+ "-fx-border-color: grey;");
+				grid[i][j].setTextFill(Color.BLACK);
+			}
+		}
+		this.setStyle("-fx-background-color: white;");
 	}
 }
 
