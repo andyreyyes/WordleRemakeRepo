@@ -20,6 +20,8 @@ public class MainWordleGUI extends Application {
 	private BorderPane pane;
 	
 	private LoginAndCreatePane loginView;
+	
+	private boolean isDarkMode = false;
 
 	private MenuBar menuBar;
 	private Menu home;
@@ -92,7 +94,7 @@ public class MainWordleGUI extends Application {
 		
 		
 		gamePane = new WordleGamePane();
-		
+		 
 		keyboardPane = new KeyBoardPane();
 		keyboardPane.setGame(gamePane);
 		
@@ -135,6 +137,12 @@ public class MainWordleGUI extends Application {
 			gamePane = new WordleGamePane();
 			keyboardPane = new KeyBoardPane();
 			
+			if (isDarkMode) {
+				gamePane.setDarkMode();
+				keyboardPane.setDarkMode();
+				pane.setStyle("-fx-background-color: black;");
+			}
+			
 			keyboardPane.setGame(gamePane);
 			gamePane.setKeyboard(keyboardPane);
 			
@@ -150,6 +158,7 @@ public class MainWordleGUI extends Application {
 			pane.setCenter(mainGameLayout);
 		});
 		darkMode.setOnAction((event) -> {
+			isDarkMode = true;
 			pane.setStyle("-fx-background-color: black;");
 			title.setTextFill(Color.WHITE);
 			gamePane.setDarkMode();
@@ -157,6 +166,7 @@ public class MainWordleGUI extends Application {
 			keyboardPane.setDarkMode();
 		});
 		lightMode.setOnAction((event) -> {
+			isDarkMode = false;
 			pane.setStyle("-fx-background-color: white;");
 			title.setTextFill(Color.BLACK);
 			gamePane.setLightMode();

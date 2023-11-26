@@ -12,7 +12,7 @@ public class WordleGame {
 	private ArrayList<String> guesses;
 	private ArrayList<Character> guessedLetters;
 	private int guessAmount;
-	private ArrayList<String> wordList;
+	private ArrayList<String> wordList; 
 	
 	public WordleGame() {
 		targetWord = getRandomWord();

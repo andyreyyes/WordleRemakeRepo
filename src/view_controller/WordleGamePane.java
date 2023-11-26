@@ -163,25 +163,24 @@ public class WordleGamePane extends TilePane {
 	}
 
 	private void animateInvalidWord() {
-	    for (int i = 0; i < grid[currentRow].length; i++) {
-	        Button button = grid[currentRow][i];
+		for (int i = 0; i < grid[currentRow].length; i++) {
+			Button button = grid[currentRow][i];
 
-	        KeyValue[] keyValues = new KeyValue[]{
-	                new KeyValue(button.translateXProperty(), 10, Interpolator.EASE_BOTH),
-	                new KeyValue(button.translateXProperty(), -10, Interpolator.EASE_BOTH),
-	                new KeyValue(button.translateXProperty(), 10, Interpolator.EASE_BOTH),
-	                new KeyValue(button.translateXProperty(), -10, Interpolator.EASE_BOTH),
-	                new KeyValue(button.translateXProperty(), 0, Interpolator.EASE_BOTH)
-	        };
+			KeyValue[] keyValues = new KeyValue[] {
+					new KeyValue(button.translateXProperty(), 10, Interpolator.EASE_BOTH),
+					new KeyValue(button.translateXProperty(), -10, Interpolator.EASE_BOTH),
+					new KeyValue(button.translateXProperty(), 10, Interpolator.EASE_BOTH),
+					new KeyValue(button.translateXProperty(), -10, Interpolator.EASE_BOTH),
+					new KeyValue(button.translateXProperty(), 0, Interpolator.EASE_BOTH) };
 
-	        KeyFrame[] keyFrames = new KeyFrame[5];
-	        for (int j = 0; j < 5; j++) {
-	            keyFrames[j] = new KeyFrame(Duration.millis((j + 1)*100), keyValues[j]);
-	        }
+			KeyFrame[] keyFrames = new KeyFrame[5];
+			for (int j = 0; j < 5; j++) {
+				keyFrames[j] = new KeyFrame(Duration.millis((j + 1) * 100), keyValues[j]);
+			}
 
-	        Timeline timeline = new Timeline(keyFrames);
-	        timeline.play();
-	    }
+			Timeline timeline = new Timeline(keyFrames);
+			timeline.play();
+		}
 	}
 
 	// animates pop effect on buttons when pressed
@@ -202,27 +201,26 @@ public class WordleGamePane extends TilePane {
 	// every button will bounce up, then down, then back to its normal position on a
 	// win
 	private void animateWin() {
-	    int bounceUp = -20;
-	    int bounceDown = 10;
-	    int delay = 0;
+		int bounceUp = -20;
+		int bounceDown = 10;
+		int delay = 0;
 
-	    for (int i = 0; i < grid[currentRow - 1].length; i++) {
-	        Button button = grid[currentRow - 1][i];
+		for (int i = 0; i < grid[currentRow - 1].length; i++) {
+			Button button = grid[currentRow - 1][i];
 
-	        KeyValue[] keyValues = new KeyValue[]{
-	                new KeyValue(button.translateYProperty(), bounceUp, Interpolator.EASE_BOTH),
-	                new KeyValue(button.translateYProperty(), bounceDown, Interpolator.EASE_BOTH),
-	                new KeyValue(button.translateYProperty(), 0, Interpolator.EASE_BOTH)
-	        };
+			KeyValue[] keyValues = new KeyValue[] {
+					new KeyValue(button.translateYProperty(), bounceUp, Interpolator.EASE_BOTH),
+					new KeyValue(button.translateYProperty(), bounceDown, Interpolator.EASE_BOTH),
+					new KeyValue(button.translateYProperty(), 0, Interpolator.EASE_BOTH) };
 
-	        KeyFrame[] keyFrames = new KeyFrame[3];
-	        for (int j = 0; j < 3; j++) {
+			KeyFrame[] keyFrames = new KeyFrame[3];
+			for (int j = 0; j < 3; j++) {
 				keyFrames[j] = new KeyFrame(Duration.millis(delay += 50), keyValues[j]);
-	        }
+			}
 
-	        Timeline timeline = new Timeline(keyFrames);
-	        timeline.play();
-	    }
+			Timeline timeline = new Timeline(keyFrames);
+			timeline.play();
+		}
 	}
 
 	// updates buttons and current row and column
@@ -242,37 +240,44 @@ public class WordleGamePane extends TilePane {
 		if (game.processGuess(word)) {
 			win = true;
 		}
-		HashMap<Character, Integer> lettersCountMap = makeHashMap(game.getTargetWord());
+		HashMap<Character, Integer> lettersCountMap = makeHashMap(game.getTargetWord()); // HashMap that counts the
+																						 // letters in the word
+
+		ArrayList<String> statusArray = new ArrayList<>(); // Sets status for each letter
 
 		for (int i = 0; i < 5; i++) {
 			if (word.charAt(i) == game.getTargetWord().charAt(i)) {
 				lettersCountMap.put(game.getTargetWord().charAt(i),
 						lettersCountMap.get(game.getTargetWord().charAt(i)) - 1);
-			} else if (game.getTargetWord().indexOf(word.charAt(i)) != -1) {
+				statusArray.add("Correct");
+			} else if (game.getTargetWord().indexOf(word.charAt(i)) != -1 && lettersCountMap.get(word.charAt(i)) > 0) 
+						// checks if the letter is in the word and is has enough letters to be present
+			{
 				lettersCountMap.put(word.charAt(i), lettersCountMap.get(word.charAt(i)) - 1);
+				statusArray.add("Present");
+			} else {
+				statusArray.add("Incorrect");
+				;
 			}
-		}
-		for (int i = 0; i < 5; i++) {
-			if (word.charAt(i) == game.getTargetWord().charAt(i)) { // if char is in word and in the right spot
-				grid[currentRow][i].setCorrect();
 
-			} else if (!game.getTargetWord().contains(word.substring(i, i + 1))) { // if char is completely not in the
-																					// word
-				grid[currentRow][i].setWrong();
-			} else if (game.getTargetWord().indexOf(word.charAt(i)) != -1 && lettersCountMap.get(word.charAt(i)) >= 0) {
-				// if chat is in the word but not at the right location.
+		}
+
+		for (int i = 0; i < 5; i++) {
+			if (statusArray.get(i) == "Correct") {
+				grid[currentRow][i].setCorrect();
+			} else if (statusArray.get(i) == "Present") {
 				grid[currentRow][i].setPresent();
 			} else {
 				grid[currentRow][i].setWrong();
 			}
 		}
-
 	}
 
 	private HashMap<Character, Integer> makeHashMap(String word) {
 		HashMap<Character, Integer> newMap = new HashMap<>();
 		for (int i = 0; i < word.length(); i++) {
 			if (newMap.containsKey(word.charAt(i))) {
+
 				newMap.put(word.charAt(i), newMap.get(word.charAt(i)) + 1);
 			} else {
 				newMap.put(word.charAt(i), 1);
@@ -330,21 +335,27 @@ public class WordleGamePane extends TilePane {
 	public void setDarkMode() {
 		for (int i = 0; i < 6; i++) {
 			for (int j = 0; j < 5; j++) {
-				grid[i][j].setStyle("-fx-focus-color: transparent; -fx-faint-focus-color: transparent; -fx-background-color: black;"
-						+ "-fx-border-color:grey;");
-				grid[i][j].setTextFill(Color.WHITE);
+				if (grid[i][j].getStatus() == "EMPTY") {
+					grid[i][j].setStyle(
+							"-fx-focus-color: transparent; -fx-faint-focus-color: transparent; -fx-background-color: black;"
+									+ "-fx-border-color:grey;");
+					grid[i][j].setTextFill(Color.WHITE);
+				}
 			}
 		}
 		this.setStyle("-fx-background-color: black;");
-		
+
 	}
-	
+
 	public void setLightMode() {
 		for (int i = 0; i < 6; i++) {
 			for (int j = 0; j < 5; j++) {
-				grid[i][j].setStyle("-fx-focus-color: transparent; -fx-faint-focus-color: transparent; -fx-background-color: white;"
-			+ "-fx-border-color: grey;");
-				grid[i][j].setTextFill(Color.BLACK);
+				if (grid[i][j].getStatus() == "EMPTY") {
+					grid[i][j].setStyle(
+							"-fx-focus-color: transparent; -fx-faint-focus-color: transparent; -fx-background-color: white;"
+									+ "-fx-border-color:grey;");
+					grid[i][j].setTextFill(Color.WHITE);
+				}
 			}
 		}
 		this.setStyle("-fx-background-color: white;");
