@@ -155,6 +155,7 @@ public class MainWordleGUI extends Application {
 				pane.setStyle("-fx-background-color: black;");
 			}
 			
+			
 			keyboardPane.setGame(gamePane);
 			gamePane.setKeyboard(keyboardPane);
 			
