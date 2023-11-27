@@ -124,11 +124,23 @@ public class MainWordleGUI extends Application {
 			statsView.updateStats(user);
 		});
 		game.setOnAction((arg0) -> {
+			UserAccount user = loginView.getUser();
+			if(user != null) {
+				gamePane.setUser(user);
+			}
+			else {
+				gamePane.removeUser();
+			}
 			keyboardPane.setGame(gamePane);
 			gamePane.setKeyboard(keyboardPane);
 			pane.setCenter(mainGameLayout);
 		});
 		newGame.setOnAction((arg0) -> {
+			UserAccount user = loginView.getUser();
+			if(user != null) {
+				user.addGame(gamePane.getGame());
+			}
+			
 			gamePane = new WordleGamePane();
 			keyboardPane = new KeyBoardPane();
 			

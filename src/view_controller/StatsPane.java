@@ -54,7 +54,7 @@ public class StatsPane extends VBox {
 		if(user != null) {
 		playedVariable.setText("" +user.getGamesPlayed());
 		winPercentVariable.setText(""+user.getWinPercentage());
-		currentStreakVariable.setAccessibleText(""+user.getCurStreak());
+		currentStreakVariable.setText(""+user.getCurStreak());
 		maxStreakvariable.setText(""+user.getMaxStreak());
 		}
 	}

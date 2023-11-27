@@ -3,16 +3,19 @@ package model;
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Random;
 
-public class WordleGame {
+public class WordleGame implements Serializable{
 
+	private static final long serialVersionUID = 1L;
 	private String targetWord;
 	private ArrayList<String> guesses;
 	private ArrayList<Character> guessedLetters;
 	private int guessAmount;
 	private ArrayList<String> wordList;
+	private boolean win = false;
 	
 	public WordleGame() {
 		targetWord = getRandomWord();
@@ -56,7 +59,11 @@ public class WordleGame {
 		guessAmount++;
 		guesses.add(guess);
 		this.addGuessedLetters(guess);
+		win = targetWord.equals(guess);
 		return targetWord.equals(guess);
+	}
+	public boolean getWin() {
+		return this.win;
 	}
 	private void addGuessedLetters(String guess) {
 		for (int i = 0; i < guess.length(); i++) {

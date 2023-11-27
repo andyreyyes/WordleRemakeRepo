@@ -15,6 +15,7 @@ import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
 import javafx.util.Duration;
+import model.UserAccount;
 import model.WordleGame;
 
 public class WordleGamePane extends TilePane {
@@ -24,6 +25,7 @@ public class WordleGamePane extends TilePane {
 	Square[][] grid = new Square[6][5]; // grid of Buttons
 	ArrayList<Character> lettersUsed = new ArrayList<Character>(); // List of characters that have been used
 	Boolean win = false; // if player won
+	UserAccount user = null;
 
 	int currentRow = 0;
 	int currentCol = 0;
@@ -34,7 +36,15 @@ public class WordleGamePane extends TilePane {
 
 		System.out.println(game.getTargetWord()); // for testing
 	}
-
+	public WordleGame getGame() {
+		return this.game;
+	}
+	public void setUser(UserAccount newUser) {
+		user = newUser;
+	}
+	public void removeUser() {
+		user = null;
+	}
 	private void editPane() {
 		this.setMaxSize(400, 600);
 		this.setVgap(10);
@@ -244,6 +254,9 @@ public class WordleGamePane extends TilePane {
 	private void setStatusOfButtons(String word) {
 		word = word.toLowerCase();
 		if (game.processGuess(word)) {
+			if(user != null) {
+				user.addGame(game);
+			}
 			win = true;
 		}
 		HashMap<Character, Integer> lettersCountMap = makeHashMap(game.getTargetWord());
