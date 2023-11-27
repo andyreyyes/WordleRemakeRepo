@@ -46,6 +46,7 @@ public class WordleGamePane extends TilePane {
 		user = null;
 	}
 	private void editPane() {
+		this.setStyle("-fx-background-color: white;");
 		this.setMaxSize(400, 600);
 		this.setVgap(10);
 		this.setHgap(10);
@@ -130,7 +131,8 @@ public class WordleGamePane extends TilePane {
 				grid[i][j] = square;
 				this.getChildren().add(square);
 				square.setStyle(
-						"-fx-focus-color: transparent; -fx-faint-focus-color: transparent; -fx-background-color: white;");
+						"-fx-focus-color: transparent; -fx-faint-focus-color: transparent; -fx-background-color: white;"
+								+ "-fx-border-color: grey;");
 				square.setFont(Font.font("Helvetica Neue", FontWeight.BOLD, 26));
 			}
 		}
@@ -147,6 +149,8 @@ public class WordleGamePane extends TilePane {
 			}
 			if (validWord(word)) {
 				updateGrid(word);
+			} else {
+				animateInvalidWord();
 			}
 		} else if (currentCol == 5 && letter.length() > 0) { // if out of range do nothing
 			return;
@@ -168,6 +172,27 @@ public class WordleGamePane extends TilePane {
 		}
 	}
 
+	private void animateInvalidWord() {
+		for (int i = 0; i < grid[currentRow].length; i++) {
+			Button button = grid[currentRow][i];
+
+			KeyValue[] keyValues = new KeyValue[] {
+					new KeyValue(button.translateXProperty(), 10, Interpolator.EASE_BOTH),
+					new KeyValue(button.translateXProperty(), -10, Interpolator.EASE_BOTH),
+					new KeyValue(button.translateXProperty(), 10, Interpolator.EASE_BOTH),
+					new KeyValue(button.translateXProperty(), -10, Interpolator.EASE_BOTH),
+					new KeyValue(button.translateXProperty(), 0, Interpolator.EASE_BOTH) };
+
+			KeyFrame[] keyFrames = new KeyFrame[5];
+			for (int j = 0; j < 5; j++) {
+				keyFrames[j] = new KeyFrame(Duration.millis((j + 1) * 100), keyValues[j]);
+			}
+
+			Timeline timeline = new Timeline(keyFrames);
+			timeline.play();
+		}
+	}
+
 	// animates pop effect on buttons when pressed
 	private void animateButtonClick(Button currentButton) {
 		Timeline timeline = new Timeline(
@@ -186,57 +211,26 @@ public class WordleGamePane extends TilePane {
 	// every button will bounce up, then down, then back to its normal position on a
 	// win
 	private void animateWin() {
-		Button button1 = grid[currentRow - 1][0];
-		Button button2 = grid[currentRow - 1][1];
-		Button button3 = grid[currentRow - 1][2];
-		Button button4 = grid[currentRow - 1][3];
-		Button button5 = grid[currentRow - 1][4];
-
 		int bounceUp = -20;
 		int bounceDown = 10;
-
 		int delay = 0;
 
-		Timeline timeline = new Timeline(
+		for (int i = 0; i < grid[currentRow - 1].length; i++) {
+			Button button = grid[currentRow - 1][i];
 
-				new KeyFrame(Duration.millis(delay += 50),
-						new KeyValue(button1.translateYProperty(), bounceUp, Interpolator.EASE_BOTH)),
-				new KeyFrame(Duration.millis(delay += 75),
-						new KeyValue(button1.translateYProperty(), bounceDown, Interpolator.EASE_BOTH)),
-				new KeyFrame(Duration.millis(delay += 100),
-						new KeyValue(button1.translateYProperty(), 0, Interpolator.EASE_BOTH)),
+			KeyValue[] keyValues = new KeyValue[] {
+					new KeyValue(button.translateYProperty(), bounceUp, Interpolator.EASE_BOTH),
+					new KeyValue(button.translateYProperty(), bounceDown, Interpolator.EASE_BOTH),
+					new KeyValue(button.translateYProperty(), 0, Interpolator.EASE_BOTH) };
 
-				new KeyFrame(Duration.millis(delay += 50),
-						new KeyValue(button2.translateYProperty(), bounceUp, Interpolator.EASE_BOTH)),
-				new KeyFrame(Duration.millis(delay += 75),
-						new KeyValue(button2.translateYProperty(), bounceDown, Interpolator.EASE_BOTH)),
-				new KeyFrame(Duration.millis(delay += 100),
-						new KeyValue(button2.translateYProperty(), 0, Interpolator.EASE_BOTH)),
+			KeyFrame[] keyFrames = new KeyFrame[3];
+			for (int j = 0; j < 3; j++) {
+				keyFrames[j] = new KeyFrame(Duration.millis(delay += 50), keyValues[j]);
+			}
 
-				new KeyFrame(Duration.millis(delay += 50),
-						new KeyValue(button3.translateYProperty(), bounceUp, Interpolator.EASE_BOTH)),
-				new KeyFrame(Duration.millis(delay += 75),
-						new KeyValue(button3.translateYProperty(), bounceDown, Interpolator.EASE_BOTH)),
-				new KeyFrame(Duration.millis(delay += 100),
-						new KeyValue(button3.translateYProperty(), 0, Interpolator.EASE_BOTH)),
-
-				new KeyFrame(Duration.millis(delay += 50),
-						new KeyValue(button4.translateYProperty(), bounceUp, Interpolator.EASE_BOTH)),
-				new KeyFrame(Duration.millis(delay += 75),
-						new KeyValue(button4.translateYProperty(), bounceDown, Interpolator.EASE_BOTH)),
-				new KeyFrame(Duration.millis(delay += 100),
-						new KeyValue(button4.translateYProperty(), 0, Interpolator.EASE_BOTH)),
-
-				new KeyFrame(Duration.millis(delay += 50),
-						new KeyValue(button5.translateYProperty(), bounceUp, Interpolator.EASE_BOTH)),
-				new KeyFrame(Duration.millis(delay += 75),
-						new KeyValue(button5.translateYProperty(), bounceDown, Interpolator.EASE_BOTH)),
-				new KeyFrame(Duration.millis(delay += 100),
-						new KeyValue(button5.translateYProperty(), 0, Interpolator.EASE_BOTH))
-
-		);
-
-		timeline.play();
+			Timeline timeline = new Timeline(keyFrames);
+			timeline.play();
+		}
 	}
 
 	// updates buttons and current row and column
@@ -259,37 +253,44 @@ public class WordleGamePane extends TilePane {
 			}
 			win = true;
 		}
-		HashMap<Character, Integer> lettersCountMap = makeHashMap(game.getTargetWord());
+		HashMap<Character, Integer> lettersCountMap = makeHashMap(game.getTargetWord()); // HashMap that counts the
+																						 // letters in the word
+
+		ArrayList<String> statusArray = new ArrayList<>(); // Sets status for each letter
 
 		for (int i = 0; i < 5; i++) {
 			if (word.charAt(i) == game.getTargetWord().charAt(i)) {
 				lettersCountMap.put(game.getTargetWord().charAt(i),
 						lettersCountMap.get(game.getTargetWord().charAt(i)) - 1);
-			} else if (game.getTargetWord().indexOf(word.charAt(i)) != -1) {
+				statusArray.add("Correct");
+			} else if (game.getTargetWord().indexOf(word.charAt(i)) != -1 && lettersCountMap.get(word.charAt(i)) > 0) 
+						// checks if the letter is in the word and is has enough letters to be present
+			{
 				lettersCountMap.put(word.charAt(i), lettersCountMap.get(word.charAt(i)) - 1);
+				statusArray.add("Present");
+			} else {
+				statusArray.add("Incorrect");
+				;
 			}
-		}
-		for (int i = 0; i < 5; i++) {
-			if (word.charAt(i) == game.getTargetWord().charAt(i)) { // if char is in word and in the right spot
-				grid[currentRow][i].setCorrect();
 
-			} else if (!game.getTargetWord().contains(word.substring(i, i + 1))) { // if char is completely not in the
-																					// word
-				grid[currentRow][i].setWrong();
-			} else if (game.getTargetWord().indexOf(word.charAt(i)) != -1 && lettersCountMap.get(word.charAt(i)) >= 0) {
-				// if chat is in the word but not at the right location.
+		}
+
+		for (int i = 0; i < 5; i++) {
+			if (statusArray.get(i) == "Correct") {
+				grid[currentRow][i].setCorrect();
+			} else if (statusArray.get(i) == "Present") {
 				grid[currentRow][i].setPresent();
 			} else {
 				grid[currentRow][i].setWrong();
 			}
 		}
-
 	}
 
 	private HashMap<Character, Integer> makeHashMap(String word) {
 		HashMap<Character, Integer> newMap = new HashMap<>();
 		for (int i = 0; i < word.length(); i++) {
 			if (newMap.containsKey(word.charAt(i))) {
+
 				newMap.put(word.charAt(i), newMap.get(word.charAt(i)) + 1);
 			} else {
 				newMap.put(word.charAt(i), 1);
@@ -342,6 +343,35 @@ public class WordleGamePane extends TilePane {
 	// Sets the keyboard to a KeyBoardPane object
 	public void setKeyboard(KeyBoardPane pane) {
 		keyboard = pane;
+	}
+
+	public void setDarkMode() {
+		for (int i = 0; i < 6; i++) {
+			for (int j = 0; j < 5; j++) {
+				if (grid[i][j].getStatus() == "EMPTY") {
+					grid[i][j].setStyle(
+							"-fx-focus-color: transparent; -fx-faint-focus-color: transparent; -fx-background-color: black;"
+									+ "-fx-border-color:grey;");
+					grid[i][j].setTextFill(Color.WHITE);
+				}
+			}
+		}
+		this.setStyle("-fx-background-color: black;");
+
+	}
+
+	public void setLightMode() {
+		for (int i = 0; i < 6; i++) {
+			for (int j = 0; j < 5; j++) {
+				if (grid[i][j].getStatus() == "EMPTY") {
+					grid[i][j].setStyle(
+							"-fx-focus-color: transparent; -fx-faint-focus-color: transparent; -fx-background-color: white;"
+									+ "-fx-border-color:grey;");
+					grid[i][j].setTextFill(Color.WHITE);
+				}
+			}
+		}
+		this.setStyle("-fx-background-color: white;");
 	}
 }
 

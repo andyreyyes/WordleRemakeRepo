@@ -10,6 +10,7 @@ import javafx.scene.control.MenuBar;
 import javafx.scene.control.MenuItem;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.VBox;
+import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 import javafx.stage.Stage;
 import model.UserAccount;
@@ -19,6 +20,8 @@ public class MainWordleGUI extends Application {
 	private BorderPane pane;
 	
 	private LoginAndCreatePane loginView;
+	
+	private boolean isDarkMode = false;
 
 	private MenuBar menuBar;
 	private Menu home;
@@ -65,6 +68,8 @@ public class MainWordleGUI extends Application {
 		pane = new BorderPane();
 		menuBar = new MenuBar();
 		
+		pane.setStyle("-fx-background-color: white;");
+		
 		home = new Menu("Home");
 		game = new MenuItem("Game");
 		login = new MenuItem("Login");
@@ -79,7 +84,7 @@ public class MainWordleGUI extends Application {
 		
 		newGame = new MenuItem("New Game");
 		
-		settings.getItems().addAll(darkMode, newGame);
+		settings.getItems().addAll(darkMode, lightMode, newGame);
 		
 		stats = new MenuItem("Stats");
 		more.getItems().addAll(settings,stats);
@@ -89,7 +94,7 @@ public class MainWordleGUI extends Application {
 		
 		
 		gamePane = new WordleGamePane();
-		
+		 
 		keyboardPane = new KeyBoardPane();
 		keyboardPane.setGame(gamePane);
 		
@@ -144,6 +149,12 @@ public class MainWordleGUI extends Application {
 			gamePane = new WordleGamePane();
 			keyboardPane = new KeyBoardPane();
 			
+			if (isDarkMode) {
+				gamePane.setDarkMode();
+				keyboardPane.setDarkMode();
+				pane.setStyle("-fx-background-color: black;");
+			}
+			
 			keyboardPane.setGame(gamePane);
 			gamePane.setKeyboard(keyboardPane);
 			
@@ -157,6 +168,22 @@ public class MainWordleGUI extends Application {
 			keyboardPane.setGame(gamePane);
 			gamePane.setKeyboard(keyboardPane);
 			pane.setCenter(mainGameLayout);
+		});
+		darkMode.setOnAction((event) -> {
+			isDarkMode = true;
+			pane.setStyle("-fx-background-color: black;");
+			title.setTextFill(Color.WHITE);
+			gamePane.setDarkMode();
+			
+			keyboardPane.setDarkMode();
+		});
+		lightMode.setOnAction((event) -> {
+			isDarkMode = false;
+			pane.setStyle("-fx-background-color: white;");
+			title.setTextFill(Color.BLACK);
+			gamePane.setLightMode();
+			keyboardPane.setLightMode();
+			
 		});
 	}
 	

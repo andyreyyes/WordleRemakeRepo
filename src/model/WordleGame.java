@@ -16,6 +16,7 @@ public class WordleGame implements Serializable{
 	private int guessAmount;
 	private ArrayList<String> wordList;
 	private boolean win = false;
+
 	
 	public WordleGame() {
 		targetWord = getRandomWord();
