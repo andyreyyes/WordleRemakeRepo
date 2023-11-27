@@ -11,8 +11,10 @@ import javafx.scene.chart.XYChart;
 import javafx.scene.chart.XYChart.Data;
 import javafx.scene.control.Label;
 import javafx.scene.layout.VBox;
+import javafx.scene.paint.Color;
 import model.UserAccount;
 import model.WordleGame;
+import javafx.scene.layout.Background;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
 
@@ -59,6 +61,7 @@ public class StatsPane extends BorderPane {
 	}
 
 	private void initializePane() {
+		
 
 		statsLabel.setStyle(
 				"-fx-text-fill: black; -fx-font-family: 'Times New Roman'; -fx-font-weight: bold; -fx-font-size: 15px;");
@@ -128,6 +131,7 @@ public class StatsPane extends BorderPane {
         		data.getNode().setStyle("-fx-bar-fill: #787c7e");
             }
         }
+
         barChart.setMaxHeight(300);
         barChart.setMaxWidth(300);
 		this.setCenter(mainContainer);
@@ -169,6 +173,62 @@ public class StatsPane extends BorderPane {
 			currentStreakVariable.setText("0");
 			maxStreakvariable.setText("0");
 		}
+	}
+
+	public void setDarkMode() {
+		barChart.lookup(".chart-plot-background").setStyle("-fx-background-color: black;");
+		
+		this.setStyle("-fx-background-color: black;");
+		statsLabel.setStyle(
+				"-fx-text-fill: white; -fx-font-family: 'Times New Roman'; -fx-font-weight: bold; -fx-font-size: 15px;");
+		playedLabel.setStyle("-fx-font-size: 12.5px; -fx-text-fill: white;");
+		winPercentLabel.setStyle("-fx-font-size: 12.5px; -fx-text-fill: white;");
+		currentStreakLabel.setStyle("-fx-font-size: 12.5px; -fx-text-fill: white;");
+		maxStreakLabel.setStyle("-fx-font-size: 12.5px; -fx-text-fill: white;");
+		streakLabel1.setStyle("-fx-font-size: 12.5px; -fx-text-fill: white;");
+		streakLabel2.setStyle("-fx-font-size: 12.5px; -fx-text-fill: white;");
+		
+		playedVariable.setStyle("-fx-text-fill: white");
+		winPercentVariable.setStyle("-fx-text-fill: white");
+		currentStreakVariable.setStyle("-fx-text-fill: white");
+		maxStreakvariable.setStyle("-fx-text-fill: white");
+		
+		xAxis.setStyle("-fx-text-fill: white");
+		
+
+		playedVariable.setStyle("-fx-font-size: 30px; -fx-font-weight: bold; -fx-text-fill: white;");
+		winPercentVariable.setStyle("-fx-font-size: 30px;-fx-font-weight: bold; -fx-text-fill: white;");
+		currentStreakVariable.setStyle("-fx-font-size: 30px;-fx-font-weight: bold; -fx-text-fill: white;");
+		maxStreakvariable.setStyle("-fx-font-size: 30px;-fx-font-weight: bold; -fx-text-fill: white;");
+
+	}
+	
+	public void setLightMode() {
+		this.setStyle("-fx-background-color: white;");
+		
+		barChart.lookup(".chart-plot-background").setStyle("-fx-background-color: white;");
+		
+		statsLabel.setStyle(
+				"-fx-text-fill: black; -fx-font-family: 'Times New Roman'; -fx-font-weight: bold; -fx-font-size: 15px;");
+		playedLabel.setStyle("-fx-font-size: 12.5px; -fx-text-fill: black;");
+		winPercentLabel.setStyle("-fx-font-size: 12.5px; -fx-text-fill: black;");
+		currentStreakLabel.setStyle("-fx-font-size: 12.5px; -fx-text-fill: black;");
+		maxStreakLabel.setStyle("-fx-font-size: 12.5px; -fx-text-fill: black;");
+		streakLabel1.setStyle("-fx-font-size: 12.5px; -fx-text-fill: black;");
+		streakLabel2.setStyle("-fx-font-size: 12.5px; -fx-text-fill: black;");
+		
+		playedVariable.setStyle("-fx-text-fill: black");
+		winPercentVariable.setStyle("-fx-text-fill: black");
+		currentStreakVariable.setStyle("-fx-text-fill: black");
+		maxStreakvariable.setStyle("-fx-text-fill: black");
+		
+		xAxis.setStyle("-fx-text-fill: black");
+
+		playedVariable.setStyle("-fx-font-size: 30px; -fx-font-weight: bold; -fx-text-fill: black;");
+		winPercentVariable.setStyle("-fx-font-size: 30px;-fx-font-weight: bold; -fx-text-fill: black;");
+		currentStreakVariable.setStyle("-fx-font-size: 30px;-fx-font-weight: bold; -fx-text-fill: black;");
+		maxStreakvariable.setStyle("-fx-font-size: 30px;-fx-font-weight: bold; -fx-text-fill: black;");
+
 	}
 
 }

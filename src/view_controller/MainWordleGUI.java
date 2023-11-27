@@ -177,6 +177,7 @@ public class MainWordleGUI extends Application {
 			gamePane.setDarkMode();
 			
 			keyboardPane.setDarkMode();
+			statsView.setDarkMode();
 		});
 		lightMode.setOnAction((event) -> {
 			isDarkMode = false;
@@ -184,6 +185,7 @@ public class MainWordleGUI extends Application {
 			title.setTextFill(Color.BLACK);
 			gamePane.setLightMode();
 			keyboardPane.setLightMode();
+			statsView.setLightMode();
 			
 		});
 	}

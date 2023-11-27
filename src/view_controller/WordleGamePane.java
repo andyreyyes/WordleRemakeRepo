@@ -134,7 +134,7 @@ public class WordleGamePane extends TilePane {
 				square.setStyle(
 						"-fx-focus-color: transparent; -fx-faint-focus-color: transparent; -fx-background-color: white;"
 								+ "-fx-border-color: grey;");
-				square.setFont(Font.font("Helvetica Neue", FontWeight.BOLD, 26));
+				square.setFont(Font.font("Helvetica Neue", FontWeight.BOLD, 25));
 			}
 		}
 	}
