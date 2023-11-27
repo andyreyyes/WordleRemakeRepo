@@ -257,33 +257,20 @@ public class WordleGamePane extends TilePane {
 		HashMap<Character, Integer> lettersCountMap = makeHashMap(game.getTargetWord()); // HashMap that counts the
 																						 // letters in the word
 
-		ArrayList<String> statusArray = new ArrayList<>(); // Sets status for each letter
-
 		for (int i = 0; i < 5; i++) {
 			if (word.charAt(i) == game.getTargetWord().charAt(i)) {
 				lettersCountMap.put(game.getTargetWord().charAt(i),
 						lettersCountMap.get(game.getTargetWord().charAt(i)) - 1);
-				statusArray.add("Correct");
+				grid[currentRow][i].setCorrect();
 			} else if (game.getTargetWord().indexOf(word.charAt(i)) != -1 && lettersCountMap.get(word.charAt(i)) > 0) 
 						// checks if the letter is in the word and is has enough letters to be present
 			{
 				lettersCountMap.put(word.charAt(i), lettersCountMap.get(word.charAt(i)) - 1);
-				statusArray.add("Present");
-			} else {
-				statusArray.add("Incorrect");
-				;
-			}
-
-		}
-
-		for (int i = 0; i < 5; i++) {
-			if (statusArray.get(i) == "Correct") {
-				grid[currentRow][i].setCorrect();
-			} else if (statusArray.get(i) == "Present") {
 				grid[currentRow][i].setPresent();
 			} else {
 				grid[currentRow][i].setWrong();
 			}
+
 		}
 	}
 
@@ -349,7 +336,7 @@ public class WordleGamePane extends TilePane {
 	public void setDarkMode() {
 		for (int i = 0; i < 6; i++) {
 			for (int j = 0; j < 5; j++) {
-				if (grid[i][j].getStatus() == "EMPTY") {
+				if (grid[i][j].getStatus().equals("Empty")) {
 					grid[i][j].setStyle(
 							"-fx-focus-color: transparent; -fx-faint-focus-color: transparent; -fx-background-color: black;"
 									+ "-fx-border-color:grey;");
@@ -364,11 +351,11 @@ public class WordleGamePane extends TilePane {
 	public void setLightMode() {
 		for (int i = 0; i < 6; i++) {
 			for (int j = 0; j < 5; j++) {
-				if (grid[i][j].getStatus() == "EMPTY") {
+				if (grid[i][j].getStatus().equals("Empty")) {
 					grid[i][j].setStyle(
 							"-fx-focus-color: transparent; -fx-faint-focus-color: transparent; -fx-background-color: white;"
 									+ "-fx-border-color:grey;");
-					grid[i][j].setTextFill(Color.WHITE);
+					grid[i][j].setTextFill(Color.BLACK);
 				}
 			}
 		}
