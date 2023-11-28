@@ -1,24 +1,29 @@
 package model;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 
 public class UserAccount implements Serializable {
 	
 	private static final long serialVersionUID = 1L;
 	private String username;
     private String password;
-    private WordleGame currentGame;
     private int gamesPlayed = 0;
     private int gamesWon = 0;
     private int maxStreak = 0;
     private int curStreak = 0;
-    
+    private int[] guessDist = {0,0,0,0,0,0,0};
+    private int prevWinGuess = 0;
     public UserAccount(String username, String password) {
         this.username = username;
         this.password = password;
-        this.currentGame = null;
     }
-
+    public int[] getGuessDist() {
+    	return guessDist;
+    }
+    public int getLastGameGuess() {
+    	return prevWinGuess;
+    }
     // Getters and setters for the attributes
     public String getUsername() {
         return username;
@@ -27,9 +32,22 @@ public class UserAccount implements Serializable {
     public String getPassword() {
         return password;
     }
-
-    public void setCurrentGame(WordleGame game) {
-    	this.currentGame = game;
+    public void addGame(WordleGame game) {
+    	if(game.getWin()) {
+    		guessDist[game.getGuessAmount()] = guessDist[game.getGuessAmount()] + 1;
+        	prevWinGuess = game.getGuessAmount();
+        	curStreak++;
+        	if(curStreak > maxStreak) {
+        		maxStreak = curStreak;
+        	}
+        	gamesWon++;
+        	gamesPlayed++;
+    	}
+    	else {
+    		gamesPlayed++;
+    		curStreak = 0;
+    	}
+  
     }
     public boolean attemptLogin(String pwAttempt) {
     	return password == pwAttempt;

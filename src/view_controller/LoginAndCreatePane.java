@@ -52,8 +52,6 @@ public class LoginAndCreatePane extends VBox {
 			AccountCollection objects = (AccountCollection) inFile.readObject();
 			inFile.close();
 			accounts = (AccountCollection) objects;
-			System.out.println("Read from serialized data file");
-			accounts.printAllNames();
 		} catch (IOException | ClassNotFoundException e) {
 			// making a new file
 			try {
@@ -80,6 +78,7 @@ public class LoginAndCreatePane extends VBox {
 					curAccount = accounts.getAccount(usernameInput.getText(), passwordInput.getText());
 					usernameInput.setText("");
 					passwordInput.setText("");
+					System.out.println(curAccount.getGuessDist());
 
 				} else {
 					informationLabel.setText("Enter a valid username and Password");
@@ -164,7 +163,6 @@ public class LoginAndCreatePane extends VBox {
 			FileOutputStream bytesToDisk = new FileOutputStream("accounts.ser");
 			ObjectOutputStream outFile = new ObjectOutputStream(bytesToDisk);
 			outFile.writeObject(accounts);
-			System.out.println("changed accounts");
 			outFile.close();
 			}
 			catch (IOException ioe) {
