@@ -28,6 +28,8 @@ public class LoginAndCreatePane extends VBox {
 	private TextField usernameInput;
 	private PasswordField passwordInput;
 	private Boolean loggedIn = false;
+	
+	private MainWordleGUI game;
 
 	private Label usernameLabel = new Label("Username: ");
 	private Label passwordLabel = new Label("Password: ");
@@ -37,7 +39,8 @@ public class LoginAndCreatePane extends VBox {
 
 	private Label informationLabel = new Label("Create a new Account or Login");
 
-	public LoginAndCreatePane() {
+	public LoginAndCreatePane(MainWordleGUI game) {
+		this.game = game;
 		setupAccounts();
 		initilizePanel();
 		registerListeners();
@@ -78,6 +81,8 @@ public class LoginAndCreatePane extends VBox {
 					curAccount = accounts.getAccount(usernameInput.getText(), passwordInput.getText());
 					usernameInput.setText("");
 					passwordInput.setText("");
+					game.setGamePane();
+					
 					System.out.println(curAccount.getGuessDist());
 
 				} else {

@@ -18,9 +18,9 @@ import model.UserAccount;
 public class MainWordleGUI extends Application {
 
 	private BorderPane pane;
-	
+
 	private LoginAndCreatePane loginView;
-	
+
 	private boolean isDarkMode = false;
 
 	private MenuBar menuBar;
@@ -28,7 +28,7 @@ public class MainWordleGUI extends Application {
 	private MenuItem stats;
 	private Menu settings;
 	private Menu more;
-	
+
 	private Label title = new Label("		  Briandle");
 	private VBox titleBox;
 
@@ -37,11 +37,11 @@ public class MainWordleGUI extends Application {
 	private MenuItem darkMode;
 	private MenuItem lightMode;
 	private MenuItem newGame;
-	
+
 	private WordleGamePane gamePane;
-	
+
 	private KeyBoardPane keyboardPane;
-	
+
 	private VBox mainGameLayout;
 
 	private StatsPane statsView;
@@ -63,77 +63,74 @@ public class MainWordleGUI extends Application {
 	}
 
 	private void layoutGUI() {
-		loginView = new LoginAndCreatePane();
+		loginView = new LoginAndCreatePane(this);
 		statsView = new StatsPane();
 		pane = new BorderPane();
 		menuBar = new MenuBar();
-		
+
 		pane.setStyle("-fx-background-color: white;");
-		
+
 		home = new Menu("Home");
 		game = new MenuItem("Game");
 		login = new MenuItem("Login");
 		home.getItems().addAll(login, game);
-		
+
 		more = new Menu("More");
-		
+
 		settings = new Menu("Settings");
-		
+
 		darkMode = new MenuItem("Dark Mode");
 		lightMode = new MenuItem("Light Mode");
-		
+
 		newGame = new MenuItem("New Game");
-		
+
 		settings.getItems().addAll(darkMode, lightMode, newGame);
-		
+
 		stats = new MenuItem("Stats");
-		more.getItems().addAll(settings,stats);
-		
+		more.getItems().addAll(settings, stats);
+
 		menuBar.getMenus().addAll(home, more);
 		pane.setTop(menuBar);
-		
-		
+
 		gamePane = new WordleGamePane();
-		 
+
 		keyboardPane = new KeyBoardPane();
 		keyboardPane.setGame(gamePane);
-		
+
 		titleBox = new VBox();
-		
+
 		title.setFont(new Font("Times New Roman", 60));
-		
+
 		titleBox.getChildren().add(title);
-		
+
 		mainGameLayout = new VBox();
-		
+
 		mainGameLayout.getChildren().add(titleBox);
-		
+
 		mainGameLayout.getChildren().addAll(gamePane, keyboardPane);
-		
+
 		mainGameLayout.setAlignment(Pos.CENTER);
 		mainGameLayout.setSpacing(35);
-		
+
 		keyboardPane.setGame(gamePane);
 		gamePane.setKeyboard(keyboardPane);
 		pane.setCenter(mainGameLayout);
 	}
-	
-	
+
 	private void registerListeners() {
 		login.setOnAction((arg0) -> {
 			pane.setCenter(loginView);
 		});
-		stats.setOnAction((arg0) ->{
+		stats.setOnAction((arg0) -> {
 			UserAccount user = loginView.getUser();
 			pane.setCenter(statsView);
 			statsView.updateStats(user);
 		});
 		game.setOnAction((arg0) -> {
 			UserAccount user = loginView.getUser();
-			if(user != null) {
+			if (user != null) {
 				gamePane.setUser(user);
-			}
-			else {
+			} else {
 				gamePane.removeUser();
 			}
 			keyboardPane.setGame(gamePane);
@@ -142,30 +139,29 @@ public class MainWordleGUI extends Application {
 		});
 		newGame.setOnAction((arg0) -> {
 			UserAccount user = loginView.getUser();
-			if(user != null) {
+			if (user != null) {
 				user.addGame(gamePane.getGame());
 			}
-			
+
 			gamePane = new WordleGamePane();
 			keyboardPane = new KeyBoardPane();
-			
+
 			if (isDarkMode) {
 				gamePane.setDarkMode();
 				keyboardPane.setDarkMode();
 				pane.setStyle("-fx-background-color: black;");
 			}
-			
-			
+
 			keyboardPane.setGame(gamePane);
 			gamePane.setKeyboard(keyboardPane);
-			
+
 			mainGameLayout = new VBox();
 			mainGameLayout.getChildren().add(titleBox);
 			mainGameLayout.getChildren().addAll(gamePane, keyboardPane);
-			
+
 			mainGameLayout.setAlignment(Pos.CENTER);
 			mainGameLayout.setSpacing(35);
-			
+
 			keyboardPane.setGame(gamePane);
 			gamePane.setKeyboard(keyboardPane);
 			pane.setCenter(mainGameLayout);
@@ -175,7 +171,7 @@ public class MainWordleGUI extends Application {
 			pane.setStyle("-fx-background-color: black;");
 			title.setTextFill(Color.WHITE);
 			gamePane.setDarkMode();
-			
+
 			keyboardPane.setDarkMode();
 			statsView.setDarkMode();
 		});
@@ -186,10 +182,12 @@ public class MainWordleGUI extends Application {
 			gamePane.setLightMode();
 			keyboardPane.setLightMode();
 			statsView.setLightMode();
-			
+
 		});
 	}
 	
-	
+	public void setGamePane() {
+		pane.setCenter(mainGameLayout);
+	}
 
 }
