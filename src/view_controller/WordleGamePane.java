@@ -262,35 +262,33 @@ public class WordleGamePane extends TilePane {
 	 * This method creates the win animation for when the player wins.
 	 */
 	private void animateWin() {
-		int bounceUp = -20;
-		int bounceDown = 10;
-		int delay = 0;
+        int bounceUp = -20;
+        int bounceDown = 10;
+        int delay = 0;
 
-		for (int i = 0; i < grid[currentRow - 1].length; i++) {
-			Button button = grid[currentRow - 1][i];
+        for (int i = 0; i < grid[currentRow - 1].length; i++) {
+            Button button = grid[currentRow - 1][i];
 
-			KeyValue[] keyValues = new KeyValue[] {
-					new KeyValue(button.translateYProperty(), bounceUp, Interpolator.EASE_BOTH),
-					new KeyValue(button.translateYProperty(), bounceDown, Interpolator.EASE_BOTH),
-					new KeyValue(button.translateYProperty(), 0, Interpolator.EASE_BOTH) };
+            KeyValue[] keyValues = new KeyValue[] {
+                    new KeyValue(button.translateYProperty(), bounceUp, Interpolator.EASE_BOTH),
+                    new KeyValue(button.translateYProperty(), bounceDown, Interpolator.EASE_BOTH),
+                    new KeyValue(button.translateYProperty(), 0, Interpolator.EASE_BOTH) };
 
-			KeyFrame[] keyFrames = new KeyFrame[3];
-			for (int j = 0; j < 3; j++) {
-				keyFrames[j] = new KeyFrame(Duration.millis(delay += 50), keyValues[j]);
-			}
+            KeyFrame[] keyFrames = new KeyFrame[3];
+            for (int j = 0; j < 3; j++) {
+                keyFrames[j] = new KeyFrame(Duration.millis(delay += 50), keyValues[j]);
+            }
 
-			Timeline timeline = new Timeline(keyFrames);
-			timeline.play();
-		}
-		
-		try {
-			TimeUnit.SECONDS.sleep(1);
-			StatsWinPopup.updateStats(user);
-			StatsWinPopup.popUp();
-		} catch (InterruptedException e) {
-			e.printStackTrace();
-		}
-	}
+            Timeline timeline = new Timeline(keyFrames);
+            timeline.play();
+            if (i == grid[currentRow - 1].length-1) {
+                timeline.setOnFinished(event -> {
+                    StatsWinPopup.updateStats(user);
+                    StatsWinPopup.popUp();
+                });
+            }
+        }
+    }
 
 	/**
 	 * This method is used for updating the GUI after the user creates a guess.
