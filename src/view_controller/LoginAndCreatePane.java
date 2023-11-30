@@ -104,6 +104,7 @@ public class LoginAndCreatePane extends VBox {
 					usernameInput.setText("");
 					passwordInput.setText("");
 					game.setGamePane();
+					
 
 					System.out.println(curAccount.getGuessDist());
 

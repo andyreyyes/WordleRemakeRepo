@@ -222,6 +222,8 @@ public class StatsWinPopup {
 		window.setStyle("-fx-background-color: black;");
 		statsLabel.setStyle(
 				"-fx-text-fill: white; -fx-font-family: 'Times New Roman'; -fx-font-weight: bold; -fx-font-size: 15px;");
+		closeLabel.setStyle(
+				"-fx-text-fill: white; -fx-font-family: 'Times New Roman'; -fx-font-weight: bold; -fx-font-size: 15px;");
 		playedLabel.setStyle("-fx-font-size: 12.5px; -fx-text-fill: white;");
 		winPercentLabel.setStyle("-fx-font-size: 12.5px; -fx-text-fill: white;");
 		currentStreakLabel.setStyle("-fx-font-size: 12.5px; -fx-text-fill: white;");

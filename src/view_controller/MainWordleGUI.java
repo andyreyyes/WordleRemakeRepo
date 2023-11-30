@@ -228,6 +228,8 @@ public class MainWordleGUI extends Application {
 	 * back to the game screen automatically after logging in.
 	 */
 	public void setGamePane() {
+		UserAccount user = loginView.getUser();
+		gamePane.setUser(user);
 		pane.setCenter(mainGameLayout);
 	}
 
