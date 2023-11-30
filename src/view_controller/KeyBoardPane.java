@@ -424,17 +424,17 @@ public class KeyBoardPane extends GridPane {
 		this.setStyle("-fx-background-color: black;");
 
 		backKey.setStyle(
-				"-fx-focus-color: transparent; -fx-faint-focus-color: transparent; -fx-background-color: #c1c9c7;");
+				"-fx-focus-color: transparent; -fx-faint-focus-color: transparent; -fx-background-color: #c1c9c7; -fx-font-size: 18");
 		backKey.setTextFill(Color.WHITE);
 
 		enterKey.setStyle(
-				"-fx-focus-color: transparent; -fx-faint-focus-color: transparent; -fx-background-color: #c1c9c7;");
+				"-fx-focus-color: transparent; -fx-faint-focus-color: transparent; -fx-background-color: #c1c9c7; -fx-font-size: 18");
 		enterKey.setTextFill(Color.WHITE);
 
 		for (Button key : keyList) {
 			if (key.getStyle().contains("-fx-background-color: #c1c9c7;")) {
 				key.setStyle(
-						"-fx-focus-color: transparent; -fx-faint-focus-color: transparent; -fx-background-color: #c1c9c7;");
+						"-fx-focus-color: transparent; -fx-faint-focus-color: transparent; -fx-background-color: #c1c9c7; -fx-font-size: 18");
 				key.setTextFill(Color.WHITE);
 
 			}
@@ -448,17 +448,17 @@ public class KeyBoardPane extends GridPane {
 		this.setStyle("-fx-background-color: white;");
 
 		backKey.setStyle(
-				"-fx-focus-color: transparent; -fx-faint-focus-color: transparent; -fx-background-color: #c1c9c7;");
+				"-fx-focus-color: transparent; -fx-faint-focus-color: transparent; -fx-background-color: #c1c9c7; -fx-font-size: 18");
 		backKey.setTextFill(Color.BLACK);
 
 		enterKey.setStyle(
-				"-fx-focus-color: transparent; -fx-faint-focus-color: transparent; -fx-background-color: #c1c9c7;");
+				"-fx-focus-color: transparent; -fx-faint-focus-color: transparent; -fx-background-color: #c1c9c7; -fx-font-size: 18");
 		enterKey.setTextFill(Color.BLACK);
 
 		for (Button key : keyList) {
 			if (key.getStyle().contains("-fx-background-color: #c1c9c7;")) {
 				key.setStyle(
-						"-fx-focus-color: transparent; -fx-faint-focus-color: transparent; -fx-background-color: #c1c9c7;");
+						"-fx-focus-color: transparent; -fx-faint-focus-color: transparent; -fx-background-color: #c1c9c7; -fx-font-size: 18");
 				key.setTextFill(Color.BLACK);
 			}
 
