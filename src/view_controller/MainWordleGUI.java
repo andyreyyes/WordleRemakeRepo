@@ -168,7 +168,6 @@ public class MainWordleGUI extends Application {
 			keyboardPane = new KeyBoardPane();
 			
 			if (user != null) {
-				user.addGame(gamePane.getGame());
 				gamePane.setUser(user);
 			}
 
