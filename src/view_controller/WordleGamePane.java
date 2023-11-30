@@ -150,9 +150,15 @@ public class WordleGamePane extends TilePane {
 			startDelay += 400;
 		}
 		if (win) { // disable buttons on win and animate win
-			timeline.setOnFinished(event -> animateWin());
-			this.setOnKeyPressed(null);
-		}
+            		timeline.setOnFinished(event -> animateWin());
+            		this.setOnKeyPressed(null);
+        	} else if (!win && currentRow == 5) {
+            		timeline.setOnFinished(event -> {
+                		StatsWinPopup.updateStats(user);
+                		StatsWinPopup.popUp();
+            		});
+            		this.setOnKeyPressed(null);
+        	}
 	}
 
 	/**
@@ -303,15 +309,6 @@ public class WordleGamePane extends TilePane {
 		keyboard.updateKeys();
 		currentRow++;
 		currentCol = 0;
-		if (currentRow == 6 && !win) {
-			try {
-				TimeUnit.SECONDS.sleep(0);
-				StatsWinPopup.updateStats(user);
-				StatsWinPopup.popUp();
-			} catch (InterruptedException e) {
-				e.printStackTrace();
-			}
-		}
 	}
 
 	/**
