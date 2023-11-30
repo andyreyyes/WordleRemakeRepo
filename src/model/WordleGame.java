@@ -32,8 +32,9 @@ public class WordleGame implements Serializable{
 		guessAmount = 0;
 	}
 
-	/*
-	 * constructor for testing, allows to set target word
+	/**
+	 * This is another constructor for the class that is used for testing.
+	 * @param word A String that is able to set the target word.
 	 */
 	public WordleGame(String word) {
 		targetWord = word;

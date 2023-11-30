@@ -11,6 +11,9 @@ import java.util.HashMap;
  */
 public class AccountCollection implements Serializable {
 	private static final long serialVersionUID = 1L;
+	/**
+	 * This is used to store the accounts.
+	 */
 	HashMap<String, UserAccount> accounts;
 
 	/**
