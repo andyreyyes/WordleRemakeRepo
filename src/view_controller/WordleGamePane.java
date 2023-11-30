@@ -3,12 +3,11 @@ package view_controller;
 
 import java.util.ArrayList;
 import java.util.HashMap;
-
+import java.util.concurrent.TimeUnit;
 import javafx.animation.Interpolator;
 import javafx.animation.KeyFrame;
 import javafx.animation.KeyValue;
 import javafx.animation.Timeline;
-import javafx.animation.TranslateTransition;
 import javafx.geometry.Orientation;
 import javafx.scene.control.Button;
 import javafx.scene.layout.TilePane;
@@ -45,6 +44,7 @@ public class WordleGamePane extends TilePane {
 	public WordleGamePane() {
 		editPane();
 		makeSquares();
+		StatsWinPopup.initialize();
 
 		System.out.println(game.getTargetWord()); // for testing
 	}
@@ -205,13 +205,11 @@ public class WordleGamePane extends TilePane {
 			currentButton.setText("");
 		} else if (letter.equals("")) {
 			return;
-		} else if (Character.isLetter(letter.charAt(0))) { // changes a character with what key was pressed
-			if (currentRow < 6) {
-				Button currentButton = grid[currentRow][currentCol];
-				currentButton.setText(letter.toUpperCase());
-				currentCol++;
-				animateButtonClick(currentButton);
-			}
+		} else if (Character.isLetter(letter.charAt(0)) && currentRow < 6) { // changes a character with what key was pressed
+			Button currentButton = grid[currentRow][currentCol];
+			currentButton.setText(letter.toUpperCase());
+			currentCol++;
+			animateButtonClick(currentButton);
 		} else {
 			return;
 		}
@@ -284,6 +282,14 @@ public class WordleGamePane extends TilePane {
 			Timeline timeline = new Timeline(keyFrames);
 			timeline.play();
 		}
+		
+		try {
+			TimeUnit.SECONDS.sleep(1);
+			StatsWinPopup.updateStats(user);
+			StatsWinPopup.popUp();
+		} catch (InterruptedException e) {
+			e.printStackTrace();
+		}
 	}
 
 	/**
@@ -299,6 +305,15 @@ public class WordleGamePane extends TilePane {
 		keyboard.updateKeys();
 		currentRow++;
 		currentCol = 0;
+		if (currentRow == 6 && !win) {
+			try {
+				TimeUnit.SECONDS.sleep(0);
+				StatsWinPopup.updateStats(user);
+				StatsWinPopup.popUp();
+			} catch (InterruptedException e) {
+				e.printStackTrace();
+			}
+		}
 	}
 
 	/**
