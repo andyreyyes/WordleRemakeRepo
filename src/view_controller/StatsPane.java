@@ -4,6 +4,7 @@ import java.text.DecimalFormat;
 
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
+import javafx.scene.Group;
 import javafx.scene.chart.BarChart;
 import javafx.scene.chart.CategoryAxis;
 import javafx.scene.chart.NumberAxis;
@@ -14,7 +15,7 @@ import javafx.scene.layout.VBox;
 import model.UserAccount;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
-
+import javafx.scene.layout.StackPane;
 /**
  * This class creates the statsPane that is used in the MainWordleGUI.
  * 
