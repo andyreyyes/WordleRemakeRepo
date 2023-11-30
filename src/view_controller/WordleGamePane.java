@@ -206,10 +206,12 @@ public class WordleGamePane extends TilePane {
 		} else if (letter.equals("")) {
 			return;
 		} else if (Character.isLetter(letter.charAt(0))) { // changes a character with what key was pressed
-			Button currentButton = grid[currentRow][currentCol];
-			currentButton.setText(letter.toUpperCase());
-			currentCol++;
-			animateButtonClick(currentButton);
+			if (currentRow < 6) {
+				Button currentButton = grid[currentRow][currentCol];
+				currentButton.setText(letter.toUpperCase());
+				currentCol++;
+				animateButtonClick(currentButton);
+			}
 		} else {
 			return;
 		}
