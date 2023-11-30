@@ -1,5 +1,7 @@
 package view_controller;
 
+import java.text.DecimalFormat;
+
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.*;
@@ -160,12 +162,7 @@ public class StatsWinPopup {
 		}
 		barChart.setMaxHeight(300);
 		barChart.setMaxWidth(300);
-		if (window.getChildren().isEmpty()) {
-			window.getChildren().add(mainContainer);
-		} else {
-			window.getChildren().clear();
-			window.getChildren().add(mainContainer);
-		}
+		window.getChildren().add(mainContainer);
 
 	}
 	
@@ -175,14 +172,13 @@ public class StatsWinPopup {
 	 * @param user An UserAccount object that is the current user of the game.
 	 */
 	public static void updateStats(UserAccount user) {
-
-
+		
 		if (user != null) {
 			
-			statsLabel.setText("STATISTICS: ");
 			dataSeries.getData().clear();
 			playedVariable.setText("" + user.getGamesPlayed());
-			winPercentVariable.setText("" + user.getWinPercentage());
+			DecimalFormat df = new DecimalFormat("#.#");
+			winPercentVariable.setText("" + (df.format(user.getWinPercentage() * 100)));
 			currentStreakVariable.setText("" + user.getCurStreak());
 			maxStreakvariable.setText("" + user.getMaxStreak());
 
@@ -203,13 +199,18 @@ public class StatsWinPopup {
 				}
 			}
 			xAxis.setUpperBound(user.getGamesPlayed());
+			statsLabel.setText("STATISTICS: ");
 		} else {
-			statsLabel.setText("Create an account or login to see your stats");
 			dataSeries.getData().clear();
+			for (int i = 1; i < 7; i++) {
+				dataSeries.getData().add(new XYChart.Data<>(0, String.valueOf(i)));
+			}
+			
 			playedVariable.setText("0");
 			winPercentVariable.setText("0");
 			currentStreakVariable.setText("0");
 			maxStreakvariable.setText("0");
+			statsLabel.setText("Create an account or login to see your stats");
 		}
 	}
 	

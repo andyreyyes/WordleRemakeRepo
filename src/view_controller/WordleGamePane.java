@@ -289,8 +289,8 @@ public class WordleGamePane extends TilePane {
             timeline.play();
             if (i == grid[currentRow - 1].length-1) {
                 timeline.setOnFinished(event -> {
-                    StatsWinPopup.updateStats(user);
                     StatsWinPopup.popUp();
+                    StatsWinPopup.updateStats(user);
                 });
             }
         }
@@ -327,7 +327,6 @@ public class WordleGamePane extends TilePane {
 		if (currentRow == 5 && !win) {
 			user.addGame(game);
 		}
-		
 		HashMap<Character, Integer> lettersCountMap = makeHashMap(game.getTargetWord()); // HashMap that counts the
 																							// letters in the word
 
