@@ -119,8 +119,9 @@ public class UserAccount implements Serializable {
 	public double getWinPercentage() {
 		if (this.gamesPlayed == 0) {
 			return 0.0;
+		} else {
+			return ((double) this.gamesWon / (double) this.gamesPlayed);
 		}
-		return this.gamesWon / this.gamesPlayed;
 	}
 
 	/**

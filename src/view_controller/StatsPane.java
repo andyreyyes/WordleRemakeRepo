@@ -1,5 +1,7 @@
 package view_controller;
 
+import java.text.DecimalFormat;
+
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.chart.BarChart;
@@ -144,7 +146,8 @@ public class StatsPane extends BorderPane {
 
 			dataSeries.getData().clear();
 			playedVariable.setText("" + user.getGamesPlayed());
-			winPercentVariable.setText("" + (user.getWinPercentage() * 100));
+			DecimalFormat df = new DecimalFormat("#.#");
+			winPercentVariable.setText("" + (df.format(user.getWinPercentage() * 100)));
 			currentStreakVariable.setText("" + user.getCurStreak());
 			maxStreakvariable.setText("" + user.getMaxStreak());
 

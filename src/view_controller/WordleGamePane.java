@@ -324,6 +324,9 @@ public class WordleGamePane extends TilePane {
 			}
 			win = true;
 		}
+		if (currentRow == 5 && !win) {
+			user.addGame(game);
+		}
 		HashMap<Character, Integer> lettersCountMap = makeHashMap(game.getTargetWord()); // HashMap that counts the
 																							// letters in the word
 
