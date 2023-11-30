@@ -1,7 +1,5 @@
 package view_controller;
 
-import java.awt.event.KeyEvent;
-import javafx.event.EventHandler;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.*;
@@ -11,13 +9,17 @@ import javafx.scene.chart.NumberAxis;
 import javafx.scene.chart.XYChart;
 import javafx.scene.chart.XYChart.Data;
 import javafx.scene.control.*;
-import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.stage.*;
 import model.UserAccount;
 
-
+/**
+ * This class creates the popup that displays the stats of a user after a win or loss.
+ * 
+ * @author Adler Nugyen and John Le.
+ *
+ */
 public class StatsWinPopup {
 
 	private static VBox window = new VBox();
@@ -59,7 +61,10 @@ public class StatsWinPopup {
 	static Stage popup = new Stage();
 	
 	static Scene scene;
-
+	
+	/**
+	 * This method is the constructor of the class and calls the initializePane.
+	 */
 	public static void initialize() {
 		if (!set) {
 			set = true;
@@ -73,11 +78,17 @@ public class StatsWinPopup {
 		}
 	}
 
+	/**
+	 * This method makes the window show/popup onto the screen and initializes the register listeners.
+	 */
 	public static void popUp() {
 		registerListeners();
 		popup.show();
 	}
-
+	
+	/**
+	 * This method initializes all of the different components used in the class.
+	 */
 	private static void initializePane() {
 		statsLabel.setStyle(
 				"-fx-text-fill: black; -fx-font-family: 'Times New Roman'; -fx-font-weight: bold; -fx-font-size: 15px;");
@@ -157,7 +168,12 @@ public class StatsWinPopup {
 		}
 
 	}
-
+	
+	/**
+	 * This method updates the stats of the current user
+	 * 
+	 * @param user An UserAccount object that is the current user of the game.
+	 */
 	public static void updateStats(UserAccount user) {
 
 
@@ -197,6 +213,71 @@ public class StatsWinPopup {
 		}
 	}
 	
+	/**
+	 * This method sets the StatsWinPopup to dark mode.
+	 */
+	public static void setDarkMode() {
+		barChart.lookup(".chart-plot-background").setStyle("-fx-background-color: black;");
+
+		window.setStyle("-fx-background-color: black;");
+		statsLabel.setStyle(
+				"-fx-text-fill: white; -fx-font-family: 'Times New Roman'; -fx-font-weight: bold; -fx-font-size: 15px;");
+		playedLabel.setStyle("-fx-font-size: 12.5px; -fx-text-fill: white;");
+		winPercentLabel.setStyle("-fx-font-size: 12.5px; -fx-text-fill: white;");
+		currentStreakLabel.setStyle("-fx-font-size: 12.5px; -fx-text-fill: white;");
+		maxStreakLabel.setStyle("-fx-font-size: 12.5px; -fx-text-fill: white;");
+		streakLabel1.setStyle("-fx-font-size: 12.5px; -fx-text-fill: white;");
+		streakLabel2.setStyle("-fx-font-size: 12.5px; -fx-text-fill: white;");
+
+		playedVariable.setStyle("-fx-text-fill: white");
+		winPercentVariable.setStyle("-fx-text-fill: white");
+		currentStreakVariable.setStyle("-fx-text-fill: white");
+		maxStreakvariable.setStyle("-fx-text-fill: white");
+
+		xAxis.setStyle("-fx-text-fill: white");
+
+		playedVariable.setStyle("-fx-font-size: 30px; -fx-font-weight: bold; -fx-text-fill: white;");
+		winPercentVariable.setStyle("-fx-font-size: 30px;-fx-font-weight: bold; -fx-text-fill: white;");
+		currentStreakVariable.setStyle("-fx-font-size: 30px;-fx-font-weight: bold; -fx-text-fill: white;");
+		maxStreakvariable.setStyle("-fx-font-size: 30px;-fx-font-weight: bold; -fx-text-fill: white;");
+
+	}
+	
+	/**
+	 * This method sets the StatsWinPopup to light mode.
+	 */
+	public static void setLightMode() {
+		window.setStyle("-fx-background-color: white;");
+
+		barChart.lookup(".chart-plot-background").setStyle("-fx-background-color: white;");
+
+		statsLabel.setStyle(
+				"-fx-text-fill: black; -fx-font-family: 'Times New Roman'; -fx-font-weight: bold; -fx-font-size: 15px;");
+		playedLabel.setStyle("-fx-font-size: 12.5px; -fx-text-fill: black;");
+		winPercentLabel.setStyle("-fx-font-size: 12.5px; -fx-text-fill: black;");
+		currentStreakLabel.setStyle("-fx-font-size: 12.5px; -fx-text-fill: black;");
+		maxStreakLabel.setStyle("-fx-font-size: 12.5px; -fx-text-fill: black;");
+		streakLabel1.setStyle("-fx-font-size: 12.5px; -fx-text-fill: black;");
+		streakLabel2.setStyle("-fx-font-size: 12.5px; -fx-text-fill: black;");
+
+		playedVariable.setStyle("-fx-text-fill: black");
+		winPercentVariable.setStyle("-fx-text-fill: black");
+		currentStreakVariable.setStyle("-fx-text-fill: black");
+		maxStreakvariable.setStyle("-fx-text-fill: black");
+
+		xAxis.setStyle("-fx-text-fill: black");
+
+		playedVariable.setStyle("-fx-font-size: 30px; -fx-font-weight: bold; -fx-text-fill: black;");
+		winPercentVariable.setStyle("-fx-font-size: 30px;-fx-font-weight: bold; -fx-text-fill: black;");
+		currentStreakVariable.setStyle("-fx-font-size: 30px;-fx-font-weight: bold; -fx-text-fill: black;");
+		maxStreakvariable.setStyle("-fx-font-size: 30px;-fx-font-weight: bold; -fx-text-fill: black;");
+
+	}
+	
+	/**
+	 * This method regisers two listeners for the pop up window. They both use lambda
+	 * expressions
+	 */
 	public static void registerListeners() {
 		
 		scene.setOnMousePressed((event) -> {

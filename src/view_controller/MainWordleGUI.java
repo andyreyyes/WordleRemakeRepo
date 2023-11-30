@@ -2,7 +2,6 @@ package view_controller;
 
 import javafx.application.Application;
 import javafx.geometry.Pos;
-import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.control.Label;
 import javafx.scene.control.Menu;
@@ -198,10 +197,10 @@ public class MainWordleGUI extends Application {
 			pane.setStyle("-fx-background-color: black;");
 			title.setTextFill(Color.WHITE);
 			gamePane.setDarkMode();
-
 			keyboardPane.setDarkMode();
 			statsView.setDarkMode();
 			loginView.setDarkMode();
+			StatsWinPopup.setDarkMode();
 			
 			UserAccount user = loginView.getUser();
 			
@@ -215,6 +214,7 @@ public class MainWordleGUI extends Application {
 			keyboardPane.setLightMode();
 			statsView.setLightMode();
 			loginView.setLightMode();
+			StatsWinPopup.setLightMode();
 			
 			UserAccount user = loginView.getUser();
 			
