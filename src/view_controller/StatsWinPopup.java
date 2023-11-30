@@ -69,7 +69,7 @@ public class StatsWinPopup {
 		if (!set) {
 			set = true;
 			initializePane();
-			scene = new Scene(window, 350, 375);
+			scene = new Scene(window, 500, 450);
 
 			popup.setResizable(false);
 
