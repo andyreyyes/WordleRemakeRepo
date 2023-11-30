@@ -30,6 +30,7 @@ public class StatsPane extends BorderPane {
 
 	private HBox statsContainer = new HBox();
 	private VBox mainContainer = new VBox();
+	
 
 	private VBox playedContainer = new VBox();
 	private VBox winPercentContainer = new VBox();
@@ -143,11 +144,12 @@ public class StatsPane extends BorderPane {
 	 * @param user An UserAccount object that is the current user of the game.
 	 */
 	public void updateStats(UserAccount user) {
+		
 		if (user != null) {
 
 			dataSeries.getData().clear();
 			playedVariable.setText("" + user.getGamesPlayed());
-			winPercentVariable.setText("" + user.getWinPercentage());
+			winPercentVariable.setText("" + (user.getWinPercentage() * 100));
 			currentStreakVariable.setText("" + user.getCurStreak());
 			maxStreakvariable.setText("" + user.getMaxStreak());
 

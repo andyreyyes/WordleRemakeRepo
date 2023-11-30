@@ -15,6 +15,7 @@ import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
+import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 import model.AccountCollection;
 import model.UserAccount;
@@ -218,6 +219,23 @@ public class LoginAndCreatePane extends VBox {
 			Platform.exit();
 			System.exit(0);
 		});
+	}
+	
+	public void setDarkMode() {
+		usernameLabel.setTextFill(Color.WHITE);
+		passwordLabel.setTextFill(Color.WHITE);
+		informationLabel.setTextFill(Color.WHITE);
+
+		this.setStyle("-fx-background-color: black;");
+	}
+	
+	public void setLightMode() {
+		usernameLabel.setTextFill(Color.BLACK);
+		passwordLabel.setTextFill(Color.BLACK);
+		informationLabel.setTextFill(Color.BLACK);
+		
+		this.setStyle("-fx-background-color: white;");
+		
 	}
 
 }

@@ -199,6 +199,11 @@ public class MainWordleGUI extends Application {
 
 			keyboardPane.setDarkMode();
 			statsView.setDarkMode();
+			loginView.setDarkMode();
+			
+			UserAccount user = loginView.getUser();
+			
+			statsView.updateStats(user);
 		});
 		lightMode.setOnAction((event) -> {
 			isDarkMode = false;
@@ -207,6 +212,11 @@ public class MainWordleGUI extends Application {
 			gamePane.setLightMode();
 			keyboardPane.setLightMode();
 			statsView.setLightMode();
+			loginView.setLightMode();
+			
+			UserAccount user = loginView.getUser();
+			
+			statsView.updateStats(user);
 
 		});
 	}
