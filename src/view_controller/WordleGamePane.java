@@ -289,8 +289,8 @@ public class WordleGamePane extends TilePane {
             timeline.play();
             if (i == grid[currentRow - 1].length-1) {
                 timeline.setOnFinished(event -> {
-                    StatsWinPopup.updateStats(user);
                     StatsWinPopup.popUp();
+                    StatsWinPopup.updateStats(user);
                 });
             }
         }
