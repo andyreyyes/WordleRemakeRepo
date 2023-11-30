@@ -3,6 +3,7 @@ package view_controller;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.concurrent.TimeUnit;
 
 import javafx.animation.Interpolator;
 import javafx.animation.KeyFrame;
@@ -45,6 +46,7 @@ public class WordleGamePane extends TilePane {
 	public WordleGamePane() {
 		editPane();
 		makeSquares();
+		StatsWinPopup.initialize();
 
 		System.out.println(game.getTargetWord()); // for testing
 	}
@@ -281,6 +283,14 @@ public class WordleGamePane extends TilePane {
 
 			Timeline timeline = new Timeline(keyFrames);
 			timeline.play();
+		}
+		
+		try {
+			TimeUnit.SECONDS.sleep(1);
+			StatsWinPopup.updateStats(user);
+			StatsWinPopup.popUp();
+		} catch (InterruptedException e) {
+			e.printStackTrace();
 		}
 	}
 

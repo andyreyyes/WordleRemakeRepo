@@ -1,7 +1,6 @@
 package view_controller;
 
 import java.util.ArrayList;
-
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.control.Button;
@@ -66,7 +65,7 @@ public class KeyBoardPane extends GridPane {
 	private WordleGamePane game;
 
 	private Square[][] squareList;
-
+	
 	/**
 	 * This method is the constructor of the class that initializes all of the
 	 * components that is used in this pane.
@@ -74,15 +73,16 @@ public class KeyBoardPane extends GridPane {
 	public KeyBoardPane() {
 		initialize();
 	}
-
+	
 	/**
 	 * This method initializes all the different components that will be used.
 	 */
+	@SuppressWarnings("static-access")
 	private void initialize() {
 		this.setStyle("-fx-background-color: white;");
 		// Constructs the keyboard
-		this.setMinWidth(365);
-		this.setMaxWidth(365);
+		this.setMinWidth(550);
+		this.setMaxWidth(550);
 		this.setMinHeight(150);
 		this.setMaxHeight(150);
 
@@ -161,6 +161,8 @@ public class KeyBoardPane extends GridPane {
 		keyRow3.getChildren().addAll(enterKey, zKey, xKey, cKey, vKey, bKey, nKey, mKey, backKey);
 
 		keyColumn.getChildren().addAll(keyRow1, keyRow2, keyRow3);
+		
+		keyRow3.setMinWidth(500);
 
 		keyRow1.setAlignment(Pos.CENTER);
 		keyRow2.setAlignment(Pos.CENTER);
@@ -171,10 +173,21 @@ public class KeyBoardPane extends GridPane {
 		this.add(keyColumn, 0, 0);
 
 		createList();
-
+		
+		for (Button keys : keyList) {
+			keys.setMinSize(keyColumn.USE_PREF_SIZE, keyColumn.USE_PREF_SIZE);
+			keys.setStyle("-fx-focus-color: transparent; -fx-faint-focus-color: transparent; -fx-background-color: #c1c9c7; -fx-font-size: 18");
+		}
+		
+		backKey.setStyle(
+				"-fx-focus-color: transparent; -fx-faint-focus-color: transparent; -fx-background-color: #c1c9c7; -fx-font-size: 18");
+		
+		enterKey.setStyle(
+				"-fx-focus-color: transparent; -fx-faint-focus-color: transparent; -fx-background-color: #c1c9c7; -fx-font-size: 18");
+		
 		registerHandlers();
 	}
-
+	
 	/**
 	 * This method registers the handlers of all the components used in this pane.
 	 */
@@ -298,7 +311,7 @@ public class KeyBoardPane extends GridPane {
 		});
 
 	}
-
+	
 	/**
 	 * This method sets the game that is used for the keyboard.
 	 * 
@@ -318,7 +331,7 @@ public class KeyBoardPane extends GridPane {
 	public void setGrid(Square[][] grid) {
 		squareList = grid;
 	}
-
+	
 	/**
 	 * This method updates each of the keys after a guess is processed.
 	 */
@@ -335,7 +348,7 @@ public class KeyBoardPane extends GridPane {
 					if ((keys.getText().equals(letter)) && !keys.getStyle().contains("-fx-background-color: green")
 							&& !keys.getStyle().contains("-fx-background-color: gold")) {
 						keys.setStyle(
-								"-fx-focus-color: transparent; -fx-faint-focus-color: transparent; -fx-background-color: gray;");
+								"-fx-focus-color: transparent; -fx-faint-focus-color: transparent; -fx-background-color: gray; -fx-font-size: 18");
 					}
 				}
 				break;
@@ -344,7 +357,7 @@ public class KeyBoardPane extends GridPane {
 				for (Button keys : keyList) {
 					if ((keys.getText().equals(letter)) && !keys.getStyle().contains("-fx-background-color: green")) {
 						keys.setStyle(
-								"-fx-focus-color: transparent; -fx-faint-focus-color: transparent; -fx-background-color: gold;");
+								"-fx-focus-color: transparent; -fx-faint-focus-color: transparent; -fx-background-color: gold; -fx-font-size: 18");
 					}
 				}
 				break;
@@ -353,14 +366,14 @@ public class KeyBoardPane extends GridPane {
 				for (Button keys : keyList) {
 					if ((keys.getText().equals(letter))) {
 						keys.setStyle(
-								"-fx-focus-color: transparent; -fx-faint-focus-color: transparent; -fx-background-color: green;");
+								"-fx-focus-color: transparent; -fx-faint-focus-color: transparent; -fx-background-color: green; -fx-font-size: 18");
 					}
 				}
 				break;
 			}
 		}
 	}
-
+	
 	/**
 	 * This method creates an ArrayList of KeyButtons that is used to help.
 	 */
@@ -403,7 +416,7 @@ public class KeyBoardPane extends GridPane {
 		keyList.add(nKey);
 		keyList.add(mKey);
 	}
-
+	
 	/**
 	 * This method sets the keyboard pane to dark mode.
 	 */
@@ -427,7 +440,7 @@ public class KeyBoardPane extends GridPane {
 			}
 		}
 	}
-
+	
 	/**
 	 * This method sets the keyboard pane to light mode.
 	 */

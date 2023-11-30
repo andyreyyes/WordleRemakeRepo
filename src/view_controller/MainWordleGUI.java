@@ -164,12 +164,14 @@ public class MainWordleGUI extends Application {
 		});
 		newGame.setOnAction((arg0) -> {
 			UserAccount user = loginView.getUser();
-			if (user != null) {
-				user.addGame(gamePane.getGame());
-			}
-
+			
 			gamePane = new WordleGamePane();
 			keyboardPane = new KeyBoardPane();
+			
+			if (user != null) {
+				user.addGame(gamePane.getGame());
+				gamePane.setUser(user);
+			}
 
 			if (isDarkMode) {
 				gamePane.setDarkMode();
