@@ -176,6 +176,7 @@ public class StatsWinPopup {
 		if (user != null) {
 			
 			dataSeries.getData().clear();
+
 			playedVariable.setText("" + user.getGamesPlayed());
 			DecimalFormat df = new DecimalFormat("#.#");
 			winPercentVariable.setText("" + (df.format(user.getWinPercentage() * 100)));
@@ -186,17 +187,8 @@ public class StatsWinPopup {
 			int prevWin = user.getLastGameGuess();
 
 			for (int i = 1; i < 7; i++) {
-				dataSeries.getData().add(new XYChart.Data<>(guessDist[i], String.valueOf(i)));
-			}
-			// Apply styles directly in Java code
-			for (Data<Number, String> data : dataSeries.getData()) {
-				if (data != null) {
-					if (data.getYValue().equals(String.valueOf(prevWin))) {
-						data.getNode().setStyle("-fx-bar-fill: #538d4e");
-					} else {
-						data.getNode().setStyle("-fx-bar-fill: #787c7e");
-					}
-				}
+				System.out.println(i + ":" + guessDist[i]);
+				dataSeries.getData().add(createData(guessDist[i], String.valueOf(i), prevWin));
 			}
 			xAxis.setUpperBound(user.getGamesPlayed());
 			statsLabel.setText("STATISTICS: ");
@@ -212,6 +204,38 @@ public class StatsWinPopup {
 			maxStreakvariable.setText("0");
 			statsLabel.setText("Create an account or login to see your stats");
 		}
+	}
+
+	/**
+	 * Creates a customized XYChart.Data instance with the given x and y values. The
+	 * node of the data includes a label with the x value. If the y value matches
+	 * the previous win, the bar color is set to green; otherwise, it's set to gray.
+	 *
+	 * @param x       The x-axis value.
+	 * @param y       The y-axis value.
+	 * @param prevWin The value indicating the previous win.
+	 * @return A customized XYChart.Data instance.
+	 */
+	private static XYChart.Data createData(Number x, String y, int prevWin) {
+		XYChart.Data data = new XYChart.Data(x, y);
+
+		String text = x.toString();
+
+		StackPane node = new StackPane();
+		Label label = new Label(text);
+		Group group = new Group(label);
+		StackPane.setAlignment(group, Pos.BOTTOM_RIGHT);
+		StackPane.setMargin(group, new Insets(5, 5, 5, 5));
+		node.getChildren().add(group);
+		data.setNode(node);
+		if (data.getYValue().equals(String.valueOf(prevWin))) {
+			data.getNode().setStyle("-fx-bar-fill: #538d4e");
+		} else {
+			data.getNode().setStyle("-fx-bar-fill: #787c7e");
+		}
+
+		return data;
+
 	}
 	
 	/**
