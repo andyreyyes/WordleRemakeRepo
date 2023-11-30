@@ -19,6 +19,13 @@ import javafx.util.Duration;
 import model.UserAccount;
 import model.WordleGame;
 
+/**
+ * This class creates the pane that displays the guesses and the correct and
+ * incorrect guesses.
+ * 
+ * @author Brian Nguyen and Andy Reyes.
+ *
+ */
 public class WordleGamePane extends TilePane {
 
 	WordleGame game = new WordleGame(); // Wordle game
@@ -31,21 +38,45 @@ public class WordleGamePane extends TilePane {
 	int currentRow = 0;
 	int currentCol = 0;
 
+	/**
+	 * This is the constructor of the class that initializes the pane and makes the
+	 * squares.
+	 */
 	public WordleGamePane() {
 		editPane();
 		makeSquares();
 
 		System.out.println(game.getTargetWord()); // for testing
 	}
+
+	/**
+	 * This method gets the current game.
+	 * 
+	 * @return The current game.
+	 */
 	public WordleGame getGame() {
 		return this.game;
 	}
+
+	/**
+	 * This method sets the user to the current game.
+	 * 
+	 * @param newUser An UserAccount that it going to play the current game.
+	 */
 	public void setUser(UserAccount newUser) {
 		user = newUser;
 	}
+
+	/**
+	 * This method removes the user from the current game.
+	 */
 	public void removeUser() {
 		user = null;
 	}
+
+	/**
+	 * This method creates the visuals for the pane.
+	 */
 	private void editPane() {
 		this.setStyle("-fx-background-color: white;");
 		this.setMaxSize(400, 600);
@@ -57,7 +88,10 @@ public class WordleGamePane extends TilePane {
 		this.setOnKeyPressed(event -> keyPress(event.getText(), String.valueOf(event.getCode())));
 	}
 
-	// changes the color of the spaces in the row (and disables buttons on win)
+	/**
+	 * This method updates the buttons on each guess. It also creates the animations
+	 * for each square.
+	 */
 	public void updateRowColors() {
 		int delay = 400;
 		int startDelay = 400;
@@ -121,7 +155,9 @@ public class WordleGamePane extends TilePane {
 		}
 	}
 
-	// makes the squares of the grids
+	/**
+	 * This method creates the squares that are used to hold the guesses.
+	 */
 	private void makeSquares() {
 		for (int i = 0; i < 6; i++) {
 			for (int j = 0; j < 5; j++) {
@@ -139,7 +175,13 @@ public class WordleGamePane extends TilePane {
 		}
 	}
 
-	// on a key press
+	/**
+	 * This method registers all the keys that are pressed.
+	 * 
+	 * @param letter  A String that represents the current letter that was typed
+	 * @param keyCode A String that represents if either enter or backspace was
+	 *                pressed.
+	 */
 	public void keyPress(String letter, String keyCode) {
 		if (win) { // cant type after win
 			return;
@@ -173,6 +215,9 @@ public class WordleGamePane extends TilePane {
 		}
 	}
 
+	/**
+	 * This method creates the shake animation when the word is invalid.
+	 */
 	private void animateInvalidWord() {
 		for (int i = 0; i < grid[currentRow].length; i++) {
 			Button button = grid[currentRow][i];
@@ -194,7 +239,11 @@ public class WordleGamePane extends TilePane {
 		}
 	}
 
-	// animates pop effect on buttons when pressed
+	/**
+	 * This method creates the pop effect when typing.
+	 * 
+	 * @param currentButton The current Button.
+	 */
 	private void animateButtonClick(Button currentButton) {
 		Timeline timeline = new Timeline(
 				new KeyFrame(Duration.millis(100),
@@ -209,8 +258,9 @@ public class WordleGamePane extends TilePane {
 		timeline.play();
 	}
 
-	// every button will bounce up, then down, then back to its normal position on a
-	// win
+	/**
+	 * This method creates the win animation for when the player wins.
+	 */
 	private void animateWin() {
 		int bounceUp = -20;
 		int bounceDown = 10;
@@ -234,7 +284,11 @@ public class WordleGamePane extends TilePane {
 		}
 	}
 
-	// updates buttons and current row and column
+	/**
+	 * This method is used for updating the GUI after the user creates a guess.
+	 * 
+	 * @param word A String that is the word the user guessed.
+	 */
 	private void updateGrid(String word) {
 		setStatusOfButtons(word);
 		updateRowColors();
@@ -245,25 +299,29 @@ public class WordleGamePane extends TilePane {
 		currentCol = 0;
 	}
 
-	// Checks for win, and also changes the status of the spaces
+	/**
+	 * This method sets the status of each of the buttons based on the users guess.
+	 * 
+	 * @param word A String which is the users guess
+	 */
 	private void setStatusOfButtons(String word) {
 		word = word.toLowerCase();
 		if (game.processGuess(word)) {
-			if(user != null) {
+			if (user != null) {
 				user.addGame(game);
 			}
 			win = true;
 		}
 		HashMap<Character, Integer> lettersCountMap = makeHashMap(game.getTargetWord()); // HashMap that counts the
-																						 // letters in the word
+																							// letters in the word
 
 		for (int i = 0; i < 5; i++) {
 			if (word.charAt(i) == game.getTargetWord().charAt(i)) {
 				lettersCountMap.put(game.getTargetWord().charAt(i),
 						lettersCountMap.get(game.getTargetWord().charAt(i)) - 1);
 				grid[currentRow][i].setCorrect();
-			} else if (game.getTargetWord().indexOf(word.charAt(i)) != -1 && lettersCountMap.get(word.charAt(i)) > 0) 
-						// checks if the letter is in the word and is has enough letters to be present
+			} else if (game.getTargetWord().indexOf(word.charAt(i)) != -1 && lettersCountMap.get(word.charAt(i)) > 0)
+			// checks if the letter is in the word and is has enough letters to be present
 			{
 				lettersCountMap.put(word.charAt(i), lettersCountMap.get(word.charAt(i)) - 1);
 				grid[currentRow][i].setPresent();
@@ -274,6 +332,14 @@ public class WordleGamePane extends TilePane {
 		}
 	}
 
+	/**
+	 * This is a helper method that creates a HashMap that counts each letter in the
+	 * word. This is then used in order to set the color of each button based on a
+	 * guess.
+	 * 
+	 * @param word A String which is the word the user needs to guess.
+	 * @return A HashMap that counts the letters in a string,
+	 */
 	private HashMap<Character, Integer> makeHashMap(String word) {
 		HashMap<Character, Integer> newMap = new HashMap<>();
 		for (int i = 0; i < word.length(); i++) {
@@ -287,7 +353,12 @@ public class WordleGamePane extends TilePane {
 		return newMap;
 	}
 
-	// Checks if word is able to be used
+	/**
+	 * This method checks if the users guess is a valid word.
+	 * 
+	 * @param word A String that is the users guess.
+	 * @return A Boolean that is true if the word is valid.
+	 */
 	private boolean validWord(String word) {
 		for (int i = 0; i < word.length(); i++) { // loop that adds to lettersUsed
 			if (!lettersUsed.contains(word.charAt(i))) {
@@ -300,23 +371,45 @@ public class WordleGamePane extends TilePane {
 		return true;
 	}
 
+	/**
+	 * This is a getter method that returns the ArrayList of characters used.
+	 * 
+	 * @return An ArrayList of the letters used in a guess.
+	 */
 	public ArrayList<Character> getLettersUsed() {
 		return lettersUsed;
 	}
 
+	/**
+	 * This method returns the current column.
+	 * 
+	 * @return An Integer that is the current column.
+	 */
 	public int getColumn() {
 		return currentCol;
 	}
 
+	/**
+	 * This method returns the current row.
+	 * 
+	 * @return An Integer that is the current row.
+	 */
 	public int getRow() {
 		return currentRow;
 	}
 
+	/**
+	 * This method returns the grid.
+	 * 
+	 * @return A 2d Square array that represents the game.
+	 */
 	public Square[][] getGrid() {
 		return grid;
 	}
 
-	// Prints the grid for testing
+	/**
+	 * This method returns a String version of the grid.
+	 */
 	public String toString() {
 		String ret = "";
 		for (int i = 0; i < 6; i++) {
@@ -328,11 +421,18 @@ public class WordleGamePane extends TilePane {
 		return ret;
 	}
 
-	// Sets the keyboard to a KeyBoardPane object
+	/**
+	 * This method sets the keyboard to a KeyBoardPane object.
+	 * 
+	 * @param pane A KeyBoardPane object that is the current keyboard for the game.
+	 */
 	public void setKeyboard(KeyBoardPane pane) {
 		keyboard = pane;
 	}
 
+	/**
+	 * This method sets the game to dark mode.
+	 */
 	public void setDarkMode() {
 		for (int i = 0; i < 6; i++) {
 			for (int j = 0; j < 5; j++) {
@@ -348,6 +448,9 @@ public class WordleGamePane extends TilePane {
 
 	}
 
+	/**
+	 * This method sets the game to light mode.
+	 */
 	public void setLightMode() {
 		for (int i = 0; i < 6; i++) {
 			for (int j = 0; j < 5; j++) {
@@ -363,40 +466,78 @@ public class WordleGamePane extends TilePane {
 	}
 }
 
+/**
+ * This class is used as the squares the show the guesses.
+ * 
+ * @author Brian Nguyen
+ *
+ */
 class Square extends Button {
 	char letter;
 	String status;
 
+	/**
+	 * This is the constructor of the class that sets the status to empty and the
+	 * letter to a period.
+	 */
 	public Square() {
 		letter = '.';
 		status = "Empty";
 	}
 
+	/**
+	 * This method sets the letter to the letter that is passed in. It also updates
+	 * the square.
+	 * 
+	 * @param letter A Character that is a letter thats passed in from a user guess.
+	 */
 	public void setSpace(char letter) {
 		this.letter = letter;
 		this.setText(String.valueOf(letter));
 	}
 
+	/**
+	 * This method returns the String value of the Square.
+	 */
 	public String toString() {
 		return String.valueOf(letter);
 	}
 
+	/**
+	 * This method sets the status of the square to Wrong.
+	 */
 	void setWrong() {
 		status = "Wrong";
 	}
 
+	/**
+	 * This method sets the status of the square to Present.
+	 */
 	void setPresent() {
 		status = "Present";
 	}
 
+	/**
+	 * This method sets the status of the square to Correct.
+	 */
 	void setCorrect() {
 		status = "Correct";
 	}
 
+	/**
+	 * This method sets the status to what ever is passed in.
+	 * 
+	 * @param status A String that the user passes in.
+	 */
 	void setStatus(String status) {
 		this.status = status;
 	}
 
+	/**
+	 * This method returns the status of the Square.
+	 * 
+	 * @return A String which is the status of the Square.
+	 */
 	String getStatus() {
 		return status;
 	}

@@ -19,7 +19,10 @@ import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
 
 /**
- * This class handles a stats pane
+ * This class creates the statsPane that is used in the MainWordleGUI.
+ * 
+ * @author Adler Nguyen
+ *
  */
 public class StatsPane extends BorderPane {
 
@@ -46,35 +49,37 @@ public class StatsPane extends BorderPane {
 	private Label emptyLabel1 = new Label(" ");
 	private Label emptyLabel2 = new Label(" ");
 
-
 	private Label maxStreakLabel = new Label("Max");
-	
+
 	NumberAxis xAxis = new NumberAxis();
 	CategoryAxis yAxis = new CategoryAxis();
-    BarChart<Number, String> barChart = new BarChart<>(xAxis, yAxis);
-    XYChart.Series<Number, String> dataSeries = new XYChart.Series<>();
+	BarChart<Number, String> barChart = new BarChart<>(xAxis, yAxis);
+	XYChart.Series<Number, String> dataSeries = new XYChart.Series<>();
 
-	
-	
+	/**
+	 * This method is the constructor of the class and calls the initializePane.
+	 */
 	public StatsPane() {
 		initializePane();
 	}
 
+	/**
+	 * This method initializes all of the different components used in the class.
+	 */
 	private void initializePane() {
-		
 
 		statsLabel.setStyle(
 				"-fx-text-fill: black; -fx-font-family: 'Times New Roman'; -fx-font-weight: bold; -fx-font-size: 15px;");
 
-		playedContainer.getChildren().addAll(playedVariable, playedLabel,emptyLabel1);
-		winPercentContainer.getChildren().addAll(winPercentVariable, winPercentLabel,emptyLabel2);
-		currentStreakContainer.getChildren().addAll(currentStreakVariable, currentStreakLabel,streakLabel2);
-		maxStreakContainer.getChildren().addAll(maxStreakvariable, maxStreakLabel,streakLabel1);
+		playedContainer.getChildren().addAll(playedVariable, playedLabel, emptyLabel1);
+		winPercentContainer.getChildren().addAll(winPercentVariable, winPercentLabel, emptyLabel2);
+		currentStreakContainer.getChildren().addAll(currentStreakVariable, currentStreakLabel, streakLabel2);
+		maxStreakContainer.getChildren().addAll(maxStreakvariable, maxStreakLabel, streakLabel1);
 
 		playedContainer.setPadding(new Insets(0, 15, 0, 0));
 		winPercentContainer.setPadding(new Insets(0, 15, 0, 0));
 		currentStreakContainer.setPadding(new Insets(0, 15, 0, 0));
-		
+
 		playedContainer.setAlignment(Pos.CENTER);
 		winPercentContainer.setAlignment(Pos.CENTER);
 		currentStreakContainer.setAlignment(Pos.CENTER);
@@ -86,7 +91,6 @@ public class StatsPane extends BorderPane {
 		maxStreakLabel.setStyle("-fx-font-size: 12.5px");
 		streakLabel1.setStyle("-fx-font-size: 12.5px");
 		streakLabel2.setStyle("-fx-font-size: 12.5px");
-		
 
 		playedVariable.setStyle("-fx-font-size: 30px; -fx-font-weight: bold");
 		winPercentVariable.setStyle("-fx-font-size: 30px;-fx-font-weight: bold");
@@ -97,76 +101,75 @@ public class StatsPane extends BorderPane {
 		statsContainer.getChildren().addAll(playedContainer, winPercentContainer, currentStreakContainer,
 				maxStreakContainer);
 
-		mainContainer.getChildren().addAll(statsLabel, statsContainer,barChart);
+		mainContainer.getChildren().addAll(statsLabel, statsContainer, barChart);
 		mainContainer.setAlignment(Pos.CENTER);
 
-        dataSeries.getData().add(new XYChart.Data<>(0, "1"));
-        dataSeries.getData().add(new XYChart.Data<>(0, "2"));
-        dataSeries.getData().add(new XYChart.Data<>(0, "3"));
-        dataSeries.getData().add(new XYChart.Data<>(0, "4"));
-        dataSeries.getData().add(new XYChart.Data<>(0, "5"));
-        dataSeries.getData().add(new XYChart.Data<>(0, "6"));
+		dataSeries.getData().add(new XYChart.Data<>(0, "1"));
+		dataSeries.getData().add(new XYChart.Data<>(0, "2"));
+		dataSeries.getData().add(new XYChart.Data<>(0, "3"));
+		dataSeries.getData().add(new XYChart.Data<>(0, "4"));
+		dataSeries.getData().add(new XYChart.Data<>(0, "5"));
+		dataSeries.getData().add(new XYChart.Data<>(0, "6"));
 
-        
+		barChart.getData().add(dataSeries);
 
-        barChart.getData().add(dataSeries);
-        
-		
-		
-        yAxis.setTickMarkVisible(false);
-        xAxis.setTickMarkVisible(false);
+		yAxis.setTickMarkVisible(false);
+		xAxis.setTickMarkVisible(false);
 
-        xAxis.setTickLabelsVisible(false);
-        xAxis.setMinorTickVisible(false);
-        xAxis.setVisible(false);
-        barChart.setHorizontalGridLinesVisible(false); 
-        barChart.setLegendVisible(false);
-        barChart.setVerticalGridLinesVisible(false);
-        barChart.setBarGap(2);
+		xAxis.setTickLabelsVisible(false);
+		xAxis.setMinorTickVisible(false);
+		xAxis.setVisible(false);
+		barChart.setHorizontalGridLinesVisible(false);
+		barChart.setLegendVisible(false);
+		barChart.setVerticalGridLinesVisible(false);
+		barChart.setBarGap(2);
 
-        
-        // Apply styles directly in Java code
-        for (Data<Number, String> data : dataSeries.getData()) {
-        	if(data != null) {
-        		data.getNode().setStyle("-fx-bar-fill: #787c7e");
-            }
-        }
+		// Apply styles directly in Java code
+		for (Data<Number, String> data : dataSeries.getData()) {
+			if (data != null) {
+				data.getNode().setStyle("-fx-bar-fill: #787c7e");
+			}
+		}
 
-        barChart.setMaxHeight(300);
-        barChart.setMaxWidth(300);
+		barChart.setMaxHeight(300);
+		barChart.setMaxWidth(300);
 		this.setCenter(mainContainer);
 
 	}
 
+	/**
+	 * This method updates the stats of the current user
+	 * 
+	 * @param user An UserAccount object that is the current user of the game.
+	 */
 	public void updateStats(UserAccount user) {
 		if (user != null) {
-			
-	        dataSeries.getData().clear();
+
+			dataSeries.getData().clear();
 			playedVariable.setText("" + user.getGamesPlayed());
 			winPercentVariable.setText("" + user.getWinPercentage());
 			currentStreakVariable.setText("" + user.getCurStreak());
 			maxStreakvariable.setText("" + user.getMaxStreak());
-			
+
 			int[] guessDist = user.getGuessDist();
 			int prevWin = user.getLastGameGuess();
 
-			for(int i = 1; i < 7; i++) {
-			    dataSeries.getData().add(new XYChart.Data<>(guessDist[i], String.valueOf(i)));
+			for (int i = 1; i < 7; i++) {
+				dataSeries.getData().add(new XYChart.Data<>(guessDist[i], String.valueOf(i)));
 			}
 			// Apply styles directly in Java code
-	        for (Data<Number, String> data : dataSeries.getData()) {
-	        	if(data != null) {
-	        		if(data.getYValue().equals(String.valueOf(prevWin))) {
-	        			data.getNode().setStyle("-fx-bar-fill: #538d4e");
-	        		}
-	        		else {
-	        			data.getNode().setStyle("-fx-bar-fill: #787c7e");
-	        		}
-	            }
-	        }
+			for (Data<Number, String> data : dataSeries.getData()) {
+				if (data != null) {
+					if (data.getYValue().equals(String.valueOf(prevWin))) {
+						data.getNode().setStyle("-fx-bar-fill: #538d4e");
+					} else {
+						data.getNode().setStyle("-fx-bar-fill: #787c7e");
+					}
+				}
+			}
 			xAxis.setUpperBound(user.getGamesPlayed());
-		}else {
-	        dataSeries.getData().clear();
+		} else {
+			dataSeries.getData().clear();
 
 			playedVariable.setText("0");
 			winPercentVariable.setText("0");
@@ -175,9 +178,12 @@ public class StatsPane extends BorderPane {
 		}
 	}
 
+	/**
+	 * This method sets the StatsPane to dark mode.
+	 */
 	public void setDarkMode() {
 		barChart.lookup(".chart-plot-background").setStyle("-fx-background-color: black;");
-		
+
 		this.setStyle("-fx-background-color: black;");
 		statsLabel.setStyle(
 				"-fx-text-fill: white; -fx-font-family: 'Times New Roman'; -fx-font-weight: bold; -fx-font-size: 15px;");
@@ -187,14 +193,13 @@ public class StatsPane extends BorderPane {
 		maxStreakLabel.setStyle("-fx-font-size: 12.5px; -fx-text-fill: white;");
 		streakLabel1.setStyle("-fx-font-size: 12.5px; -fx-text-fill: white;");
 		streakLabel2.setStyle("-fx-font-size: 12.5px; -fx-text-fill: white;");
-		
+
 		playedVariable.setStyle("-fx-text-fill: white");
 		winPercentVariable.setStyle("-fx-text-fill: white");
 		currentStreakVariable.setStyle("-fx-text-fill: white");
 		maxStreakvariable.setStyle("-fx-text-fill: white");
-		
+
 		xAxis.setStyle("-fx-text-fill: white");
-		
 
 		playedVariable.setStyle("-fx-font-size: 30px; -fx-font-weight: bold; -fx-text-fill: white;");
 		winPercentVariable.setStyle("-fx-font-size: 30px;-fx-font-weight: bold; -fx-text-fill: white;");
@@ -202,12 +207,15 @@ public class StatsPane extends BorderPane {
 		maxStreakvariable.setStyle("-fx-font-size: 30px;-fx-font-weight: bold; -fx-text-fill: white;");
 
 	}
-	
+
+	/**
+	 * This method sets the StatsPane to light mode.
+	 */
 	public void setLightMode() {
 		this.setStyle("-fx-background-color: white;");
-		
+
 		barChart.lookup(".chart-plot-background").setStyle("-fx-background-color: white;");
-		
+
 		statsLabel.setStyle(
 				"-fx-text-fill: black; -fx-font-family: 'Times New Roman'; -fx-font-weight: bold; -fx-font-size: 15px;");
 		playedLabel.setStyle("-fx-font-size: 12.5px; -fx-text-fill: black;");
@@ -216,12 +224,12 @@ public class StatsPane extends BorderPane {
 		maxStreakLabel.setStyle("-fx-font-size: 12.5px; -fx-text-fill: black;");
 		streakLabel1.setStyle("-fx-font-size: 12.5px; -fx-text-fill: black;");
 		streakLabel2.setStyle("-fx-font-size: 12.5px; -fx-text-fill: black;");
-		
+
 		playedVariable.setStyle("-fx-text-fill: black");
 		winPercentVariable.setStyle("-fx-text-fill: black");
 		currentStreakVariable.setStyle("-fx-text-fill: black");
 		maxStreakvariable.setStyle("-fx-text-fill: black");
-		
+
 		xAxis.setStyle("-fx-text-fill: black");
 
 		playedVariable.setStyle("-fx-font-size: 30px; -fx-font-weight: bold; -fx-text-fill: black;");

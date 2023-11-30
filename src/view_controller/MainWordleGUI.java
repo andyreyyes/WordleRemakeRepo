@@ -15,6 +15,11 @@ import javafx.scene.text.Font;
 import javafx.stage.Stage;
 import model.UserAccount;
 
+/**
+ * 
+ * @author Andy Reyes, Brian Nguyen, John Le, Adler Nguyen
+ *
+ */
 public class MainWordleGUI extends Application {
 
 	private BorderPane pane;
@@ -46,11 +51,24 @@ public class MainWordleGUI extends Application {
 
 	private StatsPane statsView;
 
+	/**
+	 * This function is the main function of this class. It runs program.
+	 * 
+	 * @param args A String[] that causes the program to compile.
+	 */
 	public static void main(String args[]) {
 		launch(args);
 	}
 
 	@Override
+	/**
+	 * The entry point for the JavaFX application. Initializes the graphical user
+	 * interface (GUI), registers event listeners, sets up the scene with the main
+	 * pane, and displays the stage.
+	 *
+	 * @param stage The primary stage for the JavaFX application.
+	 * @throws Exception If an exception occurs during the initialization process.
+	 */
 	public void start(Stage stage) throws Exception {
 
 		layoutGUI();
@@ -62,6 +80,9 @@ public class MainWordleGUI extends Application {
 
 	}
 
+	/**
+	 * Method to set up the graphical user interface (GUI) components.
+	 */
 	private void layoutGUI() {
 		loginView = new LoginAndCreatePane(this);
 		statsView = new StatsPane();
@@ -117,6 +138,10 @@ public class MainWordleGUI extends Application {
 		pane.setCenter(mainGameLayout);
 	}
 
+	/**
+	 * This method regisers all the listeners for the program. They all use lambda
+	 * expressions
+	 */
 	private void registerListeners() {
 		login.setOnAction((arg0) -> {
 			pane.setCenter(loginView);
@@ -185,7 +210,11 @@ public class MainWordleGUI extends Application {
 
 		});
 	}
-	
+
+	/**
+	 * This method is used in the login and create pane class. It's used to switch
+	 * back to the game screen automatically after logging in.
+	 */
 	public void setGamePane() {
 		pane.setCenter(mainGameLayout);
 	}

@@ -8,6 +8,12 @@ import javafx.scene.control.Button;
 import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
 
+/**
+ * This class creates the keyboard that is used in the MainWordleGui pane.
+ * 
+ * @author John Le
+ *
+ */
 public class KeyBoardPane extends GridPane {
 
 	// arraylist of all keys on the keyboard
@@ -61,10 +67,17 @@ public class KeyBoardPane extends GridPane {
 
 	private Square[][] squareList;
 
+	/**
+	 * This method is the constructor of the class that initializes all of the
+	 * components that is used in this pane.
+	 */
 	public KeyBoardPane() {
 		initialize();
 	}
 
+	/**
+	 * This method initializes all the different components that will be used.
+	 */
 	private void initialize() {
 		this.setStyle("-fx-background-color: white;");
 		// Constructs the keyboard
@@ -162,6 +175,9 @@ public class KeyBoardPane extends GridPane {
 		registerHandlers();
 	}
 
+	/**
+	 * This method registers the handlers of all the components used in this pane.
+	 */
 	private void registerHandlers() {
 		// First row of keys event handlers
 		qKey.setOnAction((event) -> {
@@ -283,15 +299,29 @@ public class KeyBoardPane extends GridPane {
 
 	}
 
+	/**
+	 * This method sets the game that is used for the keyboard.
+	 * 
+	 * @param newGame A WordleGamePane object that is used to depict how the
+	 *                keyboard works.
+	 */
 	public void setGame(WordleGamePane newGame) {
 		// Sets game to a WordleGamePane object
 		game = newGame;
 	}
 
+	/**
+	 * This method sets the keyboard to a grid that is passed in.
+	 * 
+	 * @param grid A 2d Array of Squares.
+	 */
 	public void setGrid(Square[][] grid) {
 		squareList = grid;
 	}
 
+	/**
+	 * This method updates each of the keys after a guess is processed.
+	 */
 	public void updateKeys() {
 		// Updates the keyboard to gray keys if the letters have been used
 		// Goes through each key and each letter used in a guess and
@@ -331,6 +361,9 @@ public class KeyBoardPane extends GridPane {
 		}
 	}
 
+	/**
+	 * This method creates an ArrayList of KeyButtons that is used to help.
+	 */
 	public void createList() {
 		// Creates an arraylist of the key buttons
 		// Indexes:
@@ -371,6 +404,9 @@ public class KeyBoardPane extends GridPane {
 		keyList.add(mKey);
 	}
 
+	/**
+	 * This method sets the keyboard pane to dark mode.
+	 */
 	public void setDarkMode() {
 		this.setStyle("-fx-background-color: black;");
 
@@ -386,12 +422,15 @@ public class KeyBoardPane extends GridPane {
 			if (key.getStyle().contains("-fx-background-color: #c1c9c7;")) {
 				key.setStyle(
 						"-fx-focus-color: transparent; -fx-faint-focus-color: transparent; -fx-background-color: #c1c9c7;");
-				key.setTextFill(Color.BLACK);
+				key.setTextFill(Color.WHITE);
 
 			}
 		}
 	}
 
+	/**
+	 * This method sets the keyboard pane to light mode.
+	 */
 	public void setLightMode() {
 		this.setStyle("-fx-background-color: white;");
 
